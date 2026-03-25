@@ -1,14 +1,17 @@
-import '../assets/config.css';
+import "../assets/config.css";
 import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { useInfo } from '../hooks/useInfo';
-import { useState } from 'react';
+import { useInfo } from "../hooks/useInfo";
+import { useState, useEffect, useRef } from "react";
 
 const Configuracion = () => {
-
+  // hooks
   const { nombres, apellidos, email } = useInfo();
+  const containerRef = useRef(null);
+  const modalRef = useRef(null);
 
   const [inputState, setInputState] = useState(false);
+  const [dangerState, setDangerState] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -16,29 +19,38 @@ const Configuracion = () => {
     dni: "",
   });
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setDangerState(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="configuracion">
-      <div className='titleConfig'>
+    <div className="configuracion" ref={containerRef}>
+      <div className="titleConfig">
         <h3>Configuracion y Perfil</h3>
         <p>
           Administra tu identidad digital y preferencias del ecosistema
           'nombreEmpresa'
         </p>
       </div>
-      {/* -- */}
 
-      <div className='BodyConfig'>
-        <div className='PerfilPanel'>
-          <div className='PerfilDescription'>
-            <img className='configImgPerfil' src={rostro} alt="rostro" />
-            <p className='fontBlack'> {nombres} </p>
-            <p className='fontOrange'> {apellidos} </p>
+      <div className="BodyConfig">
+        <div className="PerfilPanel">
+          <div className="PerfilDescription">
+            <img className="configImgPerfil" src={rostro} alt="rostro" />
+            <p className="fontBlack"> {nombres} </p>
+            <p className="fontOrange"> {apellidos} </p>
           </div>
-          <div className='PanelPerfilInfo'>
-            <InfoUsuario
-              txtTitle={"CORREO ELECTRONICO"}
-              txtInfo={email}
-            />
+          <div className="PanelPerfilInfo">
+            <InfoUsuario txtTitle={"CORREO ELECTRONICO"} txtInfo={email} />
             <PassUsuario
               txtTitle={"CONTRASEÑA"}
               txtInfo={"*********"}
@@ -46,16 +58,23 @@ const Configuracion = () => {
             />
             <InfoUsuario txtTitle={"NUMERO DNI"} txtInfo={"70300000"} />
           </div>
-          <div className='PanelPerfilBtn'>
-            <button className='btn editarPefil fontOrange'>Editar Perfil</button>
-            <button className='btn seguridad fontBlack' onClick={() => setInputState(!inputState)}>Seguridad</button>
+          <div className="PanelPerfilBtn">
+            <button className="btn editarPefil fontOrange">
+              Editar Perfil
+            </button>
+            <button
+              className="btn seguridad fontBlack"
+              onClick={() => setInputState(!inputState)}
+            >
+              Seguridad
+            </button>
           </div>
         </div>
-        <div className='PreferPanel'>
+        <div className="PreferPanel">
           <div>
             <h3>Preferencias de interfaz</h3>
-            <div className='ItemPreference'>
-              <DynamicIcon name={'sun-moon'} />
+            <div className="ItemPreference">
+              <DynamicIcon name={"sun-moon"} />
               <div>
                 <p>Modo Oscuro</p>
                 <p>Cambia entre tema oscuro y claro.</p>
@@ -64,8 +83,8 @@ const Configuracion = () => {
                 <input type="checkbox" name="" id="ModoTema" />
               </div>
             </div>
-            <div className='ItemPreference'>
-              <DynamicIcon name={'languages'} />
+            <div className="ItemPreference">
+              <DynamicIcon name={"languages"} />
               <div>
                 <p>Idioma del sistema</p>
                 <p>Selecciona el lenguaje de la plataforma.</p>
@@ -77,33 +96,37 @@ const Configuracion = () => {
               </div>
             </div>
           </div>
-          <div>
-          </div>
+          <div></div>
           {inputState && (
-            <div className='botoneraConfig'>
-              <div className='btnCancelar' onClick={() => setInputState(false)}>Cancelar</div>
-              <div className=' btnGuardar'>Guardar Cambios</div>
+            <div className="botoneraConfig">
+              <div className="btnCancelar" onClick={() => setInputState(false)}>
+                Cancelar
+              </div>
+              <div className=" btnGuardar">Guardar Cambios</div>
             </div>
           )}
         </div>
+      </div>
 
-      </div>
-      {/* -- */}
-      <div className='footerConfig'>
-        <div className='EstadoCuenta'>
-          <h4 className='fontBlack'>Estado de Cuenta</h4>
-          <p className='fontGrayInfo' >tu cuenta esta verificada y activa.</p>
+      <div className="footerConfig">
+        <div className="EstadoCuenta">
+          <h4 className="fontBlack">Estado de Cuenta</h4>
+          <p className="fontGrayInfo">tu cuenta esta verificada y activa.</p>
         </div>
-        <div className='DangerZone'>
-          <div>
-            <h4>Zona de Riesgo</h4>
-            <p className='fontGrayInfo'>una vez desactivada la cuenta no hay marcha atras.</p>
-          </div>
-          <div className='borderDanger'>
-            <p>Desactivar cuenta</p>
-          </div>
-        </div>
+
+        <DangerZone setDangerState={setDangerState} />
       </div>
+
+      {dangerState && (
+        <div className="overlay">
+          <DangerZoneContent
+            name={nombres}
+            lastname={apellidos}
+            setDangerState={setDangerState}
+            modalRef={modalRef}
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -111,8 +134,8 @@ const Configuracion = () => {
 const InfoUsuario = ({ txtTitle, txtInfo }) => {
   return (
     <div className="infoUsuario">
-      <p className='fontGrayInfo'>{txtTitle}</p>
-      <p className='fontBlackInfo'>{txtInfo}</p>
+      <p className="fontGrayInfo">{txtTitle}</p>
+      <p className="fontBlackInfo">{txtInfo}</p>
     </div>
   );
 };
@@ -165,7 +188,7 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
         <div className="infoUsuarioSecurity">
           <div className="inputPass">
             <input
-              className='inputSecurity'
+              className="inputSecurity"
               type="password"
               name=""
               id=""
@@ -180,7 +203,7 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
           </div>
           <div className="inputPass">
             <input
-              className='inputSecurity'
+              className="inputSecurity"
               type="password"
               placeholder="Confirmar Contraseña"
               onChange={(e) =>
@@ -198,6 +221,43 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
         </div>
       )}
     </form>
+  );
+};
+
+const DangerZone = ({ setDangerState }) => {
+  return (
+    <div className="DangerZone">
+      <div>
+        <h4>Zona de Riesgo</h4>
+        <p className="fontGrayInfo">
+          una vez desactivada la cuenta no hay marcha atras.
+        </p>
+      </div>
+      <div className="borderDanger" onClick={() => setDangerState(true)}>
+        <p>Desactivar cuenta</p>
+      </div>
+    </div>
+  );
+};
+
+const DangerZoneContent = ({ name, lastname, setDangerState, modalRef }) => {
+  return (
+    <div className="borderDangerContent" ref={modalRef}>
+      <div className="TitleDanger">
+        <p>Desactivar mi cuenta</p>{" "}
+        <p onClick={() => setDangerState(false)} className="CloseDanger">
+          x
+        </p>
+      </div>
+      <div className="contentDanger">
+        <p>¿Estas seguro de desactivar tu cuenta?</p>
+        <p className="fntDanger">{name}</p>
+        <p className="fntDanger">{lastname}</p>
+      </div>
+      <div className="bottomDanger">
+        <button>Desactivar cuenta</button>
+      </div>
+    </div>
   );
 };
 

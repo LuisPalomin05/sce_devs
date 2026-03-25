@@ -9,11 +9,3 @@ router.get('/me', verifyToken, userController.findUserById);
 
 module.exports = router;
 
-
-
-
-
-
-
-
-

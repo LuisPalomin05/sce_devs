@@ -48,6 +48,7 @@ pids
 *.sqlite
 *.sqlite3
 *.db
+*.sql
 
 # Archivos de configuración local
 *.local
