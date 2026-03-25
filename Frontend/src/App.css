@@ -1,0 +1,19 @@
+*{
+    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+.boldtxt{
+    font-weight: bold;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+Link, a{
+      color: #8c8686;
+    text-decoration: none;
+}

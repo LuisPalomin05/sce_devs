@@ -1,0 +1,12 @@
+
+select * from usuario;
+
+INSERT INTO usuario (nombres, apellidos, email, password_hash, id_rol) values ('admin', 'admin1', 'admin@sce.com.pe', '$2b$10$ugcZHIybpj5Wjc1hvidrBeAsPMPg881I44MoM2/HcmIk1czsFoiri', 1);
+
+
+INSERT INTO usuario (nombres, apellidos, email, password_hash, id_rol) 
+values ('Luis Alfredo', 'Palomino Medina', 'luispalomino@sce.com.pe', 'HASH', 1),
+('Melissa', 'Chauca Medina', 'melisachauca@sce.com.pe', 'HASH', 1),
+('Miriam Erica', 'Medina Peña', 'ericamedina@sce.com.pe', 'HASH', 1);
+
+SELECT * FROM usuario WHERE email = 'admin@sce.com.pe';

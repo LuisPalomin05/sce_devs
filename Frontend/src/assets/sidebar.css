@@ -1,0 +1,96 @@
+/* SideBar */
+
+.SideBar {
+    background: white;
+    border-right: 1px solid #ccc;
+}
+
+.EmpresaTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #cccccc58;
+}
+
+.InfoSideTitle {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.SideBardList {
+    padding: 10px;
+}
+
+.cambiarEmpresa {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    position: relative;
+}
+
+.SideBarTarget {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    padding: 8px 5px;
+    gap: 10px;
+    border-radius: 8px;
+}
+
+.SideBarTarget p {
+    /* color: #6d6666; */
+    font-weight: bold;
+
+}
+
+.SideBarTarget:hover {
+    background: #f4a20a;
+}
+
+#cardAccounts {
+    position: absolute;
+    top: 45px;
+    left: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgb(77, 75, 75);
+    border: 1px solid #ccc;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 5px;
+    z-index: 100;
+    width: 300px;
+    min-height: 120px;
+}
+
+.AccountJobs{
+cursor: pointer;
+    background: #656565;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.AccountJobs:hover{
+
+    background: #f0b41c;
+
+}
+
+.orangebg{
+    background: #f0b41c;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    /* 535050 */
+}

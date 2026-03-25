@@ -1,0 +1,107 @@
+.Dashboard {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    width: 100%;
+    height: 100vh;
+}
+
+.MainContent,
+.SideBar {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    background: #f8f7f7;
+}
+
+.HeaderPage {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 15px;
+    background: white;
+    gap: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.SearchHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 36px;
+    padding: 10px;
+    gap: 8px;
+    flex: 1;
+    border-radius: 6px;
+    background: #d6d0d038;
+}
+
+.btnHeaderAlerts {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.SearchHeader input {
+    outline: none;
+    border: none;
+    min-width: 300px;
+    background: none;
+    flex: 1;
+}
+
+.fontBlack {
+    color: #504a4a;
+    font-weight: bold;
+}
+
+.fontGrayInfo {
+    font-size: 12px;
+    color: #bbb2b2;
+    font-weight: bold;
+}
+
+
+.UserInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.UserInfo:hover {
+    border: 1px solid #bbb2b2;
+    border-radius: 5px;
+    box-shadow: 0px 3px 5px -3px rgba(0, 0, 0, 0.1);
+}
+
+.UserInfoHeader {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.HeaderImage {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#cardPerfil {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    background: rgb(77, 75, 75);
+    border: 1px solid #ccc;
+    color: #f3f2f2;
+    border-radius: 8px;
+    top: 54px;
+    right: 15px;
+    z-index: 100;
+    width: 300px;
+    min-height: 120px;
+}

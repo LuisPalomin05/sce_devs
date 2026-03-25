@@ -1,0 +1,91 @@
+# Dependencias
+node_modules/
+
+# Archivos de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDE / Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos temporales
+tmp/
+temp/
+.cache/
+
+# Build / compilación
+dist/
+build/
+out/
+
+# Coverage de tests
+coverage/
+.nyc_output/
+
+# Archivos de procesos
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Base de datos local (si se usa sqlite por ejemplo)
+*.sqlite
+*.sqlite3
+*.db
+
+# Archivos de configuración local
+*.local
+
+# Archivos generados por herramientas
+.eslintcache
+.stylelintcache
+
+# Archivos de TypeScript
+*.tsbuildinfo
+
+
+
+
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sql

@@ -1,0 +1,200 @@
+.configuracion,
+.titleConfig,
+.infoUsuario {
+  display: flex;
+  flex-direction: column;
+}
+
+.configuracion {
+  height: 100%;
+  padding: 5px 80px;
+  display: flex;
+  gap: 10px;
+}
+.PanelPerfilInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 15px 0;
+}
+.infoUsuario {
+  gap: 5px;
+}
+
+.titleConfig {
+  padding: 15px 0;
+}
+
+.titleConfig h3 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.titleConfig p {
+  font-size: 14px;
+  color: #666;
+}
+
+
+.fontBlackInfo {
+  font-size: 14px;
+  color: #504a4a;
+  font-weight: bold;
+}
+
+.fontOrange {
+  color: rgb(255, 187, 0);
+  font-weight: bold;
+}
+
+.btn {
+  padding: 10px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+}
+.PanelPerfilBtn{
+    display: flex;
+    gap: 10px;
+}
+.editarPefil {
+  background-color: #e5e08aa4;
+  cursor: pointer;
+}
+
+.seguridad{
+      cursor: pointer;
+
+}
+
+.BodyConfig {
+  display: flex;
+  flex-direction: row;
+}
+.configImgPerfil {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #f7a935;
+}
+.PerfilDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.DangerZone {
+  border: 1px dashed red;
+  padding: 10px;
+  color: rgb(211, 25, 25);
+  display: flex;
+  border-radius: 10px;
+  gap: 10px;
+  width: 50%;
+}
+.borderDanger {
+  border: 3px solid red;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.borderDanger:hover {
+  background-color: red;
+  color: white;
+  transition: 0.3s;
+}
+
+.EstadoCuenta {
+  background-color: #eedec5a4;
+  border-radius: 10px;
+  border: 1px solid #ede27db7;
+  padding: 10px;
+  width: 50%;
+}
+
+.EstadoCuenta:hover {
+  border: 2px solid #ebb76bb7;
+}
+
+.ItemPreference {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  gap: 15px;
+  min-height: 80px;
+}
+
+.footerConfig {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.PerfilPanel {
+  flex: 1;
+}
+
+.PreferPanel {
+  flex: 1;
+}
+
+.botoneraConfig {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.btnCancelar,
+.btnGuardar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.btnGuardar {
+  background-color: #f7a935;
+  color: white;
+}
+.btnCancelar {
+  background-color: #f1efebd0;
+  color: rgb(151, 147, 147);
+}
+
+.btnCancelar:hover {
+  background-color: rgba(235, 224, 224, 0.705);
+}
+
+.btnGuardar:hover {
+  background-color: #f3af1c;
+}
+
+.ModoTema{
+  height: 15px;
+  width: 15px;
+}
+
+.inputSecurity{
+  height: 25px;
+}
+
+.infoUsuarioSecurity{
+  display: flex;
+  gap: 5px;
+}
+
+
+
+
+
