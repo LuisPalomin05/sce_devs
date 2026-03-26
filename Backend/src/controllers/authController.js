@@ -51,37 +51,36 @@ const login = async (req, res) => {
 const findUserById = async (req, res) => {
   try {
     const id = req.user.id;
-
-    console.log("ID DEL TOKEN:", id);
-
     const user = await userModel.getProfile(id);
-
-    console.log("USER DB:", user);
 
     if (!user || user.length === 0) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    const formattedUser = {
+    const empresaActivaId = user[0].empresa_activa_id;
+
+    const empresas = user.map((u) => ({
+      id_empresa: u.id_empresa,
+      razon_social: u.razon_social,
+      ruc: u.ruc,
+      rol: u.rol,
+    }));
+
+    const empresa_activa =
+      empresas.find((e) => e.id_empresa === empresaActivaId) || empresas[0];
+
+    res.json({
       id: user[0].id_usuario,
       nombres: user[0].nombres,
       apellidos: user[0].apellidos,
       email: user[0].email,
-      tenants: user.map((u) => ({
-        id_tenant: u.id_tenant,
-        razon_social: u.razon_social,
-        ruc: u.ruc,
-        rol: u.rol,
-      })),
-    };
-
-    res.json(formattedUser);
+      empresas,
+      empresa_activa,
+    });
   } catch (error) {
-    console.error("ERROR REAL:", error);
     res.status(500).json({ error: "Error interno" });
   }
 };
-
 module.exports = {
   register,
   login,

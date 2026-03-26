@@ -47,4 +47,35 @@ WHERE u.id_usuario = ?;`,
   return rows;
 };
 
-module.exports = { createUser, findByEmail, findUsers, getProfile };
+const evalUserTenant = async (userId, tenantId) => {
+  const [rows] = await pool.query(
+    `
+      SELECT 1
+      FROM usuario_tenant
+      WHERE id_usuario = ? AND id_tenant = ?
+    `,
+    [userId, tenantId],
+  );
+
+  return rows;
+};
+
+const setUserTenant = async (userId, tenantId) => {
+  await pool.query(
+    `
+    UPDATE usuario
+    SET tenant_activa_id = ?
+    WHERE id_usuario = ?
+  `,
+    [tenantId, userId],
+  );
+};
+
+module.exports = {
+  createUser,
+  findByEmail,
+  findUsers,
+  getProfile,
+  evalUserTenant,
+  setUserTenant,
+};

@@ -1,6 +1,9 @@
 import { DynamicIcon } from "lucide-react/dynamic";
 import { useInfo } from "../hooks/useInfo";
 import { useState, useEffect, useRef } from "react";
+import axiosClient from "../api/client";
+
+// se realiza el codigo para el uso de una sola empres y que se guarde en el estado local.
 
 const SelectAccount = () => {
   const containerRef = useRef(null);
@@ -55,8 +58,14 @@ const SelectAccount = () => {
               <div
                 className="AccountJobs"
                 key={index}
-                onClick={() => {
-                  setTenant(tenantItem);
+                onClick={async () => {
+                  setEmpresa(empresaItem);
+                  localStorage.setItem("empresa", JSON.stringify(empresaItem));
+
+                  await axiosClient.post("/users/set-empresa", {
+                    empresa_id: empresaItem.id_empresa,
+                  });
+
                   setVisible(false);
                 }}
               >

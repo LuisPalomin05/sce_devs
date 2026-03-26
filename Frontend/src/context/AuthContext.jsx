@@ -15,18 +15,20 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const response = await axiosClient.get("/users/me");
-      setUser(response.data);
+      const userData = response.data;
+
+      setUser(userData);
+
+      setEmpresa(userData.empresa_activa);
+
+      localStorage.setItem("empresa", JSON.stringify(userData.empresa_activa));
     } catch (error) {
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-      }
       setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
-  // LOGIN
   const login = async (email, password) => {
     try {
       const response = await axiosClient.post("/auth/login", {
