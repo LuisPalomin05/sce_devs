@@ -5,21 +5,15 @@ import { useState, useEffect, useRef } from "react";
 const SelectAccount = () => {
   const containerRef = useRef(null);
 
-  const { empresas, empresa, setEmpresa } = useInfo();
+  const { tenants, tenant, setTenant } = useInfo();
 
   const [isVisible, setVisible] = useState(false);
 
-  // console.log(empresas[0].ruc);
-
   useEffect(() => {
-    if (empresas && empresas.length > 0) {
-      setEmpresa(empresas[0]);
+    if (tenants && tenants.length > 0) {
+      setTenant(tenants[0]);
     }
-  }, [empresas]);
-
-  // const handleVisibility = () => {
-  //     setVisible(!isVisible);
-  // }
+  }, [tenants]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,8 +39,8 @@ const SelectAccount = () => {
       </div>
 
       <div className="InfoSideTitle">
-        <p className="fontBlack">{empresa.razon_social}</p>
-        <p className="fontGrayInfo">ruc: {empresa.ruc}</p>
+        <p className="fontBlack">{tenant.razon_social}</p>
+        <p className="fontGrayInfo">ruc: {tenant.ruc}</p>
       </div>
 
       <div className="cambiarEmpresa" onClick={() => setVisible(!isVisible)}>
@@ -56,13 +50,13 @@ const SelectAccount = () => {
       {isVisible && (
         <div id="cardAccounts">
           <p>Selecciona la empresa a administrar :</p>
-          {empresas.map((empresaItem, index) => {
+          {tenants.map((tenantItem, index) => {
             return (
               <div
                 className="AccountJobs"
                 key={index}
                 onClick={() => {
-                  setEmpresa(empresaItem);
+                  setTenant(tenantItem);
                   setVisible(false);
                 }}
               >
@@ -72,8 +66,8 @@ const SelectAccount = () => {
                   </div>
                 </div>
                 <div>
-                  <strong>{empresaItem.razon_social}</strong>
-                  <p>{empresaItem.ruc}</p>
+                  <strong>{tenantItem.razon_social}</strong>
+                  <p>{tenantItem.ruc}</p>
                 </div>
               </div>
             );

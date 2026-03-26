@@ -1,38 +1,37 @@
 import { createContext, useState, useEffect } from "react";
 import axiosClient from "../api/client";
 
-//se esta realizando la implementacion para multiempresa
+//se actualiza el nombramiento de variables de empresa a tenant
+//bajo supervision para coincidir con las reglas de negocio y backend
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
   const [user, setUser] = useState(null);
-  const [empresa, setEmpresa] = useState({});
-  // const [workerjob, setWorkerjob] =useState({});
+  const [tenant, setTenant] = useState({});
+
   const [loading, setLoading] = useState(true);
   //CONSULTAR USUARIO
-const fetchUser = async () => {
-  try {
-    const response = await axiosClient.get("/users/me");
-    setUser(response.data);
-  } catch (error) {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
+  const fetchUser = async () => {
+    try {
+      const response = await axiosClient.get("/users/me");
+      setUser(response.data);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+      }
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-    setUser(null);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   // LOGIN
   const login = async (email, password) => {
     try {
-
       const response = await axiosClient.post("/auth/login", {
         email,
-        password
+        password,
       });
 
       const token = response.data.token;
@@ -40,7 +39,6 @@ const fetchUser = async () => {
       localStorage.setItem("token", token);
 
       await fetchUser();
-      
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
@@ -55,9 +53,7 @@ const fetchUser = async () => {
     setUser(null);
   };
 
-
   useEffect(() => {
-
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -65,34 +61,17 @@ const fetchUser = async () => {
     } else {
       setLoading(false);
     }
-
   }, []);
 
   const value = {
     user,
     login,
     logout,
-    empresa,
-    setEmpresa,
+    tenant,
+    setTenant,
     isAuthenticated: !!user,
-    loading
+    loading,
   };
 
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-
-
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-
-
-
-
-
-
-
-

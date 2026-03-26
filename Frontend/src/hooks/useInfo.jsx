@@ -1,22 +1,21 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-const useInfo = () =>{
-    const {user, setEmpresa, empresa} = useContext(AuthContext);
+const useInfo = () => {
+  const { user, setTenant, tenant } = useContext(AuthContext);
 
-        if (!user) {
-        return {
-            nombres: "",
-            apellidos: "",
-            email: "",
-            empresas: []
-        };
-    }
+  if (!user) {
+    return {
+      nombres: "",
+      apellidos: "",
+      email: "",
+      tenants: [],
+    };
+  }
 
-    const { nombres, apellidos, email, empresas } = user;
+  const { nombres, apellidos, email, tenants } = user;
 
-    return {nombres, apellidos, email, empresas, setEmpresa, empresa};
-    
-}
+  return { nombres, apellidos, email, tenants, setTenant, tenant };
+};
 
-export {useInfo};
+export { useInfo };

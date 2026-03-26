@@ -32,13 +32,13 @@ const getProfile = async (idUser) => {
   u.nombres,
   u.apellidos,
   u.email,
-  e.id_empresa,
+  e.id_tenant,
   e.razon_social,
   e.ruc,
   r.nombre AS rol
 FROM usuario u
-JOIN usuario_empresa ue ON u.id_usuario = ue.id_usuario
-JOIN empresa e ON ue.id_empresa = e.id_empresa
+JOIN usuario_tenant ue ON u.id_usuario = ue.id_usuario
+JOIN tenant e ON ue.id_tenant = e.id_tenant
 JOIN rol r ON ue.id_rol = r.id_rol
 WHERE u.id_usuario = ?;`,
     [idUser],
