@@ -59,11 +59,11 @@ const SelectAccount = () => {
                 className="AccountJobs"
                 key={index}
                 onClick={async () => {
-                  setEmpresa(empresaItem);
-                  localStorage.setItem("empresa", JSON.stringify(empresaItem));
+                  setTenant(tenantItem);
+                  localStorage.setItem("tenant", JSON.stringify(tenantItem));
 
-                  await axiosClient.post("/users/set-empresa", {
-                    empresa_id: empresaItem.id_empresa,
+                  await axiosClient.post("/users/set-tenant", {
+                    tenant_id: tenantItem.id_tenant,
                   });
 
                   setVisible(false);

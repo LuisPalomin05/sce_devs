@@ -57,25 +57,25 @@ const findUserById = async (req, res) => {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    const empresaActivaId = user[0].empresa_activa_id;
+    const tenantActivaId = user[0].tenant_activa_id;
 
-    const empresas = user.map((u) => ({
-      id_empresa: u.id_empresa,
+    const tenants = user.map((u) => ({
+      id_tenant: u.id_tenant,
       razon_social: u.razon_social,
       ruc: u.ruc,
       rol: u.rol,
     }));
 
-    const empresa_activa =
-      empresas.find((e) => e.id_empresa === empresaActivaId) || empresas[0];
+    const tenant_activa =
+      tenants.find((e) => e.id_tenant === tenantActivaId) || tenants[0];
 
     res.json({
       id: user[0].id_usuario,
       nombres: user[0].nombres,
       apellidos: user[0].apellidos,
       email: user[0].email,
-      empresas,
-      empresa_activa,
+      tenants,
+      tenant_activa,
     });
   } catch (error) {
     res.status(500).json({ error: "Error interno" });

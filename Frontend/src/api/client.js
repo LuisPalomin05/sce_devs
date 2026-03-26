@@ -6,14 +6,14 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  const empresa = JSON.parse(localStorage.getItem("empresa"));
+  const tenant = JSON.parse(localStorage.getItem("tenant"));
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  if (empresa) {
-    config.headers["x-empresa-id"] = empresa.id_empresa;
+  if (tenant) {
+    config.headers["x-tenant-id"] = tenant.id_tenant;
   }
 
   return config;

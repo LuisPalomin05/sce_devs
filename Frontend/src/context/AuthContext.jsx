@@ -19,9 +19,9 @@ export const AuthProvider = ({ children }) => {
 
       setUser(userData);
 
-      setEmpresa(userData.empresa_activa);
+      setTenant(userData.tenant_activa);
 
-      localStorage.setItem("empresa", JSON.stringify(userData.empresa_activa));
+      localStorage.setItem("tenant", JSON.stringify(userData.tenant_activa));
     } catch (error) {
       setUser(null);
     } finally {
