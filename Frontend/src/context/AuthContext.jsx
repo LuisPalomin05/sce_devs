@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axiosClient from "../api/client";
 
-//se esta realizando la implementacion para multiempresa
 
 export const AuthContext = createContext();
 
@@ -9,24 +8,26 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [empresa, setEmpresa] = useState({});
-  // const [workerjob, setWorkerjob] =useState({});
   const [loading, setLoading] = useState(true);
   //CONSULTAR USUARIO
-const fetchUser = async () => {
+ const fetchUser = async () => {
   try {
     const response = await axiosClient.get("/users/me");
-    setUser(response.data);
+    const userData = response.data;
+
+    setUser(userData);
+
+    setEmpresa(userData.empresa_activa);
+
+    localStorage.setItem("empresa", JSON.stringify(userData.empresa_activa));
+
   } catch (error) {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-    }
     setUser(null);
   } finally {
     setLoading(false);
   }
 };
 
-  // LOGIN
   const login = async (email, password) => {
     try {
 
@@ -40,7 +41,7 @@ const fetchUser = async () => {
       localStorage.setItem("token", token);
 
       await fetchUser();
-      
+
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
