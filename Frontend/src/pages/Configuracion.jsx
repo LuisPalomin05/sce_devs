@@ -3,11 +3,12 @@ import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { useInfo } from "../hooks/useInfo";
 import { useState, useEffect, useRef } from "react";
-import { axiosClient } from '../api/client';
+import axiosClient from "../api/client";
 
 const Configuracion = () => {
   // hooks
-  const { nombres, apellidos, email } = useInfo();
+  const { nombres, apellidos, email, tenant } = useInfo();
+
   const containerRef = useRef(null);
   const modalRef = useRef(null);
 
@@ -38,8 +39,8 @@ const Configuracion = () => {
       <div className="titleConfig">
         <h3>Configuracion y Perfil</h3>
         <p>
-          Administra tu identidad digital y preferencias del ecosistema
-          'nombreEmpresa'
+          Administra tu identidad digital y preferencias del ecosistema{" "}
+          {tenant.razon_social}.
         </p>
       </div>
 
@@ -180,7 +181,7 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
         alert("Contraseña actualizada correctamente");
         setValidarPassword({
           newPassword: "",
-          validatePassword: ""
+          validatePassword: "",
         });
       } catch (error) {
         alert("Error al actualizar la contraseña");
@@ -230,7 +231,6 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
         <div className="infosecurity">
           <p className="fontBlackInfo formatpass">{txtInfo}</p>
           <UpdatePass setInputState={funs} estado={statespass} />
-
         </div>
       )}
     </form>
@@ -238,12 +238,12 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
 };
 
 const UpdatePass = ({ setInputState, estado }) => {
-
   return (
-    <div className="btnGuardar" onClick={() => setInputState(!estado)}>Actualizar contraseña</div>
-
-  )
-}
+    <div className="btnGuardar" onClick={() => setInputState(!estado)}>
+      Actualizar contraseña
+    </div>
+  );
+};
 
 const DangerZone = ({ setDangerState }) => {
   return (
