@@ -1,10 +1,24 @@
 .configuracion,
 .titleConfig,
-.infoUsuario {
+.infoUsuario, .formSecurity {
   display: flex;
   flex-direction: column;
 }
 
+.infosecurity{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.formSecurity, .infosecurity{
+  gap: 5px;
+
+}
+
+.formatpass{
+  flex: 1;
+}
 .configuracion {
   height: 100%;
   padding: 5px 80px;
@@ -36,7 +50,12 @@
 }
 
 .fontBlackInfo {
+  display: flex;
+  align-items: center;
   font-size: 14px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   color: #504a4a;
   font-weight: bold;
 }
@@ -185,7 +204,9 @@
 }
 
 .inputSecurity {
-  height: 25px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .infoUsuarioSecurity {

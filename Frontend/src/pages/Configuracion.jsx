@@ -3,6 +3,7 @@ import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { useInfo } from "../hooks/useInfo";
 import { useState, useEffect, useRef } from "react";
+import { axiosClient } from '../api/client';
 
 const Configuracion = () => {
   // hooks
@@ -55,10 +56,13 @@ const Configuracion = () => {
               txtTitle={"CONTRASEÑA"}
               txtInfo={"*********"}
               statespass={inputState}
+              funs={setInputState}
             />
             <InfoUsuario txtTitle={"NUMERO DNI"} txtInfo={"70300000"} />
           </div>
-          <div className="PanelPerfilBtn">
+          {/* <div onClick={() => setInputState(!inputState)}>Actualizar contraseña</div> */}
+
+          {/* <div className="PanelPerfilBtn">
             <button className="btn editarPefil fontOrange">
               Editar Perfil
             </button>
@@ -68,7 +72,7 @@ const Configuracion = () => {
             >
               Seguridad
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="PreferPanel">
           <div>
@@ -102,7 +106,7 @@ const Configuracion = () => {
               <div className="btnCancelar" onClick={() => setInputState(false)}>
                 Cancelar
               </div>
-              <div className=" btnGuardar">Guardar Cambios</div>
+              {/* <button type="submit" className=" btnGuardar">Guardar Cambios</button> */}
             </div>
           )}
         </div>
@@ -140,7 +144,7 @@ const InfoUsuario = ({ txtTitle, txtInfo }) => {
   );
 };
 
-const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
+const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
   const [validarPassword, setValidarPassword] = useState({
     newPassword: "",
     validatePassword: "",
@@ -170,10 +174,14 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
 
     if (validacion) {
       try {
-        const response = await axiosClient.post("/api/user/update-password", {
+        const response = await axiosClient.put("/api/user/update-password", {
           password: validacion,
         });
         alert("Contraseña actualizada correctamente");
+        setValidarPassword({
+          newPassword: "",
+          validatePassword: ""
+        });
       } catch (error) {
         alert("Error al actualizar la contraseña");
       }
@@ -181,7 +189,7 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="formSecurity" onSubmit={handleSubmit}>
       <p className="fontGrayInfo">{txtTitle}</p>
 
       {statespass ? (
@@ -214,15 +222,28 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass }) => {
               }
             />
           </div>
+          <button type="submit" className="btnGuardar">
+            Aceptar
+          </button>
         </div>
       ) : (
-        <div className="infoUsuario">
-          <p className="fontBlackInfo">{txtInfo}</p>
+        <div className="infosecurity">
+          <p className="fontBlackInfo formatpass">{txtInfo}</p>
+          <UpdatePass setInputState={funs} estado={statespass} />
+
         </div>
       )}
     </form>
   );
 };
+
+const UpdatePass = ({ setInputState, estado }) => {
+
+  return (
+    <div className="btnGuardar" onClick={() => setInputState(!estado)}>Actualizar contraseña</div>
+
+  )
+}
 
 const DangerZone = ({ setDangerState }) => {
   return (

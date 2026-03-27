@@ -8,5 +8,6 @@ const verifyToken = require("../middlewares/authMiddleware");
 
 router.get("/me", verifyToken, authController.findUserById);
 router.post("/set-tenant", verifyToken, userController.setTenantActiva);
+router.put('/update-password', verifyToken, userController.updatePassword);
 
 module.exports = router;

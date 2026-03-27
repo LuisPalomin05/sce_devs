@@ -71,6 +71,11 @@ const setUserTenant = async (userId, tenantId) => {
   );
 };
 
+const newPassword = async (newPass, user_id) =>{
+await pool.query(`UPDATE usuario SET password_hash = ? WHERE id_usuario = ?`, [newPass, user_id]);
+
+}
+
 module.exports = {
   createUser,
   findByEmail,
@@ -78,4 +83,5 @@ module.exports = {
   getProfile,
   evalUserTenant,
   setUserTenant,
+  newPassword
 };

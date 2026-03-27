@@ -2,22 +2,33 @@ import { DynamicIcon } from "lucide-react/dynamic";
 import { useInfo } from "../hooks/useInfo";
 import { useState, useEffect, useRef } from "react";
 import axiosClient from "../api/client";
-
-// se realiza el codigo para el uso de una sola empres y que se guarde en el estado local.
+import { useToast } from "../hooks/useNotifications";
 
 const SelectAccount = () => {
   const containerRef = useRef(null);
-
+  const {success, errorToast} = useToast();
   const { tenants, tenant, setTenant } = useInfo();
 
   const [isVisible, setVisible] = useState(false);
 
-  useEffect(() => {
-    if (tenants && tenants.length > 0) {
-      setTenant(tenants[0]);
-    }
-  }, [tenants]);
+const validarTenant = async (tenantItem) => {
+  try {
+    await axiosClient.post("/users/set-tenant", {
+      tenant_id: tenantItem.id_tenant,
+    });
 
+    setTenant(tenantItem);
+    localStorage.setItem("tenant", JSON.stringify(tenantItem));
+
+    setVisible(false);
+
+  } catch (error) {
+    errorToast("Error al Seleccionar servicio");
+
+    // Opcional: feedback UI
+    // alert("No se pudo cambiar de empresa");
+  }
+};
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -58,16 +69,7 @@ const SelectAccount = () => {
               <div
                 className="AccountJobs"
                 key={index}
-                onClick={async () => {
-                  setTenant(tenantItem);
-                  localStorage.setItem("tenant", JSON.stringify(tenantItem));
-
-                  await axiosClient.post("/users/set-tenant", {
-                    tenant_id: tenantItem.id_tenant,
-                  });
-
-                  setVisible(false);
-                }}
+                onClick={() => validarTenant(tenantItem)}
               >
                 <div>
                   <div className="orangebg">

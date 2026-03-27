@@ -19,7 +19,8 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.18.0",
-    "open": "^11.0.0"
+    "open": "^11.0.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

@@ -6,13 +6,15 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  const tenant = JSON.parse(localStorage.getItem("tenant"));
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  if (tenant) {
+  const tenantRaw = localStorage.getItem("tenant");
+  const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
+
+  if (tenant?.id_tenant) {
     config.headers["x-tenant-id"] = tenant.id_tenant;
   }
 

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../hooks/useNotifications";
 import '../assets/login.css';
 import torque from '../assets/icot.png';
 import { DynamicIcon } from "lucide-react/dynamic";
@@ -8,6 +9,7 @@ import { DynamicIcon } from "lucide-react/dynamic";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const { success, errorToast, warning } = useToast();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -25,11 +27,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(form.email, form.password);
-      navigate("/dashboard");
+      const result = await login(form.email, form.password);
+
+      if (result.ok) {
+        success("Sesión iniciada");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
+      } else {
+        errorToast(result.message);
+      }
+
+
     } catch (error) {
-      console.log(error)
-      alert("Credenciales incorrectas");
+      warning('error al servir la informacion');
     }
   };
 
