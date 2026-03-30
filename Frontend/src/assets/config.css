@@ -1,22 +1,23 @@
 .configuracion,
 .titleConfig,
-.infoUsuario, .formSecurity {
+.infoUsuario,
+.formSecurity {
   display: flex;
   flex-direction: column;
 }
 
-.infosecurity{
+.infosecurity {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.formSecurity, .infosecurity{
+.formSecurity,
+.infosecurity {
   gap: 5px;
-
 }
 
-.formatpass{
+.formatpass {
   flex: 1;
 }
 .configuracion {
@@ -144,7 +145,6 @@
 .ItemPreference {
   display: flex;
   align-items: center;
-  /* justify-content: space-around; */
   gap: 15px;
   min-height: 80px;
 }
@@ -217,12 +217,10 @@
 .borderDangerContent {
   position: absolute;
   border: 1px solid #d6d6d6b7;
-  /* background: rgb(68, 66, 66); */
   background: #f5f1f1;
   border-radius: 10px;
   min-width: 500px;
   height: 300px;
-  /* color: white; */
   color: #1f1d1d;
   top: 50%;
   left: 50%;

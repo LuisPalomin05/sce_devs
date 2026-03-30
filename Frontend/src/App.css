@@ -1,19 +1,19 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-
-.boldtxt{
-    font-weight: bold;
+.boldtxt {
+  font-weight: bold;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-Link, a{
-      color: #8c8686;
-    text-decoration: none;
+Link,
+a {
+  color: #8c8686;
+  text-decoration: none;
 }

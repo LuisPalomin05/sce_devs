@@ -1,7 +1,7 @@
 /* SideBar */
 
 .SideBar {
-  background: white;
+  background: var(--bg-color);
   border-right: 1px solid #ccc;
 }
 

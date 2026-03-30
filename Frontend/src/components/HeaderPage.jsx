@@ -1,7 +1,9 @@
 import { Bell, Search, MessageSquare } from "lucide-react";
 import rostro from "../assets/rostro.avif";
-import { useState, useEffect, useRef } from "react"; //aquiva el context
+import { useState, useEffect, useRef, useContext } from "react"; //aquiva el context
+import { AuthContext } from "../context/AuthContext";
 
+import CardPerfil from "./CardPerfil";
 //hooks
 import { useInfo } from "../hooks/useInfo";
 
@@ -9,6 +11,7 @@ import LogOut from "./LogOut";
 
 const HeaderPage = () => {
   const containerRef = useRef(null);
+  const { isDark, toggleTheme } = useContext(AuthContext);
 
   const { nombres, apellidos, email } = useInfo();
   const [isVisible, setVisible] = useState(false);
@@ -53,24 +56,7 @@ const HeaderPage = () => {
         <img className="HeaderImage" src={rostro} alt="" />
       </div>
 
-      {isVisible && (
-        <div id="cardPerfil">
-          <strong>
-            {nombres} {apellidos}
-          </strong>
-          <p>{email}</p>
-
-          <div className="btnPerfil">
-            <div className="btnPerfilBtn">Perfil</div>
-          </div>
-
-          <div className="btnPerfil">
-            <div className="btnPerfilBtn">Configuración</div>
-          </div>
-
-          <LogOut Color="#ffffff" />
-        </div>
-      )}
+      {isVisible && <CardPerfil />}
     </div>
   );
 };
