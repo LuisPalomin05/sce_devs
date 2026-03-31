@@ -2,15 +2,15 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../hooks/useNotifications";
-import '../assets/login.css';
-import torque from '../assets/icot.png';
+import "../assets/login.css";
+import torque from "../assets/icot.png";
 import { DynamicIcon } from "lucide-react/dynamic";
-
 
 const Login = () => {
   const { login } = useContext(AuthContext);
   const { success, errorToast, warning } = useToast();
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useContext(AuthContext);
 
   const [form, setForm] = useState({
     email: "",
@@ -37,10 +37,8 @@ const Login = () => {
       } else {
         errorToast(result.message);
       }
-
-
     } catch (error) {
-      warning('error al servir la informacion');
+      warning("error al servir la informacion");
     }
   };
 
@@ -49,7 +47,7 @@ const Login = () => {
       <div className="tittleLogin">
         <div className="nameLogin">
           {/* <img src="" alt="" /> */}
-          <p>SCE</p>
+          <p onClick={toggleTheme}>SCE SISTEMAS</p>
         </div>
         <div>Soporte Tecnico</div>
       </div>
@@ -62,9 +60,7 @@ const Login = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="formLogin">
-
             <div className="inputsContendor">
-
               <div className="inputGroup">
                 <div>
                   <p className="boldtxt">Correo electrónico</p>
@@ -78,7 +74,8 @@ const Login = () => {
                     placeholder="ejemplo@torqueg46.com.pe"
                     onChange={handleChange}
                     required
-                  /></div>
+                  />
+                </div>
               </div>
 
               <div className="inputGroup">
@@ -97,25 +94,27 @@ const Login = () => {
                     required
                   />
                 </div>
-
               </div>
-
             </div>
             <div className="footerLogin">
               <div className="checkItems">
                 <input type="checkbox" name="recordar" id="recordar" />
-                <label htmlFor="recordar">Recordar Sesion  </label>
+                <label htmlFor="recordar">Recordar Sesion </label>
               </div>
-              <button type="submit" className="BottonLogin">Inicia Sesion</button>
+              <button type="submit" className="BottonLogin">
+                Inicia Sesion
+              </button>
             </div>
-
-
           </form>
-
         </div>
 
         <div className="footLogin">
-          <div className="leyendafooter"><p>¿No tienes cuenta?</p> <p className="alertOrange boldtxt pointer">Contactar Administrador</p></div>
+          <div className="leyendafooter">
+            <p>¿No tienes cuenta?</p>{" "}
+            <p className="alertOrange boldtxt pointer">
+              Contactar Administrador
+            </p>
+          </div>
           <div className="leyenda boldtxt">
             SCE SISTEMAS - 2026 SOFTWARE DE GESTION EMPRESARIAL
           </div>
@@ -124,6 +123,5 @@ const Login = () => {
     </div>
   );
 };
-
 
 export default Login;

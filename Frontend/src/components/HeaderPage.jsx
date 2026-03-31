@@ -51,7 +51,6 @@ const HeaderPage = () => {
       <div className="UserInfo" onClick={() => setVisible(!isVisible)}>
         <div className="UserInfoHeader">
           <p className="fontBlack"> {nombres} </p>
-          {/* <p className='fontGrayInfo'> {user.rol} </p> */}
         </div>
         <img className="HeaderImage" src={rostro} alt="" />
       </div>

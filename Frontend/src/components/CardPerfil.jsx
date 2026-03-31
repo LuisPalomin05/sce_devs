@@ -1,4 +1,4 @@
-import { useContext } from "react"; //aquiva el context
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useInfo } from "../hooks/useInfo";
 import { Sun, Moon } from "lucide-react";

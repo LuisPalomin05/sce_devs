@@ -1,6 +1,10 @@
 :root {
   --bg-color: #ffffff;
-  --text-color: #242323;
+  --bg-color-primary: #f3f3f3;
+  --bg-color-secondary: #e8e8e8;
+  --text-color: #221f1f;
+  --text-color-primary: #504a4a;
+  --text-color-secondary: #8c8686;
   --accent-color: #f6ca3b;
   --button-bg: #f3f4f6;
 
@@ -10,7 +14,11 @@
 
 .dark-mode {
   --bg-color: #121212;
-  --text-color: #f9fafb;
+  --bg-color-primary: #1e1e1e;
+  --bg-color-secondary: #2e2e2e;
+  --text-color: #fdfdfd;
+  --text-color-primary: #f9fafb;
+  --text-color-secondary: #b7b0b0;
   --accent-color: #60a5fa;
   --button-bg: rgb(77, 75, 75);
 }
