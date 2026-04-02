@@ -1,11 +1,11 @@
 import "../assets/sidebar.css";
 import { DynamicIcon } from "lucide-react/dynamic";
-
 import { Link } from "react-router-dom";
 import SelectAccount from "./SelectAccount";
 import LogOut from "./LogOut";
 
 const SideBar = () => {
+
   const menu = [
     { target: "users", icon: "users" },
     { target: "settings", icon: "settings" },
@@ -18,7 +18,7 @@ const SideBar = () => {
 
       <div className="SideBardList">
         <div className="listBar">
-          <Link to={"/dashboard"}>
+          <Link to={`/dashboard`}>
             <div className="SideBarTarget">
               <DynamicIcon
                 name={"layout-dashboard"}

@@ -1,13 +1,18 @@
 import "../assets/config.css";
 import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { useInfo } from "../hooks/useInfo";
 import { useState, useEffect, useRef } from "react";
 import axiosClient from "../api/client";
+
+import {useToast} from "../hooks/useNotifications";
+import { useLogOut } from "../hooks/useLogOut";
+import { useInfo } from "../hooks/useInfo";
+
 
 const Configuracion = () => {
   // hooks
   const { nombres, apellidos, email, tenant } = useInfo();
+
 
   const containerRef = useRef(null);
   const modalRef = useRef(null);
@@ -61,19 +66,6 @@ const Configuracion = () => {
             />
             <InfoUsuario txtTitle={"NUMERO DNI"} txtInfo={"70300000"} />
           </div>
-          {/* <div onClick={() => setInputState(!inputState)}>Actualizar contraseña</div> */}
-
-          {/* <div className="PanelPerfilBtn">
-            <button className="btn editarPefil fontOrange">
-              Editar Perfil
-            </button>
-            <button
-              className="btn seguridad fontBlack"
-              onClick={() => setInputState(!inputState)}
-            >
-              Seguridad
-            </button>
-          </div> */}
         </div>
         <div className="PreferPanel">
           <div>
@@ -137,6 +129,7 @@ const Configuracion = () => {
 };
 
 const InfoUsuario = ({ txtTitle, txtInfo }) => {
+
   return (
     <div className="infoUsuario">
       <p className="fontGrayInfo">{txtTitle}</p>
@@ -146,6 +139,9 @@ const InfoUsuario = ({ txtTitle, txtInfo }) => {
 };
 
 const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
+    const {warning, success, errorToast, info} = useToast();
+    const logout  =useLogOut();
+
   const [validarPassword, setValidarPassword] = useState({
     newPassword: "",
     validatePassword: "",
@@ -153,12 +149,12 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
 
   const validarCampos = (newpass, validate) => {
     if (newpass !== validate) {
-      alert("Las contraseñas no coinciden");
+      warning("Las contraseñas no coinciden");
       return null;
     }
 
     if (newpass.length < 8) {
-      alert("La contraseña debe tener al menos 8 caracteres");
+      warning("La contraseña debe tener al menos 8 caracteres");
       return null;
     }
 
@@ -175,16 +171,18 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
 
     if (validacion) {
       try {
-        const response = await axiosClient.put("/api/user/update-password", {
+         await axiosClient.put("/users/update-password", {
           password: validacion,
         });
-        alert("Contraseña actualizada correctamente");
+        success("Contraseña actualizada");
         setValidarPassword({
           newPassword: "",
           validatePassword: "",
         });
+        logout();
+        info('Vuelve a iniciar sesion')
       } catch (error) {
-        alert("Error al actualizar la contraseña");
+        errorToast("Error al actualizar la contraseña");
       }
     }
   };
