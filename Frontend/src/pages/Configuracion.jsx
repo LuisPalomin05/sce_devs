@@ -3,15 +3,19 @@ import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { useState, useEffect, useRef } from "react";
 import axiosClient from "../api/client";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-import {useToast} from "../hooks/useNotifications";
+import { useToast } from "../hooks/useNotifications";
 import { useLogOut } from "../hooks/useLogOut";
 import { useInfo } from "../hooks/useInfo";
+import { Sun, Moon, BadgeCheck } from "lucide-react";
 
 
 const Configuracion = () => {
   // hooks
   const { nombres, apellidos, email, tenant } = useInfo();
+  const { isDark, toggleTheme } = useContext(AuthContext);
 
 
   const containerRef = useRef(null);
@@ -76,8 +80,16 @@ const Configuracion = () => {
                 <p>Modo Oscuro</p>
                 <p>Cambia entre tema oscuro y claro.</p>
               </div>
-              <div>
-                <input type="checkbox" name="" id="ModoTema" />
+              <div className="modo" onClick={toggleTheme}>
+                {isDark ?
+                  (<div className="cartillaModo">
+                    <Sun></Sun>
+                  </div>) : (
+                    <div className="cartillaModo">
+                      <Moon></Moon>
+                    </div>
+                  )
+                }
               </div>
             </div>
             <div className="ItemPreference">
@@ -107,8 +119,12 @@ const Configuracion = () => {
 
       <div className="footerConfig">
         <div className="EstadoCuenta">
-          <h4 className="fontBlack">Estado de Cuenta</h4>
-          <p className="fontGrayInfo">tu cuenta esta verificada y activa.</p>
+          <div>
+            <h4 className="fontBlack">Estado de Cuenta</h4>
+            <p className="fontGrayInfo">tu cuenta esta verificada y activa.</p>
+
+          </div>
+          <BadgeCheck size={32}/>
         </div>
 
         <DangerZone setDangerState={setDangerState} />
@@ -139,8 +155,8 @@ const InfoUsuario = ({ txtTitle, txtInfo }) => {
 };
 
 const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
-    const {warning, success, errorToast, info} = useToast();
-    const logout  =useLogOut();
+  const { warning, success, errorToast, info } = useToast();
+  const logout = useLogOut();
 
   const [validarPassword, setValidarPassword] = useState({
     newPassword: "",
@@ -171,7 +187,7 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
 
     if (validacion) {
       try {
-         await axiosClient.put("/users/update-password", {
+        await axiosClient.put("/users/update-password", {
           password: validacion,
         });
         success("Contraseña actualizada");

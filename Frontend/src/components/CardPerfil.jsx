@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useInfo } from "../hooks/useInfo";
 import { Sun, Moon } from "lucide-react";
+import { Link } from "react-router-dom"
 
 import LogOut from "./LogOut";
 
@@ -35,14 +36,17 @@ const CardPerfil = () => {
           </div>
         )}
       </button>
-      <div className="btnPerfil">
-        <div className="btnPerfilBtn">Perfil</div>
-      </div>
+      <Link to={'/dashboard/perfil'}>
+        <div className="btnPerfil">
+          <div className="btnPerfilBtn">Perfil</div>
+        </div>
+      </Link>
+      <Link to={'/dashboard/settings'}>
 
-      <div className="btnPerfil">
-        <div className="btnPerfilBtn">Configuración</div>
-      </div>
-
+        <div className="btnPerfil">
+          <div className="btnPerfilBtn">Configuración</div>
+        </div>
+      </Link>
       <LogOut Color="#ffffff" />
     </div>
   );

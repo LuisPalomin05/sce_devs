@@ -55,7 +55,7 @@
 }
 
 .SideBarTarget p {
-  /* color: #6d6666; */
+  color: var(--text-color-primary);
   font-weight: bold;
 }
 
