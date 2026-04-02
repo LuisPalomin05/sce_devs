@@ -10,7 +10,7 @@ const SideBar = () => {
   const menu = [
     { target: "", label: "Dashboard", icon: "layout-dashboard" },
     { target: "users", label: "Usuarios", icon: "users" },
-    { target: "ventas", label: "Ventas", icon: "shopping-cart" }, // 🔥 NUEVO
+    { target: "ventas", label: "Ventas", icon: "shopping-cart" }, 
     { target: "settings", label: "Configuración", icon: "settings" },
   ];
 

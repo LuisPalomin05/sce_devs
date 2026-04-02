@@ -45,8 +45,8 @@ const HeaderPage = () => {
         <input type="text" placeholder={txtBuscar} />
       </div>
       <div className="btnHeaderAlerts">
-        <Bell size={18} />
-        <MessageSquare size={18} />
+        <Bell size={18} className="pointer"/>
+        <MessageSquare size={18} className="pointer"/>
       </div>
       <div className="UserInfo" onClick={() => setVisible(!isVisible)}>
         <div className="UserInfoHeader">
