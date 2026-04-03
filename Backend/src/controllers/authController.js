@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
+
 const { getUserById } = require("../models/userRepository");
 const { getTenantsByGroupId } = require("../models/tenantRepository");
 
