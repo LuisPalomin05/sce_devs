@@ -2,6 +2,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
+const { getUserById } = require("../models/userRepository");
+const { getTenantsByGroupId } = require("../models/tenantRepository");
+
 const register = async (req, res) => {
   try {
     const { nombres, apellidos, email, password, id_rol } = req.body;
@@ -51,36 +54,32 @@ const login = async (req, res) => {
 const findUserById = async (req, res) => {
   try {
     const id = req.user.id;
-    const user = await userModel.getProfile(id);
-
-    if (!user || user.length === 0) {
+    const user = await getUserById(id);
+    if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    const tenantActivaId = user[0].tenant_activa_id;
+    const tenantGroupId = user.id_grupo_tenant;
+    const tenants = await getTenantsByGroupId(tenantGroupId);
 
-    const tenants = user.map((u) => ({
-      id_tenant: u.id_tenant,
-      razon_social: u.razon_social,
-      ruc: u.ruc,
-      rol: u.rol,
-    }));
-
-    const tenant_activa =
-      tenants.find((e) => e.id_tenant === tenantActivaId) || tenants[0];
+    let tenant_activa = tenants.find(tenant => tenant.id_tenant === user.tenant_activa_id);
+    if (!tenant_activa && tenants.length > 0) {
+      tenant_activa = tenants[0];
+    }
 
     res.json({
-      id: user[0].id_usuario,
-      nombres: user[0].nombres,
-      apellidos: user[0].apellidos,
-      email: user[0].email,
+      id: user.id_usuario,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      email: user.email,
       tenants,
       tenant_activa,
     });
   } catch (error) {
-    res.status(500).json({ error: "Error interno" });
+    res.status(500).json({ error: "Error interno " + error });
   }
 };
+
 module.exports = {
   register,
   login,
