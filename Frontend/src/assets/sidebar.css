@@ -63,6 +63,11 @@
   background: #f4a20a;
 }
 
+.SideBarTarget.active {
+  background-color: #f4a20a;
+  color: white;
+}
+
 #cardAccounts {
   position: absolute;
   top: 45px;

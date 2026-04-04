@@ -21,12 +21,11 @@ const validarTenant = async (tenantItem) => {
     localStorage.setItem("tenant", JSON.stringify(tenantItem));
 
     setVisible(false);
+    success("Empresa cambiada correctamente");
 
   } catch (error) {
     errorToast("Error al Seleccionar servicio");
 
-    // Opcional: feedback UI
-    // alert("No se pudo cambiar de empresa");
   }
 };
   useEffect(() => {

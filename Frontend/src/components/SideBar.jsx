@@ -1,24 +1,26 @@
 import "../assets/sidebar.css";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SelectAccount from "./SelectAccount";
 import LogOut from "./LogOut";
 
 const SideBar = () => {
+  const location = useLocation();
 
   const menu = [
-    { target: "users", icon: "users" },
-    { target: "settings", icon: "settings" },
-    // { target: "logout", icon: "log-out", label: "Cerrar Sesión" }
+    { target: "", label: "Dashboard", icon: "layout-dashboard" },
+    { target: "users", label: "Usuarios", icon: "users" },
+    { target: "ventas", label: "Ventas", icon: "shopping-cart" },
+    { target: "settings", label: "Configuración", icon: "settings" },
   ];
 
   return (
-    <div className="SideBar">
+    <div className="SideBar ">
       <SelectAccount />
 
       <div className="SideBardList">
         <div className="listBar">
-          <Link to={`/dashboard`}>
+          {/* <Link to={`/dashboard`}>
             <div className="SideBarTarget">
               <DynamicIcon
                 name={"layout-dashboard"}
@@ -27,14 +29,26 @@ const SideBar = () => {
               />
               <p>Dashboard</p>
             </div>
-          </Link>
-          {menu.map((item) => (
-            <SideBarTarget
-              key={item.target}
-              Target={item.target}
-              icon={item.icon}
-            />
-          ))}
+          </Link> */}
+          {menu.map((item) => {
+            const path =
+              item.target === ""
+                ? "/dashboard"
+                : `/dashboard/${item.target}`;
+
+            const isActive =
+              location.pathname === path ||
+              (item.target === "" && location.pathname === "/dashboard");
+
+            return (
+              <SideBarTarget
+                key={item.target}
+                Target={item.target}
+                icon={item.icon}
+                label={item.label}
+                active={isActive}
+              />);
+          })}
         </div>
 
         <LogOut Color="#535050" />
@@ -43,13 +57,19 @@ const SideBar = () => {
   );
 };
 
-const SideBarTarget = ({ Target, icon }) => {
-  return (
-    <Link to={`/dashboard/${Target}`}>
-      <div className="SideBarTarget">
-        <DynamicIcon name={icon} size={22} color="#535050" />
+const SideBarTarget = ({ Target, icon, label, active }) => {
+  const path =
+    Target === "" ? "/dashboard" : `/dashboard/${Target}`;
 
-        <p>{Target}</p>
+  return (
+    <Link to={path}>
+      <div className={`SideBarTarget ${active ? "active" : ''}`}>
+        <DynamicIcon
+          name={icon}
+          size={22}
+          color={active ? "#fff" : "#535050"}
+        />
+        <p>{label}</p>
       </div>
     </Link>
   );

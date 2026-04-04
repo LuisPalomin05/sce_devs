@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       setTenant(finalTenant);
       localStorage.setItem("tenant", JSON.stringify(finalTenant));
     } catch (error) {
+      localStorage.removeItem("token");
       setUser(null);
     } finally {
       setLoading(false);
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
       await fetchUser();
 
-      return { ok: "true" };
+      return { ok: true };
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
@@ -66,7 +67,10 @@ export const AuthProvider = ({ children }) => {
   // LOGOUT
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("tenant");
     setUser(null);
+    setTenant(null);
+
   };
 
   useEffect(() => {

@@ -1,0 +1,273 @@
+.ContentDashboard {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  /* height: 90vh; */
+   flex: 1;  
+  overflow-y: auto;
+  min-height: 0; 
+}
+
+/* .titleDashboard {
+  margin-bottom: 20px;
+} */
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--card-color);
+  color: var(--text-color);
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.6s ease;
+  border: 1px solid var(--border-color);
+}
+
+.card h4 {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.positive {
+  color: #22c55e;
+  font-size: 12px;
+}
+
+/* ===================== */
+/* ANIMACIÓN */
+/* ===================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== */
+/* SECCIONES */
+/* ===================== */
+
+.section {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.section h3 {
+  margin-bottom: 15px;
+}
+
+/* ===================== */
+/* GRÁFICO */
+/* ===================== */
+
+.chartContainer {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--card-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* ===================== */
+/* GRID ABAJO */
+/* ===================== */
+
+.gridBottom {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  align-items: stretch;
+}
+
+.gridBottom .section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+}
+
+/* ===================== */
+/* ACTIVIDAD */
+/* ===================== */
+
+.activityList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.activityList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.activityList li:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ===================== */
+/* HISTORIAL (TIMELINE) */
+/* ===================== */
+
+.historyList {
+  margin-top: 10px;
+  border-left: 2px solid var(--border-color);
+  padding-left: 25px;
+  position: relative;
+}
+
+.historyItem {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* PUNTO PERFECTAMENTE ALINEADO */
+.historyItem .dot {
+  position: absolute;
+  left: -33px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  background: #6366f1;
+  border-radius: 50%;
+}
+
+/* CARD HISTORIAL */
+.historyContent {
+  background: var(--card-color);
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  transition: 0.3s;
+}
+
+.historyContent h4 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.historyContent p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.historyContent span {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.historyContent:hover {
+  transform: translateX(5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+.activityContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.activityItem:hover {
+  background: #334155;
+}
+
+.activityIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityContent strong {
+  font-size: 14px;
+}
+
+.activityTime {
+  font-size: 12px;
+  color: #94a3b8;
+}
+.activityContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.activityIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityTime {
+  font-size: 12px;
+  color: #94a3b8;
+}
