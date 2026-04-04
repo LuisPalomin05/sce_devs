@@ -412,3 +412,20 @@
 .bottomDanger button:hover {
   background: #dc2626;
 }
+.modo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 40px;
+  width: 100px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 2px solid #f3af1c;
+  gap: 2px;
+}
+
+.cartillaModo{
+color: #f3af1c;
+}
