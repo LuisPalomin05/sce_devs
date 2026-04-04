@@ -7,8 +7,12 @@ const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <p>Cargando...</p>;
-  }
+  return (
+    <div style={{display:"flex", justifyContent:"center", marginTop:"100px"}}>
+      <p>Cargando sistema...</p>
+    </div>
+  );
+}
 
   if (!isAuthenticated) {
     return <Navigate to="/" />;

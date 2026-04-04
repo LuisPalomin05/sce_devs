@@ -44,7 +44,7 @@ const Configuracion = () => {
         </p>
       </div>
 
-      <div className="BodyConfig">
+      <div className="BodyConfig gridConfig">
         <div className="PerfilPanel">
           <div className="PerfilDescription">
             <img className="configImgPerfil" src={rostro} alt="rostro" />

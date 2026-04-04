@@ -1,3 +1,36 @@
+/* 🎨 VARIABLES GLOBALES */
+:root {
+  --bg-color: #0f172a;
+  --card-color: #1e293b;
+  --primary-color: #4f46e5;
+  --secondary-color: #6366f1;
+
+  --text-color: #e2e8f0;
+  --text-color-primary: #e2e8f0;
+  --text-color-secondary: #94a3b8;
+
+  --border-color: rgba(255, 255, 255, 0.05);
+  --button-bg: #1e293b;
+}
+
+/* 🏢 TEMAS POR EMPRESA */
+.theme-torque {
+  --primary-color: #4f46e5;
+  --secondary-color: #6366f1;
+
+  --bg-color: #0f172a;
+  --card-color: #1e293b;
+}
+
+.theme-irontools {
+  --primary-color: #16a34a;
+  --secondary-color: #22c55e;
+
+  --bg-color: #052e1b; 
+  --card-color: #064e3b; 
+}
+
+/* 🧱 LAYOUT */
 .Dashboard {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -12,33 +45,25 @@
   background: var(--bg-color);
 }
 
+/* 🔝 HEADER */
 .HeaderPage {
   display: flex;
-  position: relative;
-  flex-direction: row;
   align-items: center;
   padding: 5px 15px;
-  background: var(--bg-color);
   gap: 20px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-color);
 }
 
 .SearchHeader {
   display: flex;
-  flex-direction: row;
   align-items: center;
   height: 36px;
   padding: 10px;
   gap: 8px;
   flex: 1;
   border-radius: 6px;
-  background: #d6d0d038;
-}
-
-.btnHeaderAlerts {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .SearchHeader input {
@@ -47,32 +72,25 @@
   min-width: 300px;
   background: none;
   flex: 1;
+  color: var(--text-color);
 }
 
-.fontBlack {
-  color: var(--text-color-primary);
-  font-weight: bold;
+.btnHeaderAlerts {
+  display: flex;
+  gap: 15px;
 }
 
-.fontGrayInfo {
-  font-size: 12px;
-  color: var(--text-color-secondary);
-  font-weight: bold;
-}
-
+/* 👤 USER */
 .UserInfo {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 15px;
   cursor: pointer;
-  height: 100%;
 }
 
 .UserInfo:hover {
-  border: 1px solid #bbb2b2;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
-  box-shadow: 0px 3px 5px -3px rgba(0, 0, 0, 0.1);
 }
 
 .UserInfoHeader {
@@ -83,59 +101,257 @@
 .HeaderImage {
   height: 30px;
   width: 30px;
-  object-fit: cover;
   border-radius: 50%;
 }
 
+/* 📋 PERFIL */
 #cardPerfil {
   position: absolute;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 5px;
-  background: rgb(77, 75, 75);
-  border: 1px solid #ccc;
-  color: #f3f2f2;
+  padding: 10px;
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
   border-radius: 8px;
   top: 54px;
   right: 15px;
   z-index: 100;
   width: 300px;
-  min-height: 120px;
 }
 
 .btnPerfil {
   display: flex;
-  flex-direction: row;
   align-items: center;
   padding: 5px;
   border-radius: 8px;
   cursor: pointer;
-  height: 35px;
-  width: 100%;
 }
 
 .btnPerfil:hover {
-  background: rgb(100, 97, 97);
+  background: rgba(255, 255, 255, 0.05);
 }
 
+/* 🎛 BOTONES */
 .btnTheme {
   background-color: var(--button-bg);
   color: var(--text-color);
   padding: 10px 20px;
-  cursor: pointer;
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 
 .btnThemeOption {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 
-.infoCardPerfil {
+/* 🧠 TEXTO */
+.fontBlack {
+  color: var(--text-color-primary);
+  font-weight: bold;
+}
+
+.fontGrayInfo {
+  font-size: 12px;
+  color: var(--text-color-secondary);
+}
+
+/* 📦 MAIN */
+.MainContent main {
+  padding: 20px;
+}
+
+/* 💳 CARDS */
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
+  border-color: var(--primary-color);
+}
+
+/* 📊 SECCIONES */
+.section {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 12px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+/* 🏆 LISTA */
+.section ul {
+  padding-left: 20px;
+}
+
+.section li {
+  margin-bottom: 8px;
+}
+
+/* 📌 SIDEBAR */
+.SideBarTarget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: var(--text-color-secondary);
+}
+
+.SideBarTarget:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.SideBarTarget.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-color);
+}
+
+.tabla th,
+.tabla td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.tabla th {
+  color: var(--text-color-secondary);
+}
+
+.tabla tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+/* HEADER VENTAS */
+.ventasHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+/* BOTÓN */
+.btnPrimary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btnPrimary:hover {
+  background: var(--secondary-color);
+}
+
+/* TABLA */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-color);
+}
+
+.tabla th,
+.tabla td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tabla th {
+  color: var(--text-color-secondary);
+}
+
+.tabla tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modalContent {
+  background: var(--card-color);
+  padding: 20px;
+  border-radius: 12px;
+  width: 500px;
+  color: var(--text-color);
+}
+
+.productosList {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.productoItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.productoItem button {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.detalleVenta {
+  margin-top: 15px;
+}
+
+.detalleItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.detalleItem input {
+  width: 60px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }

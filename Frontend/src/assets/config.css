@@ -1,294 +1,235 @@
-.configuracion,
-.titleConfig,
-.infoUsuario,
-.formSecurity {
+/* 🔥 CONTENEDOR */
+.configuracion {
+  padding: 20px 60px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  color: #e2e8f0;
 }
 
-.infosecurity {
+/* 🔥 TITULO */
+.titleConfig h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.titleConfig p {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* 🔥 GRID PRINCIPAL */
+.BodyConfig {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* 🔥 CARDS */
+.PerfilPanel,
+.PreferPanel {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 14px;
+}
+
+/* 🔥 PERFIL */
+.PerfilDescription {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
-.formSecurity,
-.infosecurity {
+.configImgPerfil {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: 2px solid #f59e0b;
+}
+
+/* 🔥 INFO USUARIO */
+.PanelPerfilInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.infoUsuario {
+  display: flex;
+  flex-direction: column;
   gap: 5px;
+}
+
+.fontGrayInfo {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.fontBlackInfo {
+  width: 100%;
+  padding: 10px 12px;
+  background: #020617;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 14px;
+}
+
+/* 🔥 PASSWORD */
+.infosecurity {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
 }
 
 .formatpass {
   flex: 1;
 }
-.configuracion {
-  height: 100%;
-  padding: 5px 80px;
-  display: flex;
-  gap: 10px;
-}
-.PanelPerfilInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 15px 0;
-}
-.infoUsuario {
-  gap: 5px;
-}
 
-.titleConfig {
-  padding: 15px 0;
-}
-
-.titleConfig h3 {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.titleConfig p {
-  font-size: 14px;
-  color: #666;
-}
-
-.fontBlackInfo {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  height: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #504a4a;
-  font-weight: bold;
-}
-
-.fontOrange {
-  color: rgb(255, 187, 0);
-  font-weight: bold;
-}
-
-.btn {
+.inputSecurity {
+  width: 100%;
   padding: 10px;
-  height: 35px;
   border-radius: 8px;
   border: none;
-}
-.PanelPerfilBtn {
-  display: flex;
-  gap: 10px;
-}
-.editarPefil {
-  background-color: #e5e08aa4;
-  cursor: pointer;
-}
-
-.seguridad {
-  cursor: pointer;
-}
-
-.BodyConfig {
-  display: flex;
-  flex-direction: row;
-}
-.configImgPerfil {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #f7a935;
-}
-.PerfilDescription {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.DangerZone {
-  border: 1px dashed red;
-  padding: 10px;
-  color: rgb(211, 25, 25);
-  display: flex;
-  position: relative;
-  border-radius: 10px;
-  gap: 10px;
-  width: 50%;
-}
-.borderDanger {
-  border: 3px solid red;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.borderDanger:hover {
-  background-color: red;
-  color: white;
-  transition: 0.3s;
-}
-
-.EstadoCuenta {
-  background-color: #eedec5a4;
-  border-radius: 10px;
-  border: 1px solid #ede27db7;
-  padding: 10px;
-  width: 50%;
-}
-
-.EstadoCuenta:hover {
-  border: 2px solid #ebb76bb7;
-}
-
-.ItemPreference {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  min-height: 80px;
-}
-
-.footerConfig {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.PerfilPanel {
-  flex: 1;
-}
-
-.PreferPanel {
-  flex: 1;
-}
-
-.botoneraConfig {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin: 15px 0;
-}
-
-.btnCancelar,
-.btnGuardar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 10px;
-  cursor: pointer;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.btnGuardar {
-  background-color: #f7a935;
+  background: #020617;
   color: white;
 }
-.btnCancelar {
-  background-color: #f1efebd0;
-  color: rgb(151, 147, 147);
-}
 
-.btnCancelar:hover {
-  background-color: rgba(235, 224, 224, 0.705);
+/* 🔥 BOTONES */
+.btnGuardar {
+  background: #6366f1;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: white;
+  border: none;
+  transition: 0.2s;
 }
 
 .btnGuardar:hover {
-  background-color: #f3af1c;
+  background: #4f46e5;
 }
 
-.ModoTema {
-  height: 15px;
-  width: 15px;
-}
-
-.inputSecurity {
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.infoUsuarioSecurity {
-  display: flex;
-  gap: 5px;
-}
-
-.borderDangerContent {
-  position: absolute;
-  border: 1px solid #d6d6d6b7;
-  background: #f5f1f1;
-  border-radius: 10px;
-  min-width: 500px;
-  height: 300px;
-  color: #1f1d1d;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-}
-.fntDanger {
-  font-size: 24px;
-  font-weight: bold;
-}
-.TitleDanger {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 15%;
-  min-height: 30px;
-  font-weight: bold;
-  border-bottom: 1px solid #d6d6d6b7;
-  padding: 2px 10px;
-}
-
-.CloseDanger {
+.btnCancelar {
+  background: #334155;
+  padding: 6px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 12px;
+  transition: 0.2s;
 }
 
-.contentDanger {
+.btnCancelar:hover {
+  background: #475569;
+}
+
+/* 🔥 PREFERENCIAS */
+.PreferPanel {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
   gap: 10px;
-  padding: 10px;
-  height: 70%;
 }
 
-.bottomDanger {
-  display: flex;
+.ItemPreference {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
   align-items: center;
-  justify-content: center;
-  height: 15%;
-  border-top: 1px solid #d6d6d698;
+  background: #0f172a;
+  padding: 12px;
+  border-radius: 10px;
+  gap: 10px;
 }
 
-.bottomDanger button {
-  padding: 10px;
-  border: none;
+/* 🔥 FOOTER */
+.footerConfig {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* 🔥 ESTADO CUENTA */
+.EstadoCuenta {
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 18px;
+  border-radius: 12px;
+}
+
+/* 🔥 ZONA DE RIESGO */
+.DangerZone {
+  border: 1px solid #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+  padding: 18px;
+  border-radius: 12px;
+  color: #ef4444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 🔥 BOTON PELIGRO */
+.borderDanger {
+  border: 1px solid #ef4444;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
-  width: 90%;
-  background-color: rgb(226, 32, 32);
-  border: 1px solid #d6d6d698;
-  border-radius: 10px;
   font-weight: bold;
+  transition: 0.2s;
+}
+
+.borderDanger:hover {
+  background: #ef4444;
   color: white;
 }
 
-.bottomDanger button:hover {
-  background-color: rgb(224, 3, 3);
-
-  transition: 0.3s;
-}
-
+/* 🔥 MODAL */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.borderDangerContent {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  color: white;
+}
+
+/* 🔥 MODAL CONTENIDO */
+.TitleDanger {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.contentDanger {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.bottomDanger button {
+  width: 100%;
+  padding: 10px;
+  background: #ef4444;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.bottomDanger button:hover {
+  background: #dc2626;
 }

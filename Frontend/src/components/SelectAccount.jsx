@@ -18,15 +18,22 @@ const validarTenant = async (tenantItem) => {
     });
 
     setTenant(tenantItem);
+
     localStorage.setItem("tenant", JSON.stringify(tenantItem));
+
+    const theme = tenantItem.razon_social.toLowerCase().includes("iron")
+      ? "theme-irontools"
+      : "theme-torque";
+
+    document.body.classList.remove("theme-torque", "theme-irontools");
+    document.body.classList.add(theme);
 
     setVisible(false);
 
+    success("Empresa cambiada correctamente");
+
   } catch (error) {
     errorToast("Error al Seleccionar servicio");
-
-    // Opcional: feedback UI
-    // alert("No se pudo cambiar de empresa");
   }
 };
   useEffect(() => {
