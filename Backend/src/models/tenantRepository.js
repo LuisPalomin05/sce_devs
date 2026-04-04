@@ -1,21 +1,20 @@
 const pool = require("../config/db");
 
-const getTenantsByGroupId = async (tenantGroupId) => {
-    const [rows] = await pool.query(
-        `SELECT 
-                id_tenant,
-                id_grupo_tenant,
-                ruc,
-                razon_social,
-                'ADMIN' as rol
-            FROM tenant
-            WHERE id_grupo_tenant = ?;`,
-    [tenantGroupId],
+const getTenantsByUserId = async (idUser) => {
+  const [rows] = await pool.query(
+    `SELECT 
+        t.id_tenant,
+        t.ruc,
+        t.razon_social
+     FROM usuario_tenant ut
+     JOIN tenant t ON ut.id_tenant = t.id_tenant
+     WHERE ut.id_usuario = ?`,
+    [idUser]
   );
-  return rows;
-};
 
+  return rows;
+}
 
 module.exports = {
-  getTenantsByGroupId
+  getTenantsByUserId
 };

@@ -7,8 +7,7 @@ const getUserById = async (idUser) => {
             nombres,
             apellidos,
             email,
-            tenant_activa_id,
-            id_grupo_tenant,
+            tenant_activo_id,
             'ADMIN' AS rol
             FROM usuario
             WHERE id_usuario = ?;`,
