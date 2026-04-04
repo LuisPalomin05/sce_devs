@@ -2,7 +2,7 @@ const pool = require("../config/db");
 
 const getDashboard = async (req, res) => {
     try {
-        const {tenantId} = req.body;
+    const tenantId = req.headers["x-tenant-id"];
 
         const [results] = await pool.query("CALL sp_dashboard(?)", [tenantId]);
 
