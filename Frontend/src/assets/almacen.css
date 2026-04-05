@@ -1,0 +1,392 @@
+.storageContent {
+    display: flex;
+    flex-direction: column;
+    /* padding: 15px; */
+    background-color: #f7f3f3;
+    gap: 10px;
+    height: 100%;
+}
+
+.storageHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    height: 15%;
+    background: #ffffff;
+    padding: 15px;
+}
+
+.storageTittle {
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.storageTittle p {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.storageTittle small {
+    font-weight: bold;
+    color: #787676;
+}
+
+.btnExportReport {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    color: var(--text-color);
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    max-height: 45px;
+    cursor: pointer;
+}
+
+.btnExportReport:hover {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+    background: #f17107;
+    color: white;
+}
+
+.filtros {
+    width: 100%;
+    height: 5%;
+}
+
+.filtros ul {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    text-decoration: none;
+    list-style: none;
+    justify-content: space-evenly;
+}
+
+.filtros ul li {
+    cursor: pointer;
+    color: #34383a;
+    font-size: 14px;
+    background: #ffffff;
+    font-weight: bold;
+    padding: 8px 18px;
+    border-radius: 16px;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.filtros ul li:hover {
+    background: #f17107;
+    color: white;
+}
+
+.TableContendorStorage {
+    padding: 10px 25px;
+    height: 80%;
+    width: 100%;
+}
+
+.StorageTable {
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.StorageTableHeader {
+    /* display: flex;
+    flex-direction: row;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 1fr 150px 150px 150px 150px;
+    justify-content: space-evenly;
+    gap: 5px;
+    height: 10%;
+    background: #f8f7f7da;
+    color: #828080;
+    border-bottom: 1px solid #ccc;
+}
+
+.StorageTableHeader p {
+    font-size: 14px;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.StorageTableBody {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    height: 90%;
+}
+
+.StorageTableItem {
+    /* display: flex;
+    flex-direction: row;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 1fr 150px 150px 150px 150px;
+    justify-content: space-evenly;
+    min-height: 45px;
+    gap: 2px;
+}
+
+.StorageTableItem div {
+    display: flex;
+    align-items: center;
+}
+
+.NombProductoTable {
+    padding: 0 5px;
+    gap: 8px;
+
+}
+
+.NombProducto {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 8px;
+    flex: 1;
+}
+
+.NombProducto p {
+    font: 14px;
+    color: #1b1a1a;
+    font-weight: bold;
+    width: 100%;
+
+}
+
+.NombProducto small {
+    font-size: 12px;
+    font-weight: bold;
+    color: #939292c6;
+    width: 100%;
+}
+
+.itemProd {
+    color: #e6b30c;
+    background: #eae7e75c;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+.catProducto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.catProducto p {
+    color: #615f5f;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 5px 10px;
+
+    display: flex;
+    background: #f4f1f1cd;
+    align-items: center;
+    justify-content: center;
+}
+
+.stockProducto {
+    color: #1b1a1a;
+    font: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.estateProducto {
+    font-size: 14;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionProducto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    color: #787676;
+}
+
+.estateProducto.success {
+    color: #12a612;
+}
+
+.estateProducto.alert {
+    color: #a61212;
+}
+
+.estateProducto.warning {
+    color: #e6b30c;
+}
+
+.CrearProd {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0eeee;
+    height: 100%;
+}
+
+.TittleCreate {
+    width: 100%;
+    height: 15%;
+    background: white;
+    padding: 15px;
+    border-bottom: 1px solid #e6e3e3;
+}
+
+.TittleCreate p {
+    font-weight: bold;
+    font-size: 22px;
+    color: #1b1a1a;
+}
+
+.TittleCreate small {
+    font-weight: bold;
+    color: #808080;
+}
+
+.InputCreate,
+.InputItenCreate {
+    display: flex;
+    flex-direction: column;
+}
+
+.InputCreate {
+    padding: 15px 25px;
+    gap: 10px;
+    background: #ffffff;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.descriptionCreate {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    /* padding: 15px; */
+    gap: 6px;
+}
+
+.descriptionCreate textarea {
+    outline: none;
+    width: 100%;
+    height: 60%;
+    border: none;
+    border-bottom: 1px solid #787676;
+    background: #dedbdb8e;
+    padding: 5px;
+}
+
+.descpTittle {
+    display: flex;
+    flex-direction: column;
+}
+
+.descpTittle p {
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+.descpTittle small {
+    color: #787676;
+}
+
+.InputItenCreate {
+    gap: 5px;
+}
+
+.InputItenCreate label {
+    color: #303030;
+    font-size: 14px;
+    /* font-weight: bold; */
+}
+
+.InputItenCreate input {
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid #787676;
+    background: #dedbdb8e;
+    padding: 0 5px;
+}
+
+.btnCreateContent {
+    display: flex;
+    flex-direction: row;
+    height: 15%;
+    padding: 0 10px;
+
+}
+
+.createBtn {
+    min-height: 45px;
+    min-width: 50%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #ffffff;
+}
+
+.createBtn:last-child {
+    background: #e6b30c;
+    color: #e6e3e3;
+}
+
+.createBtn:hover {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+.createBtn:last-child:hover {
+    background: #e27e0c;
+}
+
+.bnk {
+    flex: 2;
+}
+
+.GroupItem {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.btnsCreate {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px;
+}

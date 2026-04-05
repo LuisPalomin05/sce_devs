@@ -11,6 +11,7 @@ const SideBar = () => {
     { target: "", label: "Dashboard", icon: "layout-dashboard" },
     { target: "users", label: "Usuarios", icon: "users" },
     { target: "ventas", label: "Ventas", icon: "shopping-cart" },
+    { target: "almacen", label: "Almacen", icon: "warehouse" },
     { target: "settings", label: "Configuración", icon: "settings" },
   ];
 

@@ -4,7 +4,9 @@ import HeaderPage from "../components/HeaderPage";
 import SideBar from "../components/SideBar";
 import Configuracion from "./Configuracion";
 import HomeDashboard from "./HomeDashboard";
+import Almacen from "./Almacen";
 import Ventas from "./Ventas";
+import CreateProducto from '../components/CreateProducto'
 
 
 const Dashboard = () => {
@@ -15,9 +17,12 @@ const Dashboard = () => {
         <HeaderPage />
         <main>
           <Routes>
-            <Route path={"settings"} element={<Configuracion />} />
             <Route path={"/"} element={<HomeDashboard />} />
             <Route path={"/ventas"} element={<Ventas />} />
+            <Route path={"/almacen"} element={<Almacen />} />
+            <Route path={"/almacen/*"} element={<CreateProducto />} />
+            <Route path={"/settings"} element={<Configuracion />} />
+
           </Routes>
         </main>
       </div>
