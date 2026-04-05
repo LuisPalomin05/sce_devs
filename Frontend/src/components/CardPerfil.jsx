@@ -47,7 +47,7 @@ const CardPerfil = () => {
           <div className="btnPerfilBtn">Configuración</div>
         </div>
       </Link>
-      <LogOut Color="#ffffff" />
+      <LogOut Color="#575454" />
     </div>
   );
 };

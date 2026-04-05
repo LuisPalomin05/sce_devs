@@ -66,7 +66,10 @@ const HomeDashboard = () => {
 
   return (
     <div className="ContentDashboard">
+      <div>
       <h2 className="titleDashboard">Dashboard</h2>
+      <p className="fontGrayInfo">Encuentra un progreso detallado y administra tus actividades recientes.</p>
+      </div>
 
       <div className="cards">
         <div className="card">

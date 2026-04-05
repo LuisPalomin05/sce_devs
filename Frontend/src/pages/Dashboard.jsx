@@ -20,7 +20,11 @@ const Dashboard = () => {
             <Route path={"/"} element={<HomeDashboard />} />
             <Route path={"/ventas"} element={<Ventas />} />
             <Route path={"/almacen"} element={<Almacen />} />
-            <Route path={"/almacen/*"} element={<CreateProducto />} />
+            {/* <Route path={"/almacen/*"} element={<CreateProducto />} /> */}
+            <Route path="/almacen/edit/:id" element={<CreateProducto />} />
+            <Route path="/almacen/create" element={<CreateProducto />} />
+
+
             <Route path={"/settings"} element={<Configuracion />} />
 
           </Routes>

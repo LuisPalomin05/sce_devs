@@ -5,7 +5,22 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Almacen = () => {
-    const [producto, setProducto] = useState([]);
+    const [producto, setProducto] = useState([
+  { id: 1, nombre: "Perno hexagonal galvanizado 1/2 x 2\"", categoria: "Pernos", stock: 120, estado: "Disponible" },
+  { id: 2, nombre: "Tuerca hexagonal 1/2\"", categoria: "Tuercas", stock: 200, estado: "Agotado" },
+  { id: 3, nombre: "Arandela plana 1/2\"", categoria: "Arandelas", stock: 350, estado: "Agotado" },
+  { id: 4, nombre: "Tornillo drywall 6 x 1\"", categoria: "Tornillos", stock: 500, estado: "Disponible" },
+  { id: 5, nombre: "Tornillo autoperforante punta broca", categoria: "Tornillos", stock: 180, estado: "Disponible" },
+{ id: 20, nombre: "Disco de corte 4.5\"", categoria: "Herramientas", stock: 5, estado: "Bajo stock" },
+{ id: 21, nombre: "Silicona industrial transparente", categoria: "Construcción", stock: 0, estado: "Agotado" }
+]);
+
+
+const getEstadoClass = (estado) => {
+  if (estado === "Disponible") return "success";
+  if (estado === "Bajo stock") return "warning";
+  if (estado === "Agotado") return "danger";
+};
 
     return (
         <div className='storageContent'>
@@ -30,6 +45,8 @@ const Almacen = () => {
                     <li>Pernos</li>
                     <li>Tuercas</li>
                     <li>Barras</li>
+                    <li>Maquinaria</li>
+
                 </ul>
             </div>
             <div className='TableContendorStorage'>
@@ -42,64 +59,41 @@ const Almacen = () => {
                         <p>ACCIONES</p>
                     </div>
                     <div className='StorageTableBody'>
-
                         {
-                            producto.map((item) => {
-                                return (
-                                    <div className='StorageTableItem'>
-                                        <div className='NombProductoTable'>
-                                            <div className='itemProd'>
-                                                <AlignHorizontalDistributeCenter />
+                            producto.length == 0 ? (<p className='alertaProd'>
+                                No hay productos por mostrar. <Link to={'/dashboard/almacen/create'}>Agregar Aqui</Link>
+                            </p>) : (
+                                producto.map((item) => {
+                                    return (
+                                        <div key={item.id} className='StorageTableItem'>
+                                            <div className='NombProductoTable'>
+                                                <div className='itemProd'>
+                                                    <AlignHorizontalDistributeCenter />
+
+                                                </div>
+                                                <div className='NombProducto'>
+                                                    <p>{item.nombre}</p>
+                                                    <small>P001-A58</small>
+                                                </div>
+                                            </div>
+                                            <div className='catProducto'>
+                                                <p>{item.categoria}</p>
 
                                             </div>
-                                            <div className='NombProducto'>
-                                                <p>ARANDELA PLANA GALVANIZADA 5/8</p>
-                                                <small>P001-A58</small>
+                                            <div className='stockProducto'>
+                                                {item.stock}
                                             </div>
+                                            <div className={`estateProducto ${getEstadoClass(item.estado)}`}>
+                                                {item.estado}
+                                            </div>
+                                            <Link to={`/dashboard/almacen/edit/${item.id}`} className="actionProducto">
+                                                <PencilLine />
+                                            </Link>
                                         </div>
-                                        <div className='catProducto'>
-                                            <p>PERNO</p>
-
-                                        </div>
-                                        <div className='stockProducto'>
-                                            45
-                                        </div>
-                                        <div className='estateProducto success'>
-                                            Disponible
-                                        </div>
-                                        <div className='actionProducto'>
-                                            <PencilLine />
-                                        </div>
-                                    </div>
-                                )
-                            })
+                                    )
+                                })
+                            )
                         }
-
-                        <div className='StorageTableItem'>
-                            <div className='NombProductoTable'>
-                                <div className='itemProd'>
-                                    <AlignHorizontalDistributeCenter />
-
-                                </div>
-                                <div className='NombProducto'>
-                                    <p>ARANDELA PLANA GALVANIZADA 5/8</p>
-                                    <small>P001-A58</small>
-                                </div>
-                            </div>
-                            <div className='catProducto'>
-                                <p>PERNO</p>
-
-                            </div>
-                            <div className='stockProducto'>
-                                45
-                            </div>
-                            <div className='estateProducto success'>
-                                Disponible
-                            </div>
-                            <div className='actionProducto'>
-                                <PencilLine />
-                            </div>
-                        </div>
 
                     </div>
                 </div>

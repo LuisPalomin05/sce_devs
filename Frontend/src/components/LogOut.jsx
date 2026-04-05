@@ -8,10 +8,10 @@ const LogOut = ({ Color }) => {
     <div
       className="SideBarTarget"
       onClick={logout}
-      style={{ border: `1px solid ${Color}` }}
+      style={{ border: `1px solid ${Color}`, background: '#ffffff' }}
     >
       <DynamicIcon name={"log-out"} size={22} color={Color} />
-      <p style={{ color: `${Color}` }}>Cerrar Sesion</p>
+      <p style={{ color: `${Color}`, background: '#ffffff' }}>Cerrar Sesion</p>
     </div>
   );
 };

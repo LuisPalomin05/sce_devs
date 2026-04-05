@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     /* padding: 15px; */
-    background-color: #f7f3f3;
+    /* background-color: #f7f3f3; */
+    background: var(--bg-color-primary);
     gap: 10px;
     height: 100%;
 }
@@ -12,7 +13,7 @@
     flex-direction: row;
     gap: 5px;
     height: 15%;
-    background: #ffffff;
+    background: var(--bg-color);
     padding: 15px;
 }
 
@@ -37,7 +38,7 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    color: var(--text-color);
+    color: var(--text-color-secondary);
     gap: 10px;
     background: #ffffff;
     border: 1px solid #ccc;
@@ -125,6 +126,11 @@
     justify-content: center;
 }
 
+.StorageTableHeader p:hover{
+    color: #656464;
+    cursor: pointer;
+
+}
 .StorageTableBody {
     display: flex;
     flex-direction: column;
@@ -219,51 +225,66 @@
     align-items: center;
     justify-content: center;
 }
-
+.alertaProd{
+    width: 100%;
+    height: 45px;
+    padding: 4px;
+    text-align: center;
+    color: var(--text-color-secondary);
+}
 .actionProducto {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2px;
     color: #787676;
+    cursor: pointer;
 }
 
-.estateProducto.success {
-    color: #12a612;
-}
-
-.estateProducto.alert {
-    color: #a61212;
-}
-
-.estateProducto.warning {
-    color: #e6b30c;
-}
 
 .CrearProd {
     display: flex;
     flex-direction: column;
-    background-color: #f0eeee;
+    background-color: var(--bg-color-primary);
     height: 100%;
 }
 
 .TittleCreate {
     width: 100%;
     height: 15%;
-    background: white;
-    padding: 15px;
+    background: var(--bg-color);
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
     border-bottom: 1px solid #e6e3e3;
+}
+
+.cardLayer {
+    color: #e27e0c;
 }
 
 .TittleCreate p {
     font-weight: bold;
     font-size: 22px;
-    color: #1b1a1a;
+    color: var(--text-color);
 }
 
-.TittleCreate small {
+.routeLayer {
     font-weight: bold;
-    color: #808080;
+    display: flex;
+    align-items: center;
+    height: 14px;
+}
+
+.bnj {
+    display: flex;
+    align-items: center;
+}
+
+.routeLayer>small {
+    color: #526487;
 }
 
 .InputCreate,
@@ -273,9 +294,9 @@
 }
 
 .InputCreate {
-    padding: 15px 25px;
+    padding: 0px 25px;
     gap: 10px;
-    background: #ffffff;
+    background: var(--bg-color-primary);
     height: 70%;
     display: flex;
     flex-direction: column;
@@ -291,13 +312,15 @@
     gap: 6px;
 }
 
+
+
 .descriptionCreate textarea {
     outline: none;
     width: 100%;
     height: 60%;
     border: none;
     border-bottom: 1px solid #787676;
-    background: #dedbdb8e;
+    background: var(--bg-color-static);
     padding: 5px;
 }
 
@@ -321,7 +344,7 @@
 }
 
 .InputItenCreate label {
-    color: #303030;
+    color: var(--text-color-label);
     font-size: 14px;
     /* font-weight: bold; */
 }
@@ -330,7 +353,7 @@
     height: 35px;
     border: none;
     border-bottom: 1px solid #787676;
-    background: #dedbdb8e;
+    background: var(bg-color-accent-hover);
     padding: 0 5px;
 }
 
@@ -355,11 +378,12 @@
     justify-content: center;
     gap: 10px;
     background: #ffffff;
+    border: 2px solid #ffffff;
 }
 
 .createBtn:last-child {
     background: #e6b30c;
-    color: #e6e3e3;
+    color: #ffffff;
 }
 
 .createBtn:hover {
@@ -379,8 +403,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    font-weight: bold;
 }
-
+.GroupItem .inputCreates{
+    flex: 1;
+}
 .btnsCreate {
     flex: 1;
     display: flex;
@@ -389,4 +416,51 @@
     justify-content: center;
     gap: 10px;
     padding: 5px;
+}
+
+.estateProducto.success,
+.textSuccess {
+    color: #12a612;
+}
+
+.estateProducto.alert,.estateProducto.danger {
+    color: #a61212;
+}
+
+.estateProducto.warning {
+    color: #e6b30c;
+}
+
+.textTitleCreate {
+    flex: 1px;
+}
+
+.textTitleCreate > small{
+    color: var(--text-color-acent);
+}
+
+.cerrar {
+    padding: 5px;
+    width: 45px;
+    height: 45px;
+    color: var(--text-color-acent);
+    border-radius: 8px;
+    background: var(--bg-color-accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cerrar:hover {
+    background: var(--bg-color-accent-hover);
+    box-shadow: 0px -1px -1px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.inputCreates {
+
+    display: flex;
+    align-items: center;
+    color: #2c3038;
+    gap: 8px;
 }
