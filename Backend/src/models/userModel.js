@@ -64,7 +64,7 @@ const setUserTenant = async (userId, tenantId) => {
   await pool.query(
     `
     UPDATE usuario
-    SET tenant_activa_id = ?
+    SET tenant_activo_id = ?
     WHERE id_usuario = ?
   `,
     [tenantId, userId],
