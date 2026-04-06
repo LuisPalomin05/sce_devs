@@ -1,20 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 
-//Route
+// Routes
 const apiRouter = require("./routes/apiRoutes");
 const usersRouter = require("./routes/userRoutes");
 const authRouter = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const productoRoutes = require("./routes/producto");
+const busquedaRoutes = require("./routes/busquedaRoutes");
 
-//app
 const app = express();
-app.use(cors());
+
+
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "x-tenant-id"],
+}));
+
 app.use(express.json());
 
-//app route
-
+app.use("/api", busquedaRoutes);
 app.use("/api/producto", productoRoutes);
 app.use("/api/", apiRouter);
 app.use("/api/users", usersRouter);

@@ -8,6 +8,8 @@ import { AuthContext } from "../context/AuthContext";
 
 const Almacen = () => {
   const [producto, setProducto] = useState([]);
+  const [filtro, setFiltro] = useState("Todos"); // ✅ CORRECTO aquí
+
   const { tenant } = useContext(AuthContext);
 
   const getEstadoClass = (estado) => {
@@ -36,7 +38,6 @@ const Almacen = () => {
         }));
 
         setProducto(dataFormateada);
-
       } catch (error) {
         console.log("ERROR:", error);
       }
@@ -46,6 +47,12 @@ const Almacen = () => {
       getProductos();
     }
   }, [tenant]);
+
+  // ✅ FILTRO FUNCIONANDO
+  const productosFiltrados = producto.filter((p) => {
+    if (filtro === "Todos") return true;
+    return p.categoria === filtro;
+  });
 
   return (
     <div className="storageContent">
@@ -69,11 +76,11 @@ const Almacen = () => {
 
       <div className="filtros">
         <ul>
-          <li>Todos</li>
-          <li>Pernos</li>
-          <li>Tuercas</li>
-          <li>Barras</li>
-          <li>Maquinaria</li>
+          <li className={filtro === "Todos" ? "active" : ""} onClick={() => setFiltro("Todos")}>Todos</li>
+          <li className={filtro === "Pernos" ? "active" : ""} onClick={() => setFiltro("Pernos")}>Pernos</li>
+          <li className={filtro === "Tuercas" ? "active" : ""} onClick={() => setFiltro("Tuercas")}>Tuercas</li>
+          <li className={filtro === "Barras" ? "active" : ""} onClick={() => setFiltro("Barras")}>Barras</li>
+          <li className={filtro === "Herramientas" ? "active" : ""} onClick={() => setFiltro("Herramientas")}>Herramientas</li>
         </ul>
       </div>
 
@@ -90,15 +97,15 @@ const Almacen = () => {
 
           <div className="StorageTableBody">
             {
-              producto.length === 0 ? (
+              productosFiltrados.length === 0 ? (
                 <p className="alertaProd">
-                  No hay productos por mostrar.{" "}
+                  No hay productos en esta categoría.{" "}
                   <Link to={"/dashboard/almacen/create"}>
                     Agregar Aqui
                   </Link>
                 </p>
               ) : (
-                producto.map((item) => {
+                productosFiltrados.map((item) => {
                   return (
                     <div key={item.id_producto} className="StorageTableItem">
 
@@ -114,7 +121,7 @@ const Almacen = () => {
                       </div>
 
                       <div className="catProducto">
-                        <p>{item.categoria || "General"}</p>
+                        {item.categoria || "General"}
                       </div>
 
                       <div className="stockProducto">
