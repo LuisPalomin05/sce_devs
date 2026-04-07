@@ -160,3 +160,49 @@
   display: flex;
   flex-direction: column;
 }
+/* 🔍 contenedor relativo para el dropdown */
+.SearchHeader {
+  position: relative; /* 🔥 clave para que el dropdown no se salga */
+}
+
+/* 🔽 dropdown buscador */
+.dropdownBusqueda {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+
+  background: var(--bg-color);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+
+  overflow: hidden;
+}
+
+/* 🧾 items */
+.itemBusqueda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 12px;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+/* hover */
+.itemBusqueda:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* tipo a la derecha */
+.tipo {
+  font-size: 12px;
+  color: var(--text-color-secondary);
+  font-weight: bold;
+}
