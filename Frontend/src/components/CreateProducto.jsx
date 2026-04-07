@@ -1,73 +1,100 @@
-import { useState } from "react"
-import '../assets/almacen.css';
-import { Save, ChevronRight, LayersPlus, X,DollarSign,ListPlus } from "lucide-react";
-import { Link, useParams } from 'react-router-dom';
-
-
-
+﻿import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axiosClient from "../api/client";
+import ProductForm from "./ProductForm";
 
 const CreateProducto = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [producto, setProducto] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-    const {id} = useParams();
+  useEffect(() => {
+    const getProducto = async () => {
+      if (!id) return;
 
-    console.log(params);
+      try {
+        const tenantRaw = localStorage.getItem("tenant");
+        const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
-    const [isEdit, setEdit] = useState(false)
+        const { data } = await axiosClient.get("/producto", {
+          headers: { "x-tenant-id": tenant?.id_tenant },
+        });
 
+        const productoSeleccionado = data.find((item) => String(item.id_producto) === String(id));
+        setProducto(productoSeleccionado || null);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    return (
-        <div className="CrearProd">
-            <div className='TittleCreate'>
-                <section><LayersPlus className="cardLayer" /></section>
-                <section className="textTitleCreate">
-                    <div className="routeLayer">
-                        <Link className="bnj" to={'/dashboard/almacen'}>
-                            <small>Almacen</small>
-                        </Link>
-                        <ChevronRight size={10} />
-                        <small>{id ? ('Editar'):('Crear')} Producto</small>
-                    </div>
-                    <p>Crear Producto</p>
-                    <small>Anade un nuevo producto a el almacen</small>
+    getProducto();
+  }, [id]);
 
-                </section>
-                <Link to={'/dashboard/almacen'}>
+  const handleSubmit = async (formData) => {
+    setLoading(true);
+    setMessage("");
 
-                    <section className="cerrar">
-                        <X />
-                    </section>
-                </Link>
-            </div>
-            <div className="InputCreate">
+    try {
+      const tenantRaw = localStorage.getItem("tenant");
+      const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
-                <div className="InputItenCreate"><label htmlFor="descripcion">Nombre del producto</label><input type="text" name="descripcion" placeholder="Ej. ARANDELA PLANA ZINCADA 1/2" /></div>
-                <div className="GroupItem">
-                    <div className="InputItenCreate"><label htmlFor="percio">Precio</label> <div  className="inputCreates"> <DollarSign /> <input type="text" name="precio" placeholder="0.00" /></div> </div>
-                    <div className="InputItenCreate"><label htmlFor="cantidad">Cantidad</label> <div className="inputCreates">  <ListPlus /> <input type="text" name="cantidad" placeholder="0" /></div></div>
-                </div>
-                <div className="descriptionCreate">
-                    <div className="descpTittle">
-                        <p>Descripcion</p>
-                        <small>Ingresa una descripcion del producto</small>
-                    </div>
+      if (id) {
+        await axiosClient.put(`/producto/${id}`, formData, {
+          headers: { "x-tenant-id": tenant?.id_tenant },
+        });
+      } else {
+        await axiosClient.post("/producto", formData, {
+          headers: { "x-tenant-id": tenant?.id_tenant },
+        });
+      }
 
-                    <textarea id="descripcion" placeholder="Especifique dimensiones, tamaño, origen, acabados o informacion adicional">
+      navigate("/dashboard/almacen");
+    } catch (error) {
+      console.error(error);
+      setMessage("Ocurrió un error al guardar el producto.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                    </textarea>
-                </div>
-            </div>
+  const handleDelete = async (productId) => {
+    if (!window.confirm("¿Eliminar este producto?")) return;
 
-            <div className="btnCreateContent">
-                <div className="bnk"></div>
-                <div className="btnsCreate">
-                    <Link to={'/dashboard/almacen'} className="createBtn">CANCELAR</Link>
-                    <button className='createBtn' type="submit"> <Save /> GUARDAR</button>
+    setLoading(true);
+    setMessage("");
 
-                </div>
-            </div>
+    try {
+      const tenantRaw = localStorage.getItem("tenant");
+      const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
-        </div>
-    )
-}
+      await axiosClient.delete(`/producto/${productId}`, {
+        headers: { "x-tenant-id": tenant?.id_tenant },
+      });
+
+      navigate("/dashboard/almacen");
+    } catch (error) {
+      console.error(error);
+      setMessage("Ocurrió un error al eliminar el producto.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancel = () => navigate("/dashboard/almacen");
+
+  return (
+    <ProductForm
+      product={producto}
+      mode={id ? "edit" : "create"}
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      onDelete={id ? handleDelete : undefined}
+      loading={loading}
+      message={message}
+    />
+  );
+};
 
 export default CreateProducto;

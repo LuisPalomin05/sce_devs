@@ -1,16 +1,31 @@
 import "../assets/almacen.css";
-import { Download, PencilLine, AlignHorizontalDistributeCenter, LayersPlus } from "lucide-react";
+import {
+  Download,
+  PencilLine,
+  AlignHorizontalDistributeCenter,
+  LayersPlus,
+} from "lucide-react";
 
-import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useContext, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
+import ProductForm from "../components/ProductForm";
 
 const Almacen = () => {
   const [producto, setProducto] = useState([]);
-  const [filtro, setFiltro] = useState("Todos"); // ✅ CORRECTO aquí
+  const [categorias, setCategorias] = useState([]);
+  const [filtro, setFiltro] = useState("Todos");
+  const [formVisible, setFormVisible] = useState(false);
+  const [formMode, setFormMode] = useState("create");
+  const [formProduct, setFormProduct] = useState(null);
+  const [formMessage, setFormMessage] = useState("");
+  const [formLoading, setFormLoading] = useState(false);
 
   const { tenant } = useContext(AuthContext);
+  const location = useLocation();
+  const [highlightId, setHighlightId] = useState(null);
+  const rowRefs = useRef({});
 
   const getEstadoClass = (estado) => {
     if (estado === "Disponible") return "success";
@@ -18,13 +33,12 @@ const Almacen = () => {
     if (estado === "Agotado") return "danger";
   };
 
+  // Carga productos
   useEffect(() => {
     const getProductos = async () => {
       try {
         const res = await axiosClient.get("/producto", {
-          headers: {
-            "x-tenant-id": tenant?.id_tenant,
-          },
+          headers: { "x-tenant-id": tenant?.id_tenant },
         });
 
         const dataFormateada = res.data.map((p) => ({
@@ -39,20 +53,170 @@ const Almacen = () => {
 
         setProducto(dataFormateada);
       } catch (error) {
-        console.log("ERROR:", error);
+        console.log("ERROR productos:", error);
       }
     };
 
-    if (tenant) {
-      getProductos();
-    }
+    if (tenant) getProductos();
   }, [tenant]);
 
-  // ✅ FILTRO FUNCIONANDO
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const highlight = params.get("highlight");
+
+    if (highlight) {
+      setHighlightId(String(highlight));
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (!highlightId || producto.length === 0) return;
+
+    const row = rowRefs.current[String(highlightId)];
+    if (row?.scrollIntoView) {
+      row.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      const timer = setTimeout(() => {
+        setHighlightId(null);
+      }, 2200);
+
+      const params = new URLSearchParams(location.search);
+      if (params.has("highlight")) {
+        params.delete("highlight");
+        const cleanedSearch = params.toString();
+        window.history.replaceState(
+          null,
+          "",
+          `${location.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}`
+        );
+      }
+
+      return () => clearTimeout(timer);
+    }
+  }, [highlightId, producto, location.pathname, location.search]);
+
+  // Carga categorias
+  useEffect(() => {
+    const getCategorias = async () => {
+      try {
+        const res = await axiosClient.get("/producto/categorias", {
+          headers: { "x-tenant-id": tenant?.id_tenant },
+        });
+        setCategorias(res.data);
+      } catch (error) {
+        console.log("ERROR categorias:", error);
+      }
+    };
+
+    if (tenant) getCategorias();
+  }, [tenant]);
+
+  const resetForm = () => {
+    setFormVisible(false);
+    setFormMode("create");
+    setFormProduct(null);
+    setFormMessage("");
+    setFormLoading(false);
+  };
+
+  const openNewProduct = () => {
+    setFormMode("create");
+    setFormProduct({
+      nombre: "",
+      precio: 0,
+      stock: 0,
+      id_categoria: "",
+      descripcion: "",
+    });
+    setFormMessage("");
+    setFormVisible(true);
+  };
+
+  const openEditProduct = (item) => {
+    setFormMode("edit");
+    setFormProduct(item);
+    setFormMessage("");
+    setFormVisible(true);
+  };
+
+  const refreshProductos = async () => {
+    try {
+      const res = await axiosClient.get("/producto", {
+        headers: { "x-tenant-id": tenant?.id_tenant },
+      });
+
+      const dataFormateada = res.data.map((p) => ({
+        ...p,
+        estado:
+          p.stock === 0
+            ? "Agotado"
+            : p.stock < 10
+            ? "Bajo stock"
+            : "Disponible",
+      }));
+
+      setProducto(dataFormateada);
+    } catch (error) {
+      console.log("ERROR productos:", error);
+    }
+  };
+
+  const handleSaveProduct = async (productData) => {
+    setFormLoading(true);
+    setFormMessage("");
+
+    try {
+      const headers = { "x-tenant-id": tenant?.id_tenant };
+
+      if (formMode === "create") {
+        await axiosClient.post("/producto", productData, { headers });
+        setFormMessage("Producto creado correctamente.");
+      } else {
+        await axiosClient.put(`/producto/${productData.id_producto}`, productData, {
+          headers,
+        });
+        setFormMessage("Producto actualizado correctamente.");
+      }
+
+      await refreshProductos();
+      resetForm();
+    } catch (error) {
+      console.error(error);
+      setFormMessage("Ocurrió un error al guardar el producto.");
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    if (!window.confirm("¿Eliminar este producto?")) return;
+    setFormLoading(true);
+    setFormMessage("");
+
+    try {
+      await axiosClient.delete(`/producto/${productId}`, {
+        headers: { "x-tenant-id": tenant?.id_tenant },
+      });
+
+      setFormMessage("Producto eliminado correctamente.");
+      await refreshProductos();
+      resetForm();
+    } catch (error) {
+      console.error(error);
+      setFormMessage("Ocurrió un error al eliminar el producto.");
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
   const productosFiltrados = producto.filter((p) => {
-    if (filtro === "Todos") return true;
-    return p.categoria === filtro;
-  });
+  if (filtro === "Todos") return true;
+
+  return (
+    p.categoria?.trim().toLowerCase() ===
+    filtro.trim().toLowerCase()
+  );
+});
 
   return (
     <div className="storageContent">
@@ -68,23 +232,50 @@ const Almacen = () => {
           <p>Exportar Reporte</p>
         </div>
 
-        <Link to={"/dashboard/almacen/create"} className="btnExportReport">
+        <button type="button" className="btnExportReport" onClick={openNewProduct}>
           <LayersPlus />
           <p>Agregar Nuevo</p>
-        </Link>
+        </button>
       </div>
 
-      <div className="filtros">
-        <ul>
-          <li className={filtro === "Todos" ? "active" : ""} onClick={() => setFiltro("Todos")}>Todos</li>
-          <li className={filtro === "Pernos" ? "active" : ""} onClick={() => setFiltro("Pernos")}>Pernos</li>
-          <li className={filtro === "Tuercas" ? "active" : ""} onClick={() => setFiltro("Tuercas")}>Tuercas</li>
-          <li className={filtro === "Barras" ? "active" : ""} onClick={() => setFiltro("Barras")}>Barras</li>
-          <li className={filtro === "Herramientas" ? "active" : ""} onClick={() => setFiltro("Herramientas")}>Herramientas</li>
-        </ul>
-      </div>
+      {/* FILTROS DINÁMICOS */}
+      {!formVisible && (
+        <div className="filtros">
+          <ul>
+            <li
+              className={filtro === "Todos" ? "active" : ""}
+              onClick={() => setFiltro("Todos")}
+            >
+              Todos
+            </li>
+
+            {categorias.map((cat) => (
+              <li
+                key={cat.id_categoria}
+                className={filtro === cat.nombre ? "active" : ""}
+                onClick={() => setFiltro(cat.nombre)}
+              >
+                {cat.nombre}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="TableContendorStorage">
+        {formVisible && (
+          <ProductForm
+            product={formProduct}
+            categorias={categorias}
+            mode={formMode}
+            onSubmit={handleSaveProduct}
+            onCancel={resetForm}
+            onDelete={handleDeleteProduct}
+            loading={formLoading}
+            message={formMessage}
+          />
+        )}
+
         <div className="StorageTable">
 
           <div className="StorageTableHeader">
@@ -96,54 +287,58 @@ const Almacen = () => {
           </div>
 
           <div className="StorageTableBody">
-            {
-              productosFiltrados.length === 0 ? (
-                <p className="alertaProd">
-                  No hay productos en esta categoría.{" "}
-                  <Link to={"/dashboard/almacen/create"}>
-                    Agregar Aqui
-                  </Link>
-                </p>
-              ) : (
-                productosFiltrados.map((item) => {
-                  return (
-                    <div key={item.id_producto} className="StorageTableItem">
+            {productosFiltrados.length === 0 ? (
+              <p className="alertaProd">
+                No hay productos en esta categoría. {" "}
+                <button className="linkButton" type="button" onClick={openNewProduct}>
+                  Agregar Aqui
+                </button>
+              </p>
+            ) : (
+              productosFiltrados.map((item) => (
+                <div
+                key={item.id_producto}
+                ref={(el) => {
+                  if (el) rowRefs.current[item.id_producto] = el;
+                }}
+                className={`StorageTableItem ${
+                  highlightId === String(item.id_producto) ? "highlighted" : ""
+                }`}
+              >
 
-                      <div className="NombProductoTable">
-                        <div className="itemProd">
-                          <AlignHorizontalDistributeCenter />
-                        </div>
-
-                        <div className="NombProducto">
-                          <p>{item.nombre}</p>
-                          <small>ID: {item.id_producto}</small>
-                        </div>
-                      </div>
-
-                      <div className="catProducto">
-                        {item.categoria || "General"}
-                      </div>
-
-                      <div className="stockProducto">
-                        {item.stock}
-                      </div>
-
-                      <div className={`estateProducto ${getEstadoClass(item.estado)}`}>
-                        {item.estado}
-                      </div>
-
-                      <Link
-                        to={`/dashboard/almacen/edit/${item.id_producto}`}
-                        className="actionProducto"
-                      >
-                        <PencilLine />
-                      </Link>
-
+                  <div className="NombProductoTable">
+                    <div className="itemProd">
+                      <AlignHorizontalDistributeCenter />
                     </div>
-                  );
-                })
-              )
-            }
+                    <div className="NombProducto">
+                      <p>{item.nombre}</p>
+                      <small>ID: {item.id_producto}</small>
+                    </div>
+                  </div>
+
+                  <div className="catProducto">
+                    {item.categoria || "Sin categoría"}
+                  </div>
+
+                  <div className="stockProducto">{item.stock}</div>
+
+                  <div className={`estateProducto ${getEstadoClass(item.estado)}`}>
+                    {item.estado}
+                  </div>
+
+                  <div className="actionButtons">
+                    <button
+                      type="button"
+                      className="actionProducto"
+                      onClick={() => openEditProduct(item)}
+                    >
+                      <PencilLine />
+                    </button>
+                  </div>
+
+                </div>
+              ))
+            )}
           </div>
 
         </div>

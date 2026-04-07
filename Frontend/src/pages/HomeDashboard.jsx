@@ -132,7 +132,7 @@ const HomeDashboard = () => {
               <div className="activityItem" key={index}>
 
                 <div className="activityIcon">
-                  {item.tipo === "venta" ? "💰" : "👤"}
+                  {item.tipo === "venta" ? "💰" : item.tipo === "usuario" ? "👤" : "⚠️"}
                 </div>
 
                 <div className="activityContent">

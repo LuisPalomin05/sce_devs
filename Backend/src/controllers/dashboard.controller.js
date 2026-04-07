@@ -44,14 +44,18 @@ const getDashboard = async (req, res) => {
   SELECT 'venta' AS tipo, created_at, total, id_venta AS id
   FROM venta
   WHERE id_tenant = ?
+  AND DATE(created_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
   
   UNION ALL
   
   SELECT 'usuario' AS tipo, created_at, NULL AS total, id_usuario AS id
   FROM usuario
+  WHERE tenant_activo_id = ?
   ORDER BY created_at DESC
   LIMIT 5
-`, [tenantId]);
+`, [tenantId, tenantId]);
+
+        console.log('Actividad raw:', actividadRaw);
 
         const actividad = actividadRaw.map(a => {
             if (a.tipo === "venta") {
@@ -69,6 +73,27 @@ const getDashboard = async (req, res) => {
             }
         });
 
+        // Agregar alertas de stock bajo
+        const [stockBajo] = await pool.query(`
+          SELECT nombre, stock
+          FROM producto
+          WHERE id_tenant = ? AND stock < 10 AND stock > 0
+          ORDER BY stock ASC
+          LIMIT 2
+        `, [tenantId]);
+
+        console.log('Stock bajo:', stockBajo);
+
+        stockBajo.forEach(p => {
+            actividad.push({
+                tipo: "alerta",
+                texto: `Stock bajo: ${p.nombre} (${p.stock} unidades)`,
+                fecha: new Date().toISOString()
+            });
+        });
+
+        console.log('Actividad final:', actividad);
+
         res.json({
             ventasHoy,
             ventasMes,
@@ -79,12 +104,7 @@ const getDashboard = async (req, res) => {
             actividad,
 
             porcentajeHoy: calcPorcentaje(ventasHoy, ayer[0].total),
-            porcentajeMes: calcPorcentaje(ventasMes, mesPasado[0].total),
-
-            actividad: [
-                "Nueva venta registrada",
-                "Usuario creado"
-            ]
+            porcentajeMes: calcPorcentaje(ventasMes, mesPasado[0].total)
         });
 
     } catch (error) {
