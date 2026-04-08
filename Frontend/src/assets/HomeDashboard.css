@@ -124,7 +124,7 @@
   padding-right: 2px;
 }
 
-..historyItem,
+.historyItem,
 .activityItem,
 .historyContent {
   min-width: 0;
