@@ -9,11 +9,13 @@ import {
   ListPlus,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import { useToast } from "../hooks/useNotifications";
 
 const CreateProducto = () => {
   const { id } = useParams();
   const isEdit = !!id;
   const [loading, setLoading] = useState(false);
+  const { success, errorToast, warning } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ const CreateProducto = () => {
         await axiosClient.post("/productos", producto);
       }
     } catch (error) {
-      console.error(error);
+      errorToast(error);
     } finally {
       setLoading(false);
     }

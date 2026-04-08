@@ -10,10 +10,12 @@ import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../hooks/useNotifications";
 
 const Almacen = () => {
   const [producto, setProducto] = useState([]);
-  const [filtro, setFiltro] = useState("Todos"); // ✅ CORRECTO aquí
+  const [filtro, setFiltro] = useState("Todos");
+  const { success, errorToast, warning } = useToast();
 
   const { tenant } = useContext(AuthContext);
 
@@ -46,7 +48,7 @@ const Almacen = () => {
 
         setProducto(dataFormateada);
       } catch (error) {
-        console.log("ERROR:", error);
+        errorToast("ERROR:" + error.message);
       }
     };
 
