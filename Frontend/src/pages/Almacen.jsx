@@ -1,4 +1,5 @@
-import "../assets/almacen.css";
+import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   Download,
   PencilLine,
@@ -6,64 +7,98 @@ import {
   LayersPlus,
 } from "lucide-react";
 
-import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import "../assets/almacen.css";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../hooks/useNotifications";
 
 const Almacen = () => {
-  const [producto, setProducto] = useState([]);
+  // =========================
+  // STATE
+  // =========================
+  const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState("Todos");
-  const { success, errorToast, warning } = useToast();
-
+  const [categorias, setCategorias] = useState([]);
   const { tenant } = useContext(AuthContext);
+  const { errorToast } = useToast();
 
+  // =========================
+  // HELPERS
+  // =========================
   const getEstadoClass = (estado) => {
-    if (estado === "Disponible") return "success";
-    if (estado === "Bajo stock") return "warning";
-    if (estado === "Agotado") return "danger";
+    const estados = {
+      Disponible: "success",
+      "Bajo stock": "warning",
+      Agotado: "danger",
+    };
+    return estados[estado] || "";
   };
 
+  const formatearProductos = (data) => {
+    return data.map((p) => ({
+      ...p,
+      estado:
+        p.stock === 0 ? "Agotado" : p.stock < 10 ? "Bajo stock" : "Disponible",
+    }));
+  };
+
+  // =========================
+  // EFFECTS
+  // =========================
   useEffect(() => {
-    const getProductos = async () => {
+    if (!tenant) return;
+
+    const fetchProductos = async () => {
       try {
         const res = await axiosClient.get("/productos/get-all", {
           headers: {
-            "x-tenant-id": tenant?.id_tenant,
+            "x-tenant-id": tenant.id_tenant,
           },
         });
-
-        console.log(res.data);
-
-        const dataFormateada = res.data.map((p) => ({
-          ...p,
-          estado:
-            p.stock === 0
-              ? "Agotado"
-              : p.stock < 10
-                ? "Bajo stock"
-                : "Disponible",
-        }));
-
-        setProducto(dataFormateada);
+        setProductos(formatearProductos(res.data));
       } catch (error) {
-        errorToast("ERROR:" + error.message);
+        errorToast("ERROR: " + error.message);
       }
     };
 
-    if (tenant) {
-      getProductos();
-    }
+    fetchProductos();
   }, [tenant]);
 
-  const productosFiltrados = producto.filter((p) => {
-    if (filtro === "Todos") return true;
-    return p.categoria === filtro;
-  });
+  useEffect(() => {
+    if (!tenant) return;
 
+    const fetchCategorias = async () => {
+      try {
+        const res = await axiosClient.get("/categoria/get-all", {
+          headers: {
+            "x-tenant-id": tenant.id_tenant,
+          },
+        });
+        setCategorias(res.data);
+      } catch (error) {
+        errorToast("ERROR: " + error.message);
+      }
+    };
+
+    fetchCategorias();
+  }, [tenant]);
+
+  console.log(categorias);
+
+  // =========================
+  // DERIVED STATE
+  // =========================
+  const productosFiltrados =
+    filtro === "Todos"
+      ? productos
+      : productos.filter((p) => p.categoria === filtro);
+
+  // =========================
+  // RENDER
+  // =========================
   return (
     <div className="storageContent">
+      {/* HEADER */}
       <div className="storageHeader">
         <div className="storageTittle">
           <p>Inventario de Almacen</p>
@@ -75,12 +110,13 @@ const Almacen = () => {
           <p>Exportar Reporte</p>
         </div>
 
-        <Link to={"/dashboard/almacen/create"} className="btnExportReport">
+        <Link to="/dashboard/almacen/create" className="btnExportReport">
           <LayersPlus />
           <p>Agregar Nuevo</p>
         </Link>
       </div>
 
+      {/* FILTROS */}
       <div className="filtros">
         <ul>
           <li
@@ -89,33 +125,20 @@ const Almacen = () => {
           >
             Todos
           </li>
-          <li
-            className={filtro === "Pernos" ? "active" : ""}
-            onClick={() => setFiltro("Pernos")}
-          >
-            Pernos
-          </li>
-          <li
-            className={filtro === "Tuercas" ? "active" : ""}
-            onClick={() => setFiltro("Tuercas")}
-          >
-            Tuercas
-          </li>
-          <li
-            className={filtro === "Barras" ? "active" : ""}
-            onClick={() => setFiltro("Barras")}
-          >
-            Barras
-          </li>
-          <li
-            className={filtro === "Herramientas" ? "active" : ""}
-            onClick={() => setFiltro("Herramientas")}
-          >
-            Herramientas
-          </li>
+
+          {categorias.map((cat) => (
+            <li
+              key={cat.id_categoria}
+              className={filtro === cat.nombre ? "active" : ""}
+              onClick={() => setFiltro(cat.nombre)}
+            >
+              {cat.nombre}
+            </li>
+          ))}
         </ul>
       </div>
 
+      {/* TABLA */}
       <div className="TableContendorStorage">
         <div className="StorageTable">
           <div className="StorageTableHeader">
@@ -130,44 +153,42 @@ const Almacen = () => {
             {productosFiltrados.length === 0 ? (
               <p className="alertaProd">
                 No hay productos en esta categoría.{" "}
-                <Link to={"/dashboard/almacen/create"}>Agregar Aqui</Link>
+                <Link to="/dashboard/almacen/create">Agregar Aqui</Link>
               </p>
             ) : (
-              productosFiltrados.map((item) => {
-                return (
-                  <div key={item.id_producto} className="StorageTableItem">
-                    <div className="NombProductoTable">
-                      <div className="itemProd">
-                        <AlignHorizontalDistributeCenter />
-                      </div>
-
-                      <div className="NombProducto">
-                        <p>{item.nombre}</p>
-                        <small>ID: {item.id_producto}</small>
-                      </div>
+              productosFiltrados.map((item) => (
+                <div key={item.id_producto} className="StorageTableItem">
+                  <div className="NombProductoTable">
+                    <div className="itemProd">
+                      <AlignHorizontalDistributeCenter />
                     </div>
 
-                    <div className="catProducto">
-                      {item.categoria || "General"}
+                    <div className="NombProducto">
+                      <p>{item.nombre}</p>
+                      <small>ID: {item.id_producto}</small>
                     </div>
-
-                    <div className="stockProducto">{item.stock}</div>
-
-                    <div
-                      className={`estateProducto ${getEstadoClass(item.estado)}`}
-                    >
-                      {item.estado}
-                    </div>
-
-                    <Link
-                      to={`/dashboard/almacen/edit/${item.id_producto}`}
-                      className="actionProducto"
-                    >
-                      <PencilLine />
-                    </Link>
                   </div>
-                );
-              })
+
+                  <div className="catProducto">
+                    {item.categoria || "General"}
+                  </div>
+
+                  <div className="stockProducto">{item.stock}</div>
+
+                  <div
+                    className={`estateProducto ${getEstadoClass(item.estado)}`}
+                  >
+                    {item.estado}
+                  </div>
+
+                  <Link
+                    to={`/dashboard/almacen/edit/${item.id_producto}`}
+                    className="actionProducto"
+                  >
+                    <PencilLine />
+                  </Link>
+                </div>
+              ))
             )}
           </div>
         </div>

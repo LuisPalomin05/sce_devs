@@ -1,6 +1,5 @@
 const pool = require("../config/db");
 
-
 // const createCategoria = async () => {
 
 // }
@@ -18,10 +17,14 @@ const pool = require("../config/db");
 // }
 
 const getCategoriaByTenantId = async (TenantId) => {
-    const [rows] = await pool.query(
-        "SELECT id_categoria, nombre FROM categoria WHERE id_tenant = ?",
-        [TenantId]
-    );
+  const [rows] = await pool.query(
+    "SELECT id_categoria, nombre FROM categoria WHERE id_tenant = ?",
+    [TenantId],
+  );
 
-    return [rows];
-}
+  return rows;
+};
+
+module.exports = {
+  getCategoriaByTenantId,
+};

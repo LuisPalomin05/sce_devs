@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productoController = require("../controllers/producto.controller");
 const verifyToken = require("../middlewares/authMiddleware");
-// router.use(verifyToken);
+router.use(verifyToken);
 
 router.get("/get-all", productoController.getAllProductos);
 // router.get("/obtenerProducto", productoController.getProductoById);
