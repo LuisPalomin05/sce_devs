@@ -3,6 +3,7 @@ import { Save, DollarSign, ListPlus, LayersPlus, Trash2 } from "lucide-react";
 
 const ProductForm = ({
   product = null,
+  categorias = [],
   mode = "create",
   onSubmit,
   onCancel,
@@ -14,6 +15,7 @@ const ProductForm = ({
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [id_categoria, setIdCategoria] = useState("");
 
   useEffect(() => {
     if (product) {
@@ -21,11 +23,13 @@ const ProductForm = ({
       setPrecio(product.precio ?? "");
       setStock(product.stock ?? "");
       setDescripcion(product.descripcion || "");
+      setIdCategoria(product.id_categoria || "");
     } else {
       setNombre("");
       setPrecio("");
       setStock("");
       setDescripcion("");
+      setIdCategoria("");
     }
   }, [product]);
 
@@ -45,6 +49,7 @@ const ProductForm = ({
       precio: Number(precio) || 0,
       stock: Number(stock) || 0,
       descripcion: descripcion.trim(),
+      id_categoria: id_categoria ? Number(id_categoria) : null,
     });
   };
 
@@ -75,6 +80,22 @@ const ProductForm = ({
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Ej. ARANDELA PLANA ZINCADA 1/2"
           />
+        </div>
+
+        <div className="InputItenCreate">
+          <label htmlFor="id_categoria">Categoría</label>
+          <select
+            id="id_categoria"
+            value={id_categoria}
+            onChange={(e) => setIdCategoria(e.target.value)}
+          >
+            <option value="">-- Selecciona una categoría --</option>
+            {categorias.map((cat) => (
+              <option key={cat.id_categoria} value={cat.id_categoria}>
+                {cat.nombre}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="GroupItem">
