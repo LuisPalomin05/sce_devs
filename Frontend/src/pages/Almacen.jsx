@@ -26,11 +26,13 @@ const Almacen = () => {
   useEffect(() => {
     const getProductos = async () => {
       try {
-        const res = await axiosClient.get("/producto", {
+        const res = await axiosClient.get("/productos/get-all", {
           headers: {
             "x-tenant-id": tenant?.id_tenant,
           },
         });
+
+        console.log(res.data);
 
         const dataFormateada = res.data.map((p) => ({
           ...p,
@@ -53,7 +55,6 @@ const Almacen = () => {
     }
   }, [tenant]);
 
-  // ✅ FILTRO FUNCIONANDO
   const productosFiltrados = producto.filter((p) => {
     if (filtro === "Todos") return true;
     return p.categoria === filtro;

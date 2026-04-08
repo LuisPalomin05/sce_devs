@@ -24,7 +24,7 @@ app.use(express.json());
 
 app.use("/api", busquedaRoutes);
 app.use("/api/producto", productoRoutes);
-app.use("/api/revision", productosRouter);
+app.use("/api/productos", productosRouter);
 app.use("/api/", apiRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);

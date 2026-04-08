@@ -10,10 +10,7 @@ const getAllProductos = async (req, res) => {
 
     const productos = await prodRepository.getAllFromProductos(tenantId);
 
-    res.status(200).json({
-      success: true,
-      data: productos,
-    });
+    res.status(200).json(productos);
   } catch (error) {
     console.log("ERROR PRODUCTOS:", error);
     res.status(500).json({ message: "Error al obtener productos" });
@@ -43,10 +40,7 @@ const createProduct = async (req, res) => {
 
     const nuevoProducto = await prodRepository.getProducto(insertId, tenantId);
 
-    res.status(201).json({
-      success: true,
-      data: nuevoProducto,
-    });
+    res.status(201).json(nuevoProducto);
   } catch (error) {
     console.error("ERROR CREAR PRODUCTO:", error);
     res.status(500).json({ message: "Error al crear producto" });
