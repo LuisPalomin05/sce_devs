@@ -88,11 +88,15 @@ exports.createVenta = async (req, res) => {
   const connection = await pool.getConnection();
   try {
     const tenantId = req.headers["x-tenant-id"];
-    const userId = req.user?.id_usuario;
+    const userId = req.user?.id;
     const { detalles } = req.body;
 
     if (!tenantId) {
       return res.status(400).json({ message: "Tenant requerido" });
+    }
+
+    if (!userId) {
+      return res.status(401).json({ message: "Usuario no autenticado" });
     }
 
     if (!detalles || detalles.length === 0) {
