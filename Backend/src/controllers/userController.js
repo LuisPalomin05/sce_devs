@@ -28,8 +28,8 @@ const updatePassword = async (req, res) => {
     const { password } = req.body;
 
     if (!password || password.length < 8) {
-  return res.status(400).json({ message: "Contraseña inválida" });
-}
+      return res.status(400).json({ message: "Contraseña inválida" });
+    }
 
     const password_hash = await bcrypt.hash(password, 10);
 
