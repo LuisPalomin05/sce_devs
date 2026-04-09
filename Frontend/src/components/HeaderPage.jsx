@@ -2,6 +2,7 @@ import { Bell, Search, MessageSquare } from "lucide-react";
 import rostro from "../assets/rostro.avif";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../hooks/useNotifications";
 
 import CardPerfil from "./CardPerfil";
 import { useInfo } from "../hooks/useInfo";
@@ -11,6 +12,7 @@ const HeaderPage = () => {
   const containerRef = useRef(null);
   const { nombres } = useInfo();
   const navigate = useNavigate();
+  const { success, errorToast, warning } = useToast();
 
   const [isVisible, setVisible] = useState(false);
   const [busqueda, setBusqueda] = useState("");
@@ -29,12 +31,11 @@ const HeaderPage = () => {
 
     setResultados(data);
   } catch (error) {
-    console.error(error);
+    errorToast(error);
     setResultados([]);
   }
 };
 
-  // 🔥 debounce
   useEffect(() => {
     const delay = setTimeout(() => {
       buscarGlobal(busqueda);
@@ -43,7 +44,6 @@ const HeaderPage = () => {
     return () => clearTimeout(delay);
   }, [busqueda]);
 
-  // cerrar dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -72,7 +72,6 @@ const HeaderPage = () => {
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        {/* 🔥 RESULTADOS */}
         {Array.isArray(resultados) && resultados.length > 0 && (
           <div className="dropdownBusqueda">
             {resultados.map((item, index) => (

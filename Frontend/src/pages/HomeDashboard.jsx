@@ -2,6 +2,7 @@ import "../assets/HomeDashboard.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axiosClient from "../api/client";
+import { useToast } from "../hooks/useNotifications";
 
 import {
   LineChart,
@@ -13,6 +14,7 @@ import {
 } from "recharts";
 
 const HomeDashboard = () => {
+    const { success, errorToast, warning } = useToast();
   const { tenant } = useContext(AuthContext);
 
   const [data, setData] = useState({
@@ -35,11 +37,10 @@ const HomeDashboard = () => {
         },
       });
 
-      console.log("DATA:", res.data);
       setData(res.data);
 
     } catch (error) {
-      console.log(error);
+      errorToast(error);
     }
   };
 
@@ -75,7 +76,6 @@ const HomeDashboard = () => {
         <div className="card">
           <h4>Ventas Hoy</h4>
           <p>S/ {data.ventasHoy}</p>
-
           <span className={data.porcentajeHoy >= 0 ? "positive" : "negative"}>
             {data.porcentajeHoy >= 0 ? "+" : ""}
             {data.porcentajeHoy}%
@@ -85,7 +85,6 @@ const HomeDashboard = () => {
         <div className="card">
           <h4>Ventas Mes</h4>
           <p>S/ {data.ventasMes}</p>
-
           <span className={data.porcentajeMes >= 0 ? "positive" : "negative"}>
             {data.porcentajeMes >= 0 ? "+" : ""}
             {data.porcentajeMes}%

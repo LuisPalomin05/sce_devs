@@ -12,7 +12,7 @@ const getAllProductos = async (req, res) => {
 
     res.status(200).json(productos);
   } catch (error) {
-    console.log("ERROR PRODUCTOS:", error);
+
     res.status(500).json({ message: "Error al obtener productos" });
   }
 };
@@ -42,7 +42,6 @@ const createProduct = async (req, res) => {
 
     res.status(201).json(nuevoProducto);
   } catch (error) {
-    console.error("ERROR CREAR PRODUCTO:", error);
     res.status(500).json({ message: "Error al crear producto" });
   }
 };
@@ -64,7 +63,6 @@ const getProductoById = async (req, res) => {
 
     res.status(200).json(producto);
   } catch (error) {
-    console.log("ERROR PRODUCTOS:", error);
     res.status(500).json({ message: "Error al obtener productos" });
   }
 };
@@ -106,7 +104,6 @@ const editProducto = async (req, res) => {
 
     res.status(200).json(productoActualizado);
   } catch (error) {
-    console.log("ERROR PRODUCTOS:", error);
     res.status(500).json({ message: "Error al obtener productos" });
   }
 };

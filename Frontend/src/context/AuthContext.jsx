@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // LOGOUT
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("tenant");

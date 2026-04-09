@@ -17,7 +17,7 @@ const setTenantActiva = async (req, res) => {
 
     res.json({ message: "Tenant activa actualizada" });
   } catch (error) {
-    console.error(error);
+
     res.status(500).json({ message: "Error del servidor" });
   }
 };

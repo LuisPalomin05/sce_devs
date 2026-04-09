@@ -88,7 +88,7 @@ const getDashboard = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("ERROR DASHBOARD:", error);
+
         res.status(500).json({ message: "Error dashboard" });
     }
 };

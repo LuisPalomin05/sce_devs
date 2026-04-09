@@ -15,7 +15,7 @@ router.get("/busqueda-global", async (req, res) => {
 
     res.json(results);
   } catch (err) {
-    console.error("❌ ERROR:", err);
+
     res.status(500).json([]);
   }
 });

@@ -60,8 +60,6 @@ const findUserById = async (req, res) => {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    console.log(user);
-
     const tenants = await getTenantsByUserId(id) || [];
 
     let tenant_activa = tenants.find(tenant => tenant.id_tenant === user.tenant_activo_id);

@@ -13,18 +13,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../hooks/useNotifications";
 
 const Almacen = () => {
-  // =========================
-  // STATE
-  // =========================
+
   const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState("Todos");
   const [categorias, setCategorias] = useState([]);
   const { tenant } = useContext(AuthContext);
   const { errorToast } = useToast();
 
-  // =========================
-  // HELPERS
-  // =========================
   const getEstadoClass = (estado) => {
     const estados = {
       Disponible: "success",
@@ -42,9 +37,7 @@ const Almacen = () => {
     }));
   };
 
-  // =========================
-  // EFFECTS
-  // =========================
+
   useEffect(() => {
     if (!tenant) return;
 
@@ -60,7 +53,6 @@ const Almacen = () => {
         errorToast("ERROR: " + error.message);
       }
     };
-
     fetchProductos();
   }, [tenant]);
 
@@ -83,22 +75,13 @@ const Almacen = () => {
     fetchCategorias();
   }, [tenant]);
 
-  console.log(categorias);
-
-  // =========================
-  // DERIVED STATE
-  // =========================
   const productosFiltrados =
     filtro === "Todos"
       ? productos
       : productos.filter((p) => p.categoria === filtro);
 
-  // =========================
-  // RENDER
-  // =========================
   return (
     <div className="storageContent">
-      {/* HEADER */}
       <div className="storageHeader">
         <div className="storageTittle">
           <p>Inventario de Almacen</p>
@@ -116,7 +99,6 @@ const Almacen = () => {
         </Link>
       </div>
 
-      {/* FILTROS */}
       <div className="filtros">
         <ul>
           <li
@@ -138,7 +120,6 @@ const Almacen = () => {
         </ul>
       </div>
 
-      {/* TABLA */}
       <div className="TableContendorStorage">
         <div className="StorageTable">
           <div className="StorageTableHeader">

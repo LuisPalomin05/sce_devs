@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import "../assets/almacen.css";
-import {
-  Save,
-  ChevronRight,
-  LayersPlus,
-  X,
-  DollarSign,
-  ListPlus,
-} from "lucide-react";
+import { Save, ChevronRight, LayersPlus, X, DollarSign, ListPlus} from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useToast } from "../hooks/useNotifications";
 
