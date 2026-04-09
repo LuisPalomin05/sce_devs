@@ -1,13 +1,26 @@
 const catRepository = require("../models/categoriaRepository");
 
-// const getAllCategorias = async (req, res) => {
-//     try {
+const createCategorias = async (req, res) => {
+  try {
+    const tenantId = parseInt(req.headers["x-tenant-id"]);
 
-//     } catch (error) {
-//     console.error("ERROR CATEGORIAS:", err);
-//     res.status(500).json({ error: err.message });
-//     }
-// }
+    if (!tenantId) {
+      return res.status(400).json({ error: "Tenant requerido" });
+    }
+
+    const { nombre } = req.body;
+
+    if (!nombre || typeof nombre !== "string") {
+      return res.status(400).json({ error: "Nombre de categoria requerido" });
+    }
+
+    await catRepository.createCategoria(tenantId, nombre);
+
+    res.status(201).json({ message: "Categoria creada exitosamente" });
+  } catch (error) {
+    res.status(500).json({ message: "error al crear categoria" });
+  }
+};
 
 const getAllCategorias = async (req, res) => {
   try {
@@ -45,4 +58,5 @@ const getAllCategorias = async (req, res) => {
 
 module.exports = {
   getAllCategorias,
+  createCategorias,
 };

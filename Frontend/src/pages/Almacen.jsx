@@ -13,7 +13,6 @@ import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../hooks/useNotifications";
 
 const Almacen = () => {
-
   const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState("Todos");
   const [categorias, setCategorias] = useState([]);
@@ -36,7 +35,6 @@ const Almacen = () => {
         p.stock === 0 ? "Agotado" : p.stock < 10 ? "Bajo stock" : "Disponible",
     }));
   };
-
 
   useEffect(() => {
     if (!tenant) return;
@@ -79,6 +77,19 @@ const Almacen = () => {
     filtro === "Todos"
       ? productos
       : productos.filter((p) => p.categoria === filtro);
+
+  // const crearCategoria = async () => {
+  //   try {
+  //     const res = await axiosClient.post("/categoria/create",{aquivalaacategoria} {
+  //       headers: {
+  //         "x-tenant-id": tenant.id_tenant,
+  //       },
+  //     });
+  //     setCategorias((prev) => [...prev, { nombre: "Mi categoría" }]);
+  //   } catch (error) {
+  //     errorToast("ERROR: " + error.message);
+  //   }
+  // };
 
   return (
     <div className="storageContent">

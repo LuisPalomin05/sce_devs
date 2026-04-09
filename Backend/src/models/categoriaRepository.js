@@ -1,8 +1,13 @@
 const pool = require("../config/db");
 
-// const createCategoria = async () => {
+const createCategoria = async (id_tenant, nombre) => {
+  const [result] = await pool.query(
+    "INSERT INTO categoria (id_tenant, nombre) VALUES (?, ?)",
+    [id_tenant, nombre],
+  );
 
-// }
+  return result.insertId;
+};
 
 // const deleteCategoria = async () => {
 
@@ -27,4 +32,5 @@ const getCategoriaByTenantId = async (TenantId) => {
 
 module.exports = {
   getCategoriaByTenantId,
+  createCategoria,
 };
