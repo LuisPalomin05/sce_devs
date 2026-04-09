@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 // Routes
-// const apiRouter = require("./routes/apiRoutes");
+const statusRoutes = require("./routes/apiRoutes");
 const usersRouter = require("./routes/userRoutes");
 const authRouter = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
@@ -24,10 +24,10 @@ app.use(
 app.use(express.json());
 
 app.use("/api", busquedaRoutes);
+app.use("/api/status", statusRoutes);
 app.use("/api/producto", productoRoutes);
 app.use("/api/productos", productosRouter);
 app.use("/api/categoria", categoriaRoutes);
-// app.use("/api/", apiRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/dashboard", dashboardRoutes);
