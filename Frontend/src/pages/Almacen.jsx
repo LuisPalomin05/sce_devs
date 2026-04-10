@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import { useEffect, useState, useContext, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link , useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import ProductForm from "../components/ProductForm";
@@ -48,7 +48,7 @@ const Almacen = () => {
   useEffect(() => {
     if (!tenant) return;
 
-    const fetchProductos = async () => {
+    const getProductos = async () => {
       try {
         const res = await axiosClient.get("/producto", {
           headers: { "x-tenant-id": tenant?.id_tenant },
