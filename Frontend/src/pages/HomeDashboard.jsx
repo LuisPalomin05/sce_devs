@@ -131,7 +131,7 @@ const HomeDashboard = () => {
               <div className="activityItem" key={index}>
 
                 <div className="activityIcon">
-                  {item.tipo === "venta" ? "💰" : "👤"}
+                  {item.tipo === "venta" ? "💰" : item.tipo === "usuario" ? "👤" : "⚠️"}
                 </div>
 
                 <div className="activityContent">
@@ -152,17 +152,24 @@ const HomeDashboard = () => {
           <h3>Historial de pedidos</h3>
 
           <div className="historyList">
-            {data.pedidos.map((pedido, index) => (
-              <div className="historyItem" key={index}>
-                <div className="dot"></div>
+            {data.pedidos.length === 0 ? (
+              <div className="emptyHistory">No hay pedidos recientes</div>
+            ) : (
+              data.pedidos.map((pedido, index) => (
+                <div className="historyItem" key={index}>
+                  <div className="dot"></div>
 
-                <div className="historyContent">
-                  <h4>{pedido.titulo}</h4>
-                  <p>{pedido.cliente}</p>
-                  <span>{pedido.fecha}</span>
+                  <div className="historyContent">
+                    <div className="historyHeader">
+                      <h4>{pedido.titulo || `Pedido #${pedido.id || index + 1}`}</h4>
+                      <span className="historyBadge">{pedido.estado || "Pendiente"}</span>
+                    </div>
+                    <p>{pedido.cliente || "Cliente no especificado"}</p>
+                    <span>{pedido.fecha || "Sin fecha"}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 

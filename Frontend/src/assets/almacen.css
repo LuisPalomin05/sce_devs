@@ -149,6 +149,21 @@
     gap: 2px;
 }
 
+.StorageTableItem.highlighted {
+    animation: highlightFade 2.2s ease-in-out;
+    background-color: rgba(245, 158, 11, 0.2);
+    border-left: 4px solid #f59e0b;
+}
+
+@keyframes highlightFade {
+    0% {
+        background-color: rgba(245, 158, 11, 0.35);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
 .StorageTableItem div {
     display: flex;
     align-items: center;
@@ -239,8 +254,47 @@
     padding: 2px;
     color: #787676;
     cursor: pointer;
+    background: transparent;
+    border: none;
 }
 
+.actionProducto.deleteBtn {
+    color: #d63939;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.formCard {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.formMessage {
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #eaf8ff;
+    border: 1px solid #b6e0ff;
+    color: #0b4f76;
+}
+
+.linkButton {
+    background: none;
+    border: none;
+    color: #f17107;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 0;
+}
 
 .CrearProd {
     display: flex;
@@ -357,17 +411,27 @@
     padding: 0 5px;
 }
 
+.InputItenCreate select {
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid #787676;
+    background: var(bg-color-accent-hover);
+    padding: 0 5px;
+    color: var(--text-color);
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .btnCreateContent {
     display: flex;
     flex-direction: row;
-    height: 15%;
-    padding: 0 10px;
-
+    padding: 15px 10px;
 }
 
 .createBtn {
     min-height: 45px;
-    min-width: 50%;
+    width: auto;
+    padding: 0 18px;
     outline: none;
     border: none;
     cursor: pointer;
@@ -379,11 +443,25 @@
     gap: 10px;
     background: #ffffff;
     border: 2px solid #ffffff;
+    transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
 
+.createBtn.cancelBtn,
+.createBtn.deleteBtn {
+    background: #ffffff;
+    color: #34383a;
+    border-color: #d1d5db;
+}
+
+.createBtn.deleteBtn {
+    color: #d63939;
+}
+
+.createBtn.submitBtn,
 .createBtn:last-child {
     background: #e6b30c;
     color: #ffffff;
+    border-color: #e6b30c;
 }
 
 .createBtn:hover {
@@ -391,6 +469,7 @@
     border: 1px solid #ccc;
 }
 
+.createBtn.submitBtn:hover,
 .createBtn:last-child:hover {
     background: #e27e0c;
 }
@@ -413,7 +492,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 10px;
     padding: 5px;
 }

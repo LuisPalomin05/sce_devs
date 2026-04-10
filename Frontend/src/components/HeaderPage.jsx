@@ -18,17 +18,19 @@ const HeaderPage = () => {
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
 
-  const buscarGlobal = async (texto) => {
-  if (!texto.trim()) {
-    setResultados([]);
-    return;
-  }
+ const buscarGlobal = async (texto) => {
+  if (!texto.trim()) return setResultados([]);
+
+  const tenantRaw = localStorage.getItem("tenant");
+  const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
   try {
     const { data } = await axiosClient.get("/busqueda-global", {
-      params: { q: texto },
+      params: { 
+        q: texto, 
+        tenant_id: tenant?.id_tenant
+      },
     });
-
     setResultados(data);
   } catch (error) {
     errorToast(error);
@@ -36,6 +38,18 @@ const HeaderPage = () => {
   }
 };
 
+const getHighlightQuery = (item) => {
+  const productId =
+    item?.id_producto || item?.id || item?.idProducto || item?.productoId;
+
+  const isAlmacen =
+    item?.ruta?.startsWith("almacen") ||
+    item?.tipo?.toLowerCase().includes("producto");
+
+  return isAlmacen && productId ? `?highlight=${productId}` : "";
+};
+
+  // 🔥 debounce
   useEffect(() => {
     const delay = setTimeout(() => {
       buscarGlobal(busqueda);
@@ -79,7 +93,11 @@ const HeaderPage = () => {
                 key={index}
                 className="itemBusqueda"
                 onClick={() => {
-                  navigate(`/dashboard/${item.ruta}`);
+                  const basePath = item?.ruta?.startsWith("/")
+                    ? item.ruta
+                    : `/${item.ruta}`;
+                  const highlight = getHighlightQuery(item);
+                  navigate(`/dashboard${basePath}${highlight}`);
                   setBusqueda("");
                   setResultados([]);
                 }}

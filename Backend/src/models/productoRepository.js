@@ -1,72 +1,42 @@
 const pool = require("../config/db");
 
-const createProducto = async (
-  nombre,
-  precio,
-  stock,
-  id_categoria,
-  tenantId,
-) => {
-  const [result] = await pool.query(
-    `INSERT INTO producto (nombre, precio, stock, id_categoria, id_tenant) VALUES (?, ?, ?, ?, ?)`,
-    [nombre, precio ?? 0, stock ?? 0, id_categoria ?? null, tenantId],
-  );
-  return result.insertId;
+const getProductos = async (tenantId) => {
+  const [results] = await pool.query("CALL sp_get_productos(?)", [tenantId]);
+  return results[0];
 };
 
-const deleteProducto = async () => {};
-
-const updateProducto = async (
-  id,
-  nombre,
-  precio,
-  stock,
-  id_categoria,
-  tenantId,
-) => {
-  const [result] = await pool.query(
-    `UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_categoria = ? WHERE id_producto = ? AND id_tenant = ?`,
-    [nombre, precio ?? 0, stock ?? 0, id_categoria ?? null, id, tenantId],
-  );
-  return result.affectedRows;
+const getCategorias = async (tenantId) => {
+  const [results] = await pool.query("CALL sp_get_categorias(?)", [tenantId]);
+  return results[0];
 };
 
-const getProducto = async (insertId, tenantId) => {
-  const [rows] = await pool.query(
-    `SELECT p.id_producto, p.nombre, p.precio, p.stock, p.id_categoria, c.nombre AS categoria
-       FROM producto p
-       LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
-       WHERE p.id_producto = ? AND p.id_tenant = ?`,
-    [insertId, tenantId],
-  );
-
-  return rows[0];
+const createProducto = async (productoData) => {
+  const { nombre, precio, stock, id_categoria, id_tenant } = productoData;
+  const [results] = await pool.query("CALL sp_create_producto(?, ?, ?, ?, ?)", [nombre, precio, stock, id_categoria, id_tenant]);
+  return results[0][0].id;
 };
 
-const getAllFromProductos = async (filterTenantId) => {
-  const [rows] = await pool.query(
-    `
-  SELECT 
-    p.id_producto,
-    p.nombre,
-    p.precio,
-    p.stock,
-    p.id_categoria,
-    c.nombre AS categoria
-  FROM producto p
-  LEFT JOIN categoria c 
-    ON p.id_categoria = c.id_categoria
-  WHERE p.id_tenant = ?
-`,
-    [filterTenantId],
-  );
+const updateProducto = async (id, productoData) => {
+  const { nombre, precio, stock, id_categoria } = productoData;
+  const [results] = await pool.query("CALL sp_update_producto(?, ?, ?, ?, ?)", [id, nombre, precio, stock, id_categoria]);
+  return results[0][0].affected > 0;
+};
 
-  return rows;
+const deleteProducto = async (id) => {
+  const [results] = await pool.query("CALL sp_delete_producto(?)", [id]);
+  return results[0][0].affected > 0;
+};
+
+const getProductoById = async (id) => {
+  const [results] = await pool.query("CALL sp_get_producto_by_id(?)", [id]);
+  return results[0][0];
 };
 
 module.exports = {
+  getProductos,
+  getCategorias,
   createProducto,
-  getAllFromProductos,
-  getProducto,
   updateProducto,
+  deleteProducto,
+  getProductoById
 };
