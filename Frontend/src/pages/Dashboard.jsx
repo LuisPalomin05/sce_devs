@@ -8,6 +8,12 @@ import SideBar from "../components/SideBar";
 import Configuracion from "./Configuracion";
 import HomeDashboard from "./HomeDashboard";
 import Ventas from "./Ventas";
+<<<<<<< Updated upstream
+=======
+import Usuario from "./Usuario";
+import CreateProducto from '../components/CreateProducto'
+
+>>>>>>> Stashed changes
 
 const Dashboard = () => {
 
@@ -27,9 +33,21 @@ const Dashboard = () => {
 
         <main>
           <Routes>
+<<<<<<< Updated upstream
             <Route path="/" element={<HomeDashboard />} />
             <Route path="ventas" element={<Ventas />} />
             <Route path="settings" element={<Configuracion />} />
+=======
+            <Route path={"/"} element={<HomeDashboard />} />
+            <Route path={"/ventas"} element={<Ventas />} />
+            <Route path={"/almacen"} element={<Almacen />} />
+            {/* <Route path={"/almacen/*"} element={<CreateProducto />} /> */}
+            <Route path="/almacen/edit/:id" element={<CreateProducto />} />
+            <Route path="/almacen/create" element={<CreateProducto />} />
+            <Route path={"/users"} element={<Usuario />} />
+            <Route path={"/settings"} element={<Configuracion />} />
+
+>>>>>>> Stashed changes
           </Routes>
         </main>
       </div>

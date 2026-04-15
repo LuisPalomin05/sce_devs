@@ -1,27 +1,31 @@
-const userModel = require("../models/userModel");
-const bcrypt = require('bcrypt');
+const userRepository = require("../models/userRepository");
+const bcrypt = require("bcrypt");
 
-
+// 🔹 Cambiar tenant activo
 const setTenantActiva = async (req, res) => {
   try {
     const user_id = req.user.id;
     const { tenant_id } = req.body;
 
-    const rows = await userModel.evalUserTenant(user_id, tenant_id);
+    const rows = await userRepository.evalUserTenant(user_id, tenant_id);
 
     if (rows.length === 0) {
       return res.status(403).json({ message: "No autorizado" });
     }
 
-    await userModel.setUserTenant(user_id, tenant_id);
+    await userRepository.setUserTenant(user_id, tenant_id);
 
     res.json({ message: "Tenant activa actualizada" });
   } catch (error) {
+<<<<<<< Updated upstream
     console.error(error);
+=======
+>>>>>>> Stashed changes
     res.status(500).json({ message: "Error del servidor" });
   }
 };
 
+// 🔹 Cambiar contraseña
 const updatePassword = async (req, res) => {
   try {
     const user_id = req.user.id;
@@ -33,17 +37,16 @@ const updatePassword = async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, 10);
 
+    await userRepository.newPassword(password_hash, user_id);
 
-    await userModel.newPassword(password_hash, user_id);
-
-    res.status(200).json({ message: "actividad actualizada" });
-
+    res.status(200).json({ message: "Contraseña actualizada" });
   } catch (error) {
     res.status(500).json({ message: "Error al actualizar" });
   }
+};
 
-}
 
 module.exports = {
-  setTenantActiva, updatePassword
+  setTenantActiva,
+  updatePassword,
 };
