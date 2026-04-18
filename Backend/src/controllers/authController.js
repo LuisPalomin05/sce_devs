@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRepository = require("../models/userRepository");
-const { getUserById } = require("../models/userRepository");
+// const { getUserById } = require("../models/userRepository");
 const { getTenantsByUserId } = require("../models/tenantRepository");
 
 const register = async (req, res) => {
@@ -61,7 +61,7 @@ const login = async (req, res) => {
 const findUserById = async (req, res) => {
   try {
     const id = req.user.id;
-    const user = await getUserById(id);
+    const user = await userRepository.getUserById(id);
 
     if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });
