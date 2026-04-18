@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-const { getUserById } = require("../models/userRepository");
+// const { getUserById } = require("../models/userRepository");
 const { getTenantsByUserId } = require("../models/tenantRepository");
 
 const register = async (req, res) => {
@@ -55,7 +55,7 @@ const findUserById = async (req, res) => {
   try {
 
     const id = req.user.id;
-    const user = await getUserById(id);
+    const user = await userModel.getUserById(id);
     if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
@@ -63,6 +63,7 @@ const findUserById = async (req, res) => {
     const tenants = await getTenantsByUserId(id) || [];
 
     let tenant_activa = tenants.find(tenant => tenant.id_tenant === user.tenant_activo_id);
+    
     if (!tenant_activa && tenants.length > 0) {
       tenant_activa = tenants[0];
     }

@@ -14,7 +14,7 @@ const createUser = async (user) => {
 const findUsers = async () => {
   const [rows] = await pool.query(`SELECT id_usuario, nombres FROM usuario`);
 
-  return rows[0];
+  return rows;
 };
 
 const findByEmail = async (email) => {
@@ -76,7 +76,30 @@ await pool.query(`UPDATE usuario SET password_hash = ? WHERE id_usuario = ?`, [n
 
 }
 
+const getUserById = async (idUser) => {
+    const [rows] = await pool.query(
+        `SELECT 
+            id_usuario,
+            nombres,
+            apellidos,
+            email,
+            tenant_activo_id,
+            'ADMIN' AS rol
+            FROM usuario
+            WHERE id_usuario = ?;`,
+    [idUser],
+  );
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  return rows[0];
+};
+
+
 module.exports = {
+  getUserById,
   createUser,
   findByEmail,
   findUsers,
