@@ -10,6 +10,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const productosRouter = require("./routes/productoRoutes");
 const busquedaRoutes = require("./routes/busquedaRoutes");
 const ventasRoutes = require("./routes/ventasRoutes");
+const usuarioRoutes = require("./routes/usuarioRoutes");
 const categoriaRoutes = require("./routes/categoria.routes");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api/producto", productosRouter);
 app.use("/api/venta", ventasRoutes);
 app.use("/api/productos", productosRouter);
 app.use("/api/categoria", categoriaRoutes);
+app.use("/api/usuario", usuarioRoutes);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/dashboard", dashboardRoutes);

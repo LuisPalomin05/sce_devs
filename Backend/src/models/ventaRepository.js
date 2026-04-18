@@ -6,9 +6,40 @@ const getVentas = async (tenantId) => {
 };
 
 const getVentaById = async (id, tenantId) => {
-  const [results] = await pool.query("CALL sp_get_venta_by_id(?, ?)", [id, tenantId]);
-  if (results[0].length === 0) return null;
-  return results[0][0];
+  // Cabecera
+  const [cabecera] = await pool.query(
+    `SELECT 
+      v.id_venta,
+      v.total,
+      v.created_at,
+      u.nombres
+     FROM venta v
+     LEFT JOIN usuario u ON v.id_usuario = u.id_usuario
+     WHERE v.id_venta = ? AND v.id_tenant = ?
+     LIMIT 1`,
+    [id, tenantId]
+  );
+
+  if (!cabecera || cabecera.length === 0) return null;
+
+  // Detalles
+  const [detalles] = await pool.query(
+    `SELECT 
+      vd.id_detalle,
+      p.nombre,
+      vd.cantidad,
+      vd.precio_unitario,
+      vd.subtotal
+     FROM venta_detalle vd
+     JOIN producto p ON vd.id_producto = p.id_producto
+     WHERE vd.id_venta = ?`,
+    [id]
+  );
+
+  return {
+    ...cabecera[0],
+    detalles: detalles || [],
+  };
 };
 
 const createVenta = async (ventaData) => {

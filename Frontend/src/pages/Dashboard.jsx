@@ -6,6 +6,7 @@ import Configuracion from "./Configuracion";
 import HomeDashboard from "./HomeDashboard";
 import Almacen from "./Almacen";
 import Ventas from "./Ventas";
+import Usuario from "./Usuario";
 import CreateProducto from '../components/CreateProducto'
 
 
@@ -23,8 +24,7 @@ const Dashboard = () => {
             {/* <Route path={"/almacen/*"} element={<CreateProducto />} /> */}
             <Route path="/almacen/edit/:id" element={<CreateProducto />} />
             <Route path="/almacen/create" element={<CreateProducto />} />
-
-
+            <Route path={"/users"} element={<Usuario />} />
             <Route path={"/settings"} element={<Configuracion />} />
 
           </Routes>
