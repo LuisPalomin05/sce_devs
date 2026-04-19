@@ -89,3 +89,4 @@ dist-ssr
 *.sln
 *.sw?
 *.sql
+init.js

@@ -21,16 +21,6 @@ const SideBar = () => {
 
       <div className="SideBardList">
         <div className="listBar">
-          {/* <Link to={`/dashboard`}>
-            <div className="SideBarTarget">
-              <DynamicIcon
-                name={"layout-dashboard"}
-                size={22}
-                color="#535050"
-              />
-              <p>Dashboard</p>
-            </div>
-          </Link> */}
           {menu.map((item) => {
             const path =
               item.target === ""

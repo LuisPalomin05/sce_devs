@@ -2,6 +2,7 @@ import { Bell, Search, MessageSquare } from "lucide-react";
 import rostro from "../assets/rostro.avif";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../hooks/useNotifications";
 
 import CardPerfil from "./CardPerfil";
 import { useInfo } from "../hooks/useInfo";
@@ -11,27 +12,41 @@ const HeaderPage = () => {
   const containerRef = useRef(null);
   const { nombres } = useInfo();
   const navigate = useNavigate();
+  const { success, errorToast, warning } = useToast();
 
   const [isVisible, setVisible] = useState(false);
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
 
-  const buscarGlobal = async (texto) => {
-  if (!texto.trim()) {
-    setResultados([]);
-    return;
-  }
+ const buscarGlobal = async (texto) => {
+  if (!texto.trim()) return setResultados([]);
+
+  const tenantRaw = localStorage.getItem("tenant");
+  const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
   try {
     const { data } = await axiosClient.get("/busqueda-global", {
-      params: { q: texto },
+      params: { 
+        q: texto, 
+        tenant_id: tenant?.id_tenant
+      },
     });
-
     setResultados(data);
   } catch (error) {
-    console.error(error);
+    errorToast(error);
     setResultados([]);
   }
+};
+
+const getHighlightQuery = (item) => {
+  const productId =
+    item?.id_producto || item?.id || item?.idProducto || item?.productoId;
+
+  const isAlmacen =
+    item?.ruta?.startsWith("almacen") ||
+    item?.tipo?.toLowerCase().includes("producto");
+
+  return isAlmacen && productId ? `?highlight=${productId}` : "";
 };
 
   // 🔥 debounce
@@ -43,7 +58,6 @@ const HeaderPage = () => {
     return () => clearTimeout(delay);
   }, [busqueda]);
 
-  // cerrar dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -72,7 +86,6 @@ const HeaderPage = () => {
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        {/* 🔥 RESULTADOS */}
         {Array.isArray(resultados) && resultados.length > 0 && (
           <div className="dropdownBusqueda">
             {resultados.map((item, index) => (
@@ -80,7 +93,11 @@ const HeaderPage = () => {
                 key={index}
                 className="itemBusqueda"
                 onClick={() => {
-                  navigate(`/dashboard/${item.ruta}`);
+                  const basePath = item?.ruta?.startsWith("/")
+                    ? item.ruta
+                    : `/${item.ruta}`;
+                  const highlight = getHighlightQuery(item);
+                  navigate(`/dashboard${basePath}${highlight}`);
                   setBusqueda("");
                   setResultados([]);
                 }}

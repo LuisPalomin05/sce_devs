@@ -1,33 +1,14 @@
-const pool = require("../config/db");
+const dashboardRepository = require("../models/dashboardRepository");
 
 const getDashboard = async (req, res) => {
     try {
-    const tenantId = req.headers["x-tenant-id"];
+        const tenantId = req.headers["x-tenant-id"];
 
-        const [results] = await pool.query("CALL sp_dashboard(?)", [tenantId]);
+        const dashboardData = await dashboardRepository.getDashboardData(tenantId);
+        const { ventasHoy, ventasMes, productos, usuarios, grafico, pedidosRaw } = dashboardData;
 
-        const ventasHoy = results[0][0].ventasHoy;
-        const ventasMes = results[1][0].ventasMes;
-        const productos = results[2][0].productos;
-        const usuarios = results[3][0].usuarios;
-
-        const grafico = results[4];
-        const pedidosRaw = results[5];
-
-        const [ayer] = await pool.query(`
-      SELECT IFNULL(SUM(total),0) AS total
-      FROM venta
-      WHERE DATE(created_at) = CURDATE() - INTERVAL 1 DAY
-      AND id_tenant = ?
-    `, [tenantId]);
-
-        const [mesPasado] = await pool.query(`
-      SELECT IFNULL(SUM(total),0) AS total
-      FROM venta
-      WHERE MONTH(created_at) = MONTH(CURDATE() - INTERVAL 1 MONTH)
-      AND YEAR(created_at) = YEAR(CURDATE())
-      AND id_tenant = ?
-    `, [tenantId]);
+        const ayer = await dashboardRepository.getVentasAyer(tenantId);
+        const mesPasado = await dashboardRepository.getVentasMesPasado(tenantId);
 
         const calcPorcentaje = (actual, anterior) => {
             if (anterior === 0) return 100;
@@ -40,18 +21,9 @@ const getDashboard = async (req, res) => {
             fecha: "Hace poco"
         }));
 
-        const [actividadRaw] = await pool.query(`
-  SELECT 'venta' AS tipo, created_at, total, id_venta AS id
-  FROM venta
-  WHERE id_tenant = ?
-  
-  UNION ALL
-  
-  SELECT 'usuario' AS tipo, created_at, NULL AS total, id_usuario AS id
-  FROM usuario
-  ORDER BY created_at DESC
-  LIMIT 5
-`, [tenantId]);
+        const actividadRaw = await dashboardRepository.getActividadReciente(tenantId);
+
+        console.log('Actividad raw:', actividadRaw);
 
         const actividad = actividadRaw.map(a => {
             if (a.tipo === "venta") {
@@ -69,6 +41,21 @@ const getDashboard = async (req, res) => {
             }
         });
 
+        // Agregar alertas de stock bajo
+        const stockBajo = await dashboardRepository.getStockBajo(tenantId);
+
+        console.log('Stock bajo:', stockBajo);
+
+        stockBajo.forEach(p => {
+            actividad.push({
+                tipo: "alerta",
+                texto: `Stock bajo: ${p.nombre} (${p.stock} unidades)`,
+                fecha: new Date().toISOString()
+            });
+        });
+
+        console.log('Actividad final:', actividad);
+
         res.json({
             ventasHoy,
             ventasMes,
@@ -77,18 +64,12 @@ const getDashboard = async (req, res) => {
             grafico,
             pedidos,
             actividad,
-
-            porcentajeHoy: calcPorcentaje(ventasHoy, ayer[0].total),
-            porcentajeMes: calcPorcentaje(ventasMes, mesPasado[0].total),
-
-            actividad: [
-                "Nueva venta registrada",
-                "Usuario creado"
-            ]
+            porcentajeHoy: calcPorcentaje(ventasHoy, ayer),
+            porcentajeMes: calcPorcentaje(ventasMes, mesPasado)
         });
 
     } catch (error) {
-        console.log("ERROR DASHBOARD:", error);
+
         res.status(500).json({ message: "Error dashboard" });
     }
 };

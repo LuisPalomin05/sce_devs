@@ -23,11 +23,11 @@ export const AuthProvider = ({ children }) => {
 
       const storedTenant = JSON.parse(localStorage.getItem("tenant"));
 
-      const validTenant = userData.tenants.find(
-        (t) => t.id_tenant === storedTenant?.id_tenant,
-      );
+    const validTenant = userData.tenants?.find(
+      (t) => t.id_tenant === storedTenant?.id_tenant
+    );
 
-      const finalTenant = validTenant || userData.tenant_activa;
+      const finalTenant = validTenant || userData.tenant_activa || null;
 
       setTenant(finalTenant);
       localStorage.setItem("tenant", JSON.stringify(finalTenant));
@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // LOGOUT
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("tenant");

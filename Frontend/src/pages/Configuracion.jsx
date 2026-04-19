@@ -1,9 +1,8 @@
 import "../assets/config.css";
 import rostro from "../assets/rostro.avif";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef,useContext } from "react";
 import axiosClient from "../api/client";
-import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import { useToast } from "../hooks/useNotifications";
@@ -13,7 +12,6 @@ import { Sun, Moon, BadgeCheck } from "lucide-react";
 
 
 const Configuracion = () => {
-  // hooks
   const { nombres, apellidos, email, tenant } = useInfo();
   const { isDark, toggleTheme } = useContext(AuthContext);
 
@@ -206,7 +204,6 @@ const PassUsuario = ({ txtTitle, txtInfo, statespass, funs }) => {
   return (
     <form className="formSecurity" onSubmit={handleSubmit}>
       <p className="fontGrayInfo">{txtTitle}</p>
-
       {statespass ? (
         <div className="infoUsuarioSecurity">
           <div className="inputPass">
