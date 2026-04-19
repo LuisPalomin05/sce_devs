@@ -1,13 +1,7 @@
-import "../assets/usuario.css";
-import {
-  Download,
-  PencilLine,
-  User,
-  LayersPlus,
-} from "lucide-react";
-
+import "../components/usuario.css";
+import { Download, PencilLine, User, LayersPlus } from "lucide-react";
 import { useEffect, useState, useContext, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import UserForm from "../components/UserForm";
@@ -35,7 +29,6 @@ const Usuario = () => {
     return estados[estado] || "";
   };
 
-  // Carga usuarios
   useEffect(() => {
     if (!tenant) return;
 
@@ -94,7 +87,6 @@ const Usuario = () => {
     }
   }, [highlightId, usuarios, location.pathname, location.search]);
 
-  // Carga roles
   useEffect(() => {
     const getRoles = async () => {
       try {
@@ -204,11 +196,7 @@ const Usuario = () => {
 
   const usuariosFiltrados = usuarios.filter((u) => {
     if (filtro === "Todos") return true;
-
-    return (
-      u.rol?.trim().toLowerCase() ===
-      filtro.trim().toLowerCase()
-    );
+    return u.rol?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
 
   return (
@@ -219,18 +207,19 @@ const Usuario = () => {
           <small>Control de usuarios y permisos en el tenant</small>
         </div>
 
-        <div className="btnExportReport">
-          <Download />
-          <p>Exportar Reporte</p>
-        </div>
+        <div className="usuarioHeaderActions">
+          <div className="btnExportReport">
+            <Download />
+            <p>Exportar Reporte</p>
+          </div>
 
-        <button type="button" className="btnExportReport" onClick={openNewUser}>
-          <LayersPlus />
-          <p>Agregar Nuevo</p>
-        </button>
+          <button type="button" className="btnExportReport" onClick={openNewUser}>
+            <LayersPlus />
+            <p>Agregar Nuevo</p>
+          </button>
+        </div>
       </div>
 
-      {/* FILTROS DINÁMICOS */}
       {!formVisible && (
         <div className="filtros">
           <ul>
@@ -255,7 +244,7 @@ const Usuario = () => {
       )}
 
       <div className="TableContendorUsuario">
-        {formVisible && (
+        {formVisible ? (
           <UserForm
             user={formUser}
             roles={roles}
@@ -266,72 +255,70 @@ const Usuario = () => {
             loading={formLoading}
             message={formMessage}
           />
+        ) : (
+          <div className="UsuarioTable">
+            <div className="UsuarioTableHeader">
+              <p>NOMBRE COMPLETO</p>
+              <p>CORREO ELECTRÓNICO</p>
+              <p>ROL</p>
+              <p>ESTADO</p>
+              <p>ACCIONES</p>
+            </div>
+
+            <div className="UsuarioTableBody">
+              {usuariosFiltrados.length === 0 ? (
+                <p className="alertaUser">
+                  No hay usuarios en esta categoría.{" "}
+                  <button className="linkButton" type="button" onClick={openNewUser}>
+                    Agregar Aquí
+                  </button>
+                </p>
+              ) : (
+                usuariosFiltrados.map((item) => (
+                  <div
+                    key={item.id_usuario}
+                    ref={(el) => {
+                      if (el) rowRefs.current[item.id_usuario] = el;
+                    }}
+                    className={`UsuarioTableItem ${
+                      highlightId === String(item.id_usuario) ? "highlighted" : ""
+                    }`}
+                  >
+                    <div className="NombUsuarioTable">
+                      <div className="itemUser">
+                        <User />
+                      </div>
+                      <div className="NombUsuario">
+                        <p>
+                          {item.nombres} {item.apellidos}
+                        </p>
+                        <small>ID: {item.id_usuario}</small>
+                      </div>
+                    </div>
+
+                    <div className="emailUsuario">{item.email}</div>
+
+                    <div className="rolUsuario">{item.rol || "Sin rol"}</div>
+
+                    <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
+                      {item.estado}
+                    </div>
+
+                    <div className="actionButtons">
+                      <button
+                        type="button"
+                        className="actionUsuario"
+                        onClick={() => openEditUser(item)}
+                      >
+                        <PencilLine />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         )}
-
-        <div className="UsuarioTable">
-          <div className="UsuarioTableHeader">
-            <p>NOMBRE COMPLETO</p>
-            <p>CORREO ELECTRÓNICO</p>
-            <p>ROL</p>
-            <p>ESTADO</p>
-            <p>ACCIONES</p>
-          </div>
-
-          <div className="UsuarioTableBody">
-            {usuariosFiltrados.length === 0 ? (
-              <p className="alertaUser">
-                No hay usuarios en esta categoría.{" "}
-                <button className="linkButton" type="button" onClick={openNewUser}>
-                  Agregar Aqui
-                </button>
-              </p>
-            ) : (
-              usuariosFiltrados.map((item) => (
-                <div
-                  key={item.id_usuario}
-                  ref={(el) => {
-                    if (el) rowRefs.current[item.id_usuario] = el;
-                  }}
-                  className={`UsuarioTableItem ${
-                    highlightId === String(item.id_usuario) ? "highlighted" : ""
-                  }`}
-                >
-                  <div className="NombUsuarioTable">
-                    <div className="itemUser">
-                      <User />
-                    </div>
-                    <div className="NombUsuario">
-                      <p>{item.nombres} {item.apellidos}</p>
-                      <small>ID: {item.id_usuario}</small>
-                    </div>
-                  </div>
-
-                  <div className="emailUsuario">
-                    {item.email}
-                  </div>
-
-                  <div className="rolUsuario">
-                    {item.rol || "Sin rol"}
-                  </div>
-
-                  <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
-                    {item.estado}
-                  </div>
-
-                  <div className="actionButtons">
-                    <button
-                      type="button"
-                      className="actionUsuario"
-                      onClick={() => openEditUser(item)}
-                    >
-                      <PencilLine />
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
