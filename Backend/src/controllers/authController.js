@@ -26,7 +26,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
     const user = await userModel.findByEmail(email);
     if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
@@ -47,6 +47,7 @@ const login = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
+    console.error("[LOGIN_ERROR]", error);
     res.status(500).json({ error: "Error en login" });
   }
 };
