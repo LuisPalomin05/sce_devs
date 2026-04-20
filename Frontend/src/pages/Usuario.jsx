@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import UserForm from "../components/UserForm";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const Usuario = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -199,6 +201,53 @@ const Usuario = () => {
     return u.rol?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
 
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+
+    const dataToExport = usuariosFiltrados.map((u) => [
+      `${u.nombres} ${u.apellidos}`,
+      u.email,
+      u.rol || "Sin rol",
+      u.estado,
+    ]);
+
+    const tituloFiltro =
+      filtro === "Todos" ? "Todos los usuarios" : `Usuarios - ${filtro}`;
+
+    doc.setFontSize(16);
+    doc.text("Reporte de Usuarios", 14, 15);
+
+    doc.setFontSize(11);
+    doc.text(`Filtro: ${tituloFiltro}`, 14, 23);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["Nombre completo", "Correo electrónico", "Rol", "Estado"]],
+      body: dataToExport,
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        valign: "middle",
+      },
+      headStyles: {
+        fillColor: [240, 138, 36],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252],
+      },
+      margin: { left: 14, right: 14 },
+    });
+
+    const nombreArchivo =
+      filtro === "Todos"
+        ? "reporte_usuarios_todos.pdf"
+        : `reporte_usuarios_${filtro.toLowerCase()}.pdf`;
+
+    doc.save(nombreArchivo);
+  };
+
   return (
     <div className="usuarioContent">
       <div className="usuarioHeader">
@@ -208,10 +257,14 @@ const Usuario = () => {
         </div>
 
         <div className="usuarioHeaderActions">
-          <div className="btnExportReport">
+          <button
+            type="button"
+            className="btnExportReport"
+            onClick={handleExportPDF}
+          >
             <Download />
             <p>Exportar Reporte</p>
-          </div>
+          </button>
 
           <button type="button" className="btnExportReport" onClick={openNewUser}>
             <LayersPlus />
@@ -297,7 +350,6 @@ const Usuario = () => {
                     </div>
 
                     <div className="emailUsuario">{item.email}</div>
-
                     <div className="rolUsuario">{item.rol || "Sin rol"}</div>
 
                     <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
