@@ -1,16 +1,12 @@
-import "../assets/usuario.css";
-import {
-  Download,
-  PencilLine,
-  User,
-  LayersPlus,
-} from "lucide-react";
-
+import "../components/usuario.css";
+import { Download, PencilLine, User, LayersPlus } from "lucide-react";
 import { useEffect, useState, useContext, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import UserForm from "../components/UserForm";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const Usuario = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -35,7 +31,6 @@ const Usuario = () => {
     return estados[estado] || "";
   };
 
-  // Carga usuarios
   useEffect(() => {
     if (!tenant) return;
 
@@ -94,7 +89,6 @@ const Usuario = () => {
     }
   }, [highlightId, usuarios, location.pathname, location.search]);
 
-  // Carga roles
   useEffect(() => {
     const getRoles = async () => {
       try {
@@ -204,12 +198,55 @@ const Usuario = () => {
 
   const usuariosFiltrados = usuarios.filter((u) => {
     if (filtro === "Todos") return true;
-
-    return (
-      u.rol?.trim().toLowerCase() ===
-      filtro.trim().toLowerCase()
-    );
+    return u.rol?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+
+    const dataToExport = usuariosFiltrados.map((u) => [
+      `${u.nombres} ${u.apellidos}`,
+      u.email,
+      u.rol || "Sin rol",
+      u.estado,
+    ]);
+
+    const tituloFiltro =
+      filtro === "Todos" ? "Todos los usuarios" : `Usuarios - ${filtro}`;
+
+    doc.setFontSize(16);
+    doc.text("Reporte de Usuarios", 14, 15);
+
+    doc.setFontSize(11);
+    doc.text(`Filtro: ${tituloFiltro}`, 14, 23);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["Nombre completo", "Correo electrónico", "Rol", "Estado"]],
+      body: dataToExport,
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        valign: "middle",
+      },
+      headStyles: {
+        fillColor: [240, 138, 36],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252],
+      },
+      margin: { left: 14, right: 14 },
+    });
+
+    const nombreArchivo =
+      filtro === "Todos"
+        ? "reporte_usuarios_todos.pdf"
+        : `reporte_usuarios_${filtro.toLowerCase()}.pdf`;
+
+    doc.save(nombreArchivo);
+  };
 
   return (
     <div className="usuarioContent">
@@ -219,18 +256,23 @@ const Usuario = () => {
           <small>Control de usuarios y permisos en el tenant</small>
         </div>
 
-        <div className="btnExportReport">
-          <Download />
-          <p>Exportar Reporte</p>
-        </div>
+        <div className="usuarioHeaderActions">
+          <button
+            type="button"
+            className="btnExportReport"
+            onClick={handleExportPDF}
+          >
+            <Download />
+            <p>Exportar Reporte</p>
+          </button>
 
-        <button type="button" className="btnExportReport" onClick={openNewUser}>
-          <LayersPlus />
-          <p>Agregar Nuevo</p>
-        </button>
+          <button type="button" className="btnExportReport" onClick={openNewUser}>
+            <LayersPlus />
+            <p>Agregar Nuevo</p>
+          </button>
+        </div>
       </div>
 
-      {/* FILTROS DINÁMICOS */}
       {!formVisible && (
         <div className="filtros">
           <ul>
@@ -255,7 +297,7 @@ const Usuario = () => {
       )}
 
       <div className="TableContendorUsuario">
-        {formVisible && (
+        {formVisible ? (
           <UserForm
             user={formUser}
             roles={roles}
@@ -266,72 +308,69 @@ const Usuario = () => {
             loading={formLoading}
             message={formMessage}
           />
+        ) : (
+          <div className="UsuarioTable">
+            <div className="UsuarioTableHeader">
+              <p>NOMBRE COMPLETO</p>
+              <p>CORREO ELECTRÓNICO</p>
+              <p>ROL</p>
+              <p>ESTADO</p>
+              <p>ACCIONES</p>
+            </div>
+
+            <div className="UsuarioTableBody">
+              {usuariosFiltrados.length === 0 ? (
+                <p className="alertaUser">
+                  No hay usuarios en esta categoría.{" "}
+                  <button className="linkButton" type="button" onClick={openNewUser}>
+                    Agregar Aquí
+                  </button>
+                </p>
+              ) : (
+                usuariosFiltrados.map((item) => (
+                  <div
+                    key={item.id_usuario}
+                    ref={(el) => {
+                      if (el) rowRefs.current[item.id_usuario] = el;
+                    }}
+                    className={`UsuarioTableItem ${
+                      highlightId === String(item.id_usuario) ? "highlighted" : ""
+                    }`}
+                  >
+                    <div className="NombUsuarioTable">
+                      <div className="itemUser">
+                        <User />
+                      </div>
+                      <div className="NombUsuario">
+                        <p>
+                          {item.nombres} {item.apellidos}
+                        </p>
+                        <small>ID: {item.id_usuario}</small>
+                      </div>
+                    </div>
+
+                    <div className="emailUsuario">{item.email}</div>
+                    <div className="rolUsuario">{item.rol || "Sin rol"}</div>
+
+                    <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
+                      {item.estado}
+                    </div>
+
+                    <div className="actionButtons">
+                      <button
+                        type="button"
+                        className="actionUsuario"
+                        onClick={() => openEditUser(item)}
+                      >
+                        <PencilLine />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         )}
-
-        <div className="UsuarioTable">
-          <div className="UsuarioTableHeader">
-            <p>NOMBRE COMPLETO</p>
-            <p>CORREO ELECTRÓNICO</p>
-            <p>ROL</p>
-            <p>ESTADO</p>
-            <p>ACCIONES</p>
-          </div>
-
-          <div className="UsuarioTableBody">
-            {usuariosFiltrados.length === 0 ? (
-              <p className="alertaUser">
-                No hay usuarios en esta categoría.{" "}
-                <button className="linkButton" type="button" onClick={openNewUser}>
-                  Agregar Aqui
-                </button>
-              </p>
-            ) : (
-              usuariosFiltrados.map((item) => (
-                <div
-                  key={item.id_usuario}
-                  ref={(el) => {
-                    if (el) rowRefs.current[item.id_usuario] = el;
-                  }}
-                  className={`UsuarioTableItem ${
-                    highlightId === String(item.id_usuario) ? "highlighted" : ""
-                  }`}
-                >
-                  <div className="NombUsuarioTable">
-                    <div className="itemUser">
-                      <User />
-                    </div>
-                    <div className="NombUsuario">
-                      <p>{item.nombres} {item.apellidos}</p>
-                      <small>ID: {item.id_usuario}</small>
-                    </div>
-                  </div>
-
-                  <div className="emailUsuario">
-                    {item.email}
-                  </div>
-
-                  <div className="rolUsuario">
-                    {item.rol || "Sin rol"}
-                  </div>
-
-                  <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
-                    {item.estado}
-                  </div>
-
-                  <div className="actionButtons">
-                    <button
-                      type="button"
-                      className="actionUsuario"
-                      onClick={() => openEditUser(item)}
-                    >
-                      <PencilLine />
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
