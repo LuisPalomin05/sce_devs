@@ -7,10 +7,12 @@ import {
 } from "lucide-react";
 
 import { useEffect, useState, useContext, useRef } from "react";
-import { Link , useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import ProductForm from "../components/ProductForm";
+import { exportToPDF } from "../utils/exportPDF";
+
 
 const Almacen = () => {
   const [producto, setProducto] = useState([]);
@@ -60,8 +62,8 @@ const Almacen = () => {
             p.stock === 0
               ? "Agotado"
               : p.stock < 10
-              ? "Bajo stock"
-              : "Disponible",
+                ? "Bajo stock"
+                : "Disponible",
         }));
 
         setProducto(dataFormateada);
@@ -164,8 +166,8 @@ const Almacen = () => {
           p.stock === 0
             ? "Agotado"
             : p.stock < 10
-            ? "Bajo stock"
-            : "Disponible",
+              ? "Bajo stock"
+              : "Disponible",
       }));
 
       setProducto(dataFormateada);
@@ -223,13 +225,37 @@ const Almacen = () => {
   };
 
   const productosFiltrados = producto.filter((p) => {
-  if (filtro === "Todos") return true;
+    if (filtro === "Todos") return true;
 
-  return (
-    p.categoria?.trim().toLowerCase() ===
-    filtro.trim().toLowerCase()
-  );
-});
+    return (
+      p.categoria?.trim().toLowerCase() ===
+      filtro.trim().toLowerCase()
+    );
+  });
+
+const handleExportPDF = () => {
+  const data = productosFiltrados.map((p) => [
+    p.nombre,
+    p.precio,
+    p.stock,
+  ]);
+
+  exportToPDF({
+    title: "Reporte de Almacén",
+    subtitle:
+      filtro === "Todos"
+        ? "Todos los productos"
+        : `Categoría - ${filtro}`,
+    columns: ["Nombre", "Precio", "Stock"],
+    data,
+    fileName:
+      filtro === "Todos"
+        ? "productos.pdf"
+        : `productos_${filtro.toLowerCase()}.pdf`,
+  });
+};
+
+
 
   return (
     <div className="storageContent">
@@ -239,7 +265,7 @@ const Almacen = () => {
           <small>Control de stock en tiempo real y gestion de suministro</small>
         </div>
 
-        <div className="btnExportReport">
+        <div className="btnExportReport" onClick={handleExportPDF}>
           <Download />
           <p>Exportar Reporte</p>
         </div>
@@ -308,14 +334,13 @@ const Almacen = () => {
             ) : (
               productosFiltrados.map((item) => (
                 <div
-                key={item.id_producto}
-                ref={(el) => {
-                  if (el) rowRefs.current[item.id_producto] = el;
-                }}
-                className={`StorageTableItem ${
-                  highlightId === String(item.id_producto) ? "highlighted" : ""
-                }`}
-              >
+                  key={item.id_producto}
+                  ref={(el) => {
+                    if (el) rowRefs.current[item.id_producto] = el;
+                  }}
+                  className={`StorageTableItem ${highlightId === String(item.id_producto) ? "highlighted" : ""
+                    }`}
+                >
 
                   <div className="NombProductoTable">
                     <div className="itemProd">

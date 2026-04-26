@@ -5,8 +5,7 @@ import { useLocation } from "react-router-dom";
 import axiosClient from "../api/client";
 import { AuthContext } from "../context/AuthContext";
 import UserForm from "../components/UserForm";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { exportToPDF } from "../utils/exportPDF";
 
 const Usuario = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -201,52 +200,28 @@ const Usuario = () => {
     return u.rol?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
 
-  const handleExportPDF = () => {
-    const doc = new jsPDF();
+const handleExportPDF = () => {
+  const data = usuariosFiltrados.map((u) => [
+    `${u.nombres} ${u.apellidos}`,
+    u.email,
+    u.rol || "Sin rol",
+    u.estado,
+  ]);
 
-    const dataToExport = usuariosFiltrados.map((u) => [
-      `${u.nombres} ${u.apellidos}`,
-      u.email,
-      u.rol || "Sin rol",
-      u.estado,
-    ]);
-
-    const tituloFiltro =
-      filtro === "Todos" ? "Todos los usuarios" : `Usuarios - ${filtro}`;
-
-    doc.setFontSize(16);
-    doc.text("Reporte de Usuarios", 14, 15);
-
-    doc.setFontSize(11);
-    doc.text(`Filtro: ${tituloFiltro}`, 14, 23);
-
-    autoTable(doc, {
-      startY: 30,
-      head: [["Nombre completo", "Correo electrónico", "Rol", "Estado"]],
-      body: dataToExport,
-      styles: {
-        fontSize: 10,
-        cellPadding: 3,
-        valign: "middle",
-      },
-      headStyles: {
-        fillColor: [240, 138, 36],
-        textColor: [255, 255, 255],
-        fontStyle: "bold",
-      },
-      alternateRowStyles: {
-        fillColor: [248, 250, 252],
-      },
-      margin: { left: 14, right: 14 },
-    });
-
-    const nombreArchivo =
+  exportToPDF({
+    title: "Reporte de Usuarios",
+    subtitle:
       filtro === "Todos"
-        ? "reporte_usuarios_todos.pdf"
-        : `reporte_usuarios_${filtro.toLowerCase()}.pdf`;
-
-    doc.save(nombreArchivo);
-  };
+        ? "Todos los usuarios"
+        : `Usuarios - ${filtro}`,
+    columns: ["Nombre completo", "Correo", "Rol", "Estado"],
+    data,
+    fileName:
+      filtro === "Todos"
+        ? "usuarios.pdf"
+        : `usuarios_${filtro.toLowerCase()}.pdf`,
+  });
+};
 
   return (
     <div className="usuarioContent">
