@@ -4,29 +4,17 @@
 }
 
 .nameLogin,
-.LoginPanel,
-.tittleLogin {
+.LoginPanel {
   display: flex;
   align-items: center;
 }
 
-.tittleLogin {
-  height: 50px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  background: var(--bg-color);
-  border-bottom: 1px solid #b8b8b852;
-}
 
 .LoginPanel {
   justify-content: center;
   flex-direction: column;
   background: var(--bg-color-secondary);
-  height: calc(100vh - 60px);
-  height: 92%;
+  height: 100vh;
 }
 
 .cntLoginPanel {
@@ -36,48 +24,93 @@
   width: 100%;
   max-width: 420px;
   min-width: 320px;
-  height: 80%;
+  height: auto;
+  min-height: 500px;
   border-radius: 8px;
-  padding: 8px 25px;
+  padding: 40px 25px;
 }
 
 .formLogin {
   font-size: 12px;
-  flex: 7;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .inputsContendor {
-  flex: 6;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  flex: none;
 }
 
 .LoginImage {
-  color: rgb(200, 195, 195);
   font-size: 12px;
   flex: 3;
-  display: grid;
-  place-items: end center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.LoginBrand {
+  font-weight: bold;
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.LoginBrand {
+  font-weight: 800;
+  font-size: 22px;
+  color: #000000;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .LoginTittle {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: rgb(25, 25, 25);
+  margin: 0;
+}
+
+
+.LoginSubtittle {
+  font-size: 12px;
+  color: rgb(80, 80, 80);
+  margin-top: 2px;
 }
 
 .inputformItem {
   display: flex;
   align-items: center;
   flex: 1;
-  padding: 0 5px;
+  padding: 0 7px;
   border-radius: 5px;
-  color: rgb(49, 47, 47);
+  height: 35px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  color: #000000;
+}
+
+.inputformItem::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
   height: 35px;
   border: 1px solid rgba(200, 195, 195, 0.701);
+  background: #3a3a3a;
+}
+
+
+.inputformItem::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .inputGroup {
@@ -108,6 +141,7 @@
   font-weight: bold;
   height: 35px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .leyendafooter {
@@ -130,19 +164,16 @@
   width: 100%;
 }
 
-.icnLogin {
-  height: 55px;
-  width: 55px;
-  border-radius: 50%;
 
-  background: #e2dedec2;
-}
 
 .footerLogin {
   display: flex;
   flex-direction: column;
-  flex: 4;
+
+  flex: 2;
   gap: 10px;
+  justify-content: flex-start;
+  padding-top: 12px;
 }
 
 .checkItems {
@@ -155,4 +186,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+
+.eyeIcon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }

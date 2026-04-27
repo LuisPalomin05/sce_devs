@@ -19,14 +19,27 @@ const Configuracion = () => {
   const containerRef = useRef(null);
   const modalRef = useRef(null);
 
+  const [fotoPerfil, setFotoPerfil] = useState(rostro);
+  const fileInputRef = useRef(null);
+
   const [inputState, setInputState] = useState(false);
   const [dangerState, setDangerState] = useState(false);
+
+  const handleChangeFoto = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const url = URL.createObjectURL(file);
+  setFotoPerfil(url);
+  };
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     dni: "",
+    
   });
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -54,7 +67,23 @@ const Configuracion = () => {
       <div className="BodyConfig gridConfig">
         <div className="PerfilPanel">
           <div className="PerfilDescription">
-            <img className="configImgPerfil" src={rostro} alt="rostro" />
+            <div className="contenedorFoto">
+            <img className="configImgPerfil" src={fotoPerfil} alt="rostro" />
+
+            <button
+              className="btnEditFoto"
+              onClick={() => fileInputRef.current.click()}
+            >
+              Editar
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleChangeFoto}
+            />
+          </div>
             <p className="fontBlack"> {nombres} </p>
             <p className="fontOrange"> {apellidos} </p>
           </div>

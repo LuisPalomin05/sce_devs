@@ -3,7 +3,6 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../hooks/useNotifications";
 import "../assets/login.css";
-import torque from "../assets/icot.png";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 const Login = () => {
@@ -16,6 +15,9 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -44,19 +46,14 @@ const Login = () => {
 
   return (
     <div className="cntLogin">
-      <div className="tittleLogin">
-        <div className="nameLogin">
-          {/* <img src="" alt="" /> */}
-          <p onClick={toggleTheme}>SCE SISTEMAS</p>
-        </div>
-        <div>Soporte Tecnico</div>
-      </div>
+
       <div className="LoginPanel">
         <div className="cntLoginPanel">
           <div className="LoginImage">
-            <img className="icnLogin" src={torque} alt="Rostro de usuario" />
-            <p className="LoginTittle">Bienvenido de nuevo</p>
-            <p>Inicia sesión con tus credenciales</p>
+
+            <p className="LoginBrand" onClick={toggleTheme}>SCE SISTEMAS</p>
+            <p className="LoginTittle">Bienvenido</p>
+            <p className="LoginSubtittle">Inicia sesión con tus credenciales</p>
           </div>
 
           <form onSubmit={handleSubmit} className="formLogin">
@@ -66,12 +63,12 @@ const Login = () => {
                   <p className="boldtxt">Correo electrónico</p>
                 </div>
                 <div className="itmInput">
-                  <DynamicIcon name="mail" size={16} color="#b3aaaa" />
+                  <DynamicIcon name="mail" size={16} color="#000000" />
                   <input
                     type="email"
                     name="email"
                     className="inputformItem"
-                    placeholder="ejemplo@torqueg46.com.pe"
+                    placeholder="ejemplo@correo.com"
                     onChange={handleChange}
                     required
                   />
@@ -84,18 +81,30 @@ const Login = () => {
                   <p className="alertOrange">¿Olvidaste tu contraseña?</p>
                 </div>
                 <div className="itmInput">
-                  <DynamicIcon name="lock-keyhole" size={16} color="#b3aaaa" />
+                  <DynamicIcon name="lock-keyhole" size={16} color="#000000" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     className="inputformItem"
                     placeholder="*********"
                     onChange={handleChange}
                     required
                   />
+
+                  <span
+                    className="eyeIcon"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <DynamicIcon
+                      name={showPassword ? "eye-off" : "eye"}
+                      size={16}
+                      color="#b3aaaa"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
+
             <div className="footerLogin">
               <div className="checkItems">
                 <input type="checkbox" name="recordar" id="recordar" />

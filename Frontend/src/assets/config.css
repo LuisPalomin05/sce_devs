@@ -314,3 +314,26 @@
 .cartillaModo{
 color: #f3af1c;
 }
+
+.contenedorFoto {
+    position: relative;
+    display: inline-block;
+}
+
+.btnEditFoto {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #e6b30c;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btnEditFoto:hover {
+    background: #e27e0c;
+}
