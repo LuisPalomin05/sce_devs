@@ -109,7 +109,7 @@ const ProductForm = ({
                 min="0"
                 step="0.01"
                 value={precio}
-                onChange={(e) => setPrecio(e.target.value)}
+                onChange={(e) => setPrecio(e.target.value.slice(0, 7))} /* ✅ CAMBIO */
                 placeholder="0.00"
               />
             </div>
@@ -124,7 +124,7 @@ const ProductForm = ({
                 type="number"
                 min="0"
                 value={stock}
-                onChange={(e) => setStock(e.target.value)}
+                onChange={(e) => setStock(e.target.value.slice(0, 3))} /* ✅ CAMBIO */
                 placeholder="0"
               />
             </div>

@@ -87,18 +87,20 @@
   gap: 15px;
   cursor: pointer;
   height: 100%;
-  padding: 0 2px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  transition: 0.3s;
 }
 
 .UserInfo:hover {
-  border: 1px solid #bbb2b2;
-  border-radius: 5px;
-  box-shadow: 0px 3px 5px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f4a20a;
+  border-radius: 8px;
+  background: #fffbf2;
 }
 
-.UserInfoHeader {
-  display: flex;
-  flex-direction: column;
+.UserInfoHeader span {
+  color: #000000 !important;
+  font-weight: bold;
 }
 
 .HeaderImage {
@@ -113,31 +115,41 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 5px;
-  background: rgb(77, 75, 75);
-  border: 1px solid #ccc;
-  color: #f3f2f2;
-  border-radius: 8px;
+  padding: 10px; /* Un poco más de aire */
+  background: #ffffff; /* FONDO BLANCO */
+  border: 2px solid #000000; /* BORDE NARANJA */
+  color: #000000; /* LETRAS NEGRAS */
+  border-radius: 12px;
   top: 54px;
   right: 15px;
   z-index: 100;
   width: 300px;
   min-height: 120px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btnPerfil {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 5px;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
-  height: 35px;
+  height: 40px;
   width: 100%;
+  color: #333333;
+  transition: 0.3s;
 }
 
 .btnPerfil:hover {
-  background: rgb(100, 97, 97);
+  background: #fffbf2; /* Fondo crema muy suave */
+  color: #f4a20a; /* Texto naranja al pasar el mouse */
+}
+
+.btnPerfil:last-child {
+  border: 1px solid #000000;
+  margin-top: 5px;
+  font-weight: bold;
 }
 
 .btnTheme {
@@ -160,12 +172,12 @@
   display: flex;
   flex-direction: column;
 }
-/* 🔍 contenedor relativo para el dropdown */
+
 .SearchHeader {
-  position: relative; /* 🔥 clave para que el dropdown no se salga */
+  position: relative;
 }
 
-/* 🔽 dropdown buscador */
+
 .dropdownBusqueda {
   position: absolute;
   top: 42px;
@@ -183,7 +195,7 @@
   overflow: hidden;
 }
 
-/* 🧾 items */
+
 .itemBusqueda {
   display: flex;
   justify-content: space-between;
@@ -195,14 +207,15 @@
   transition: 0.2s;
 }
 
-/* hover */
+
 .itemBusqueda:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* tipo a la derecha */
+
 .tipo {
   font-size: 12px;
   color: var(--text-color-secondary);
   font-weight: bold;
 }
+
