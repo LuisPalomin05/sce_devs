@@ -11,7 +11,6 @@ const getAllProductos = async (req, res) => {
     const productos = await productoRepository.getProductos(tenantId);
     res.json(productos);
   } catch (error) {
-    console.log("ERROR PRODUCTOS:", error);
     res.status(500).json({ message: "Error al obtener productos" });
   }
 };

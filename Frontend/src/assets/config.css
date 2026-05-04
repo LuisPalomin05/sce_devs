@@ -132,7 +132,6 @@
 }
 
 .EstadoCuenta {
-  /* background-color: #eedec5a4; */
   display: flex;
   align-items: center;
   justify-content: space-between;

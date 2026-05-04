@@ -23,8 +23,6 @@ const getDashboard = async (req, res) => {
 
         const actividadRaw = await dashboardRepository.getActividadReciente(tenantId);
 
-        console.log('Actividad raw:', actividadRaw);
-
         const actividad = actividadRaw.map(a => {
             if (a.tipo === "venta") {
                 return {
@@ -41,10 +39,7 @@ const getDashboard = async (req, res) => {
             }
         });
 
-        // Agregar alertas de stock bajo
         const stockBajo = await dashboardRepository.getStockBajo(tenantId);
-
-        console.log('Stock bajo:', stockBajo);
 
         stockBajo.forEach(p => {
             actividad.push({
@@ -53,8 +48,6 @@ const getDashboard = async (req, res) => {
                 fecha: new Date().toISOString()
             });
         });
-
-        console.log('Actividad final:', actividad);
 
         res.json({
             ventasHoy,

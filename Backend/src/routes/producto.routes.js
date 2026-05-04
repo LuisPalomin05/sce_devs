@@ -5,7 +5,6 @@ const verifyToken = require("../middlewares/authMiddleware");
 router.use(verifyToken);
 
 router.get("/get-all", productoController.getAllProductos);
-// router.get("/obtenerProducto", productoController.getProductoById);
 router.post("/create", productoController.createProduct);
 router.put("/update/:id", productoController.editProducto);
 router.get("/get-by-id/:id", productoController.getProductoById);

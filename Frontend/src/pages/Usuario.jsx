@@ -46,7 +46,6 @@ const Usuario = () => {
 
         setUsuarios(dataFormateada);
       } catch (error) {
-        console.log("ERROR usuarios:", error);
       }
     };
 
@@ -96,7 +95,6 @@ const Usuario = () => {
         });
         setRoles(res.data);
       } catch (error) {
-        console.log("ERROR roles:", error);
       }
     };
 
@@ -143,7 +141,6 @@ const Usuario = () => {
 
       setUsuarios(dataFormateada);
     } catch (error) {
-      console.log("ERROR usuarios:", error);
     }
   };
 

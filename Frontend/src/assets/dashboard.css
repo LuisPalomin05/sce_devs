@@ -115,10 +115,10 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 10px; /* Un poco más de aire */
-  background: #ffffff; /* FONDO BLANCO */
-  border: 2px solid #000000; /* BORDE NARANJA */
-  color: #000000; /* LETRAS NEGRAS */
+  padding: 10px; 
+  background: #ffffff; 
+  border: 2px solid #000000; 
+  color: #000000; 
   border-radius: 12px;
   top: 54px;
   right: 15px;
@@ -142,8 +142,8 @@
 }
 
 .btnPerfil:hover {
-  background: #fffbf2; /* Fondo crema muy suave */
-  color: #f4a20a; /* Texto naranja al pasar el mouse */
+  background: #fffbf2;
+  color: #f4a20a;
 }
 
 .btnPerfil:last-child {

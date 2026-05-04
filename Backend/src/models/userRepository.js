@@ -1,6 +1,5 @@
 const pool = require("../config/db");
 
-// 🔹 Crear usuario (SP)
 const createUser = async (user, tenantId) => {
   const { nombres, apellidos, email, password_hash, id_rol } = user;
 
@@ -12,13 +11,11 @@ const createUser = async (user, tenantId) => {
   return rows[0][0];
 };
 
-// 🔹 Listar usuarios del tenant
 const findUsers = async (tenantId) => {
   const [rows] = await pool.query("CALL sp_get_usuarios(?)", [tenantId]);
   return rows[0];
 };
 
-// 🔹 Buscar por email
 const findByEmail = async (email) => {
   const [rows] = await pool.query(
     "SELECT * FROM usuario WHERE email = ?",
@@ -27,7 +24,6 @@ const findByEmail = async (email) => {
   return rows[0];
 };
 
-// 🔹 Perfil
 const getProfile = async (idUser) => {
   const [rows] = await pool.query(
     `SELECT 
@@ -49,7 +45,6 @@ const getProfile = async (idUser) => {
   return rows[0];
 };
 
-// 🔹 Validar tenant
 const evalUserTenant = async (userId, tenantId) => {
   const [rows] = await pool.query(
     `SELECT 1 FROM usuario_tenant WHERE id_usuario = ? AND id_tenant = ?`,
@@ -58,7 +53,6 @@ const evalUserTenant = async (userId, tenantId) => {
   return rows;
 };
 
-// 🔹 Set tenant activo
 const setUserTenant = async (userId, tenantId) => {
   await pool.query(
     `UPDATE usuario SET tenant_activo_id = ? WHERE id_usuario = ?`,
@@ -66,7 +60,6 @@ const setUserTenant = async (userId, tenantId) => {
   );
 };
 
-// 🔹 Cambiar contraseña
 const newPassword = async (newPass, user_id) => {
   await pool.query(
     `UPDATE usuario SET password_hash = ? WHERE id_usuario = ?`,
@@ -74,7 +67,6 @@ const newPassword = async (newPass, user_id) => {
   );
 };
 
-// 🔹 Actualizar usuario + rol
 const updateUser = async (id, data, tenantId) => {
   const { nombres, apellidos, email, id_rol } = data;
 
@@ -86,19 +78,16 @@ const updateUser = async (id, data, tenantId) => {
   return rows[0][0].affected > 0;
 };
 
-// 🔹 Eliminar usuario
 const deleteUser = async (id) => {
   await pool.query("CALL sp_delete_usuario(?)", [id]);
   return true;
 };
 
-// 🔹 Obtener por ID
 const getUserById = async (id) => {
   const [rows] = await pool.query("CALL sp_get_usuario_by_id(?)", [id]);
   return rows[0][0];
 };
 
-// 🔹 Roles
 const getRoles = async () => {
   const [rows] = await pool.query("CALL sp_get_roles()");
   return rows[0];

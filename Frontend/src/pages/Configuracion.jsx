@@ -138,7 +138,6 @@ const Configuracion = () => {
               <div className="btnCancelar" onClick={() => setInputState(false)}>
                 Cancelar
               </div>
-              {/* <button type="submit" className=" btnGuardar">Guardar Cambios</button> */}
             </div>
           )}
         </div>

@@ -74,7 +74,6 @@
     cursor: not-allowed;
 }
 
-/* TABLA DE VENTAS */
 .ventasTableContainer {
     background: #ffffff;
     border-radius: 12px;
@@ -170,7 +169,6 @@
     color: #d63031;
 }
 
-/* MODAL */
 .modal {
     position: fixed;
     top: 0;
@@ -227,7 +225,6 @@
     color: #1b1a1a;
 }
 
-/* PRODUCTOS GRID */
 .productosList {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -312,7 +309,6 @@
     font-size: 12px;
 }
 
-/* DETALLE VENTA */
 .detalleVenta {
     margin-top: 20px;
     padding: 15px;
@@ -385,7 +381,6 @@
     text-align: center;
 }
 
-/* TOTAL */
 .totalVenta {
     margin-top: 20px;
     text-align: right;
@@ -397,7 +392,6 @@
     border-radius: 8px;
 }
 
-/* BUTTONS */
 .modalActions {
     display: flex;
     gap: 10px;
@@ -441,7 +435,6 @@
     cursor: not-allowed;
 }
 
-/* MENSAJES */
 .messageAlert {
     padding: 12px;
     border-radius: 8px;
@@ -461,7 +454,6 @@
     border: 1px solid #f5c6cb;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
     .ventasHeader {
         flex-direction: column;

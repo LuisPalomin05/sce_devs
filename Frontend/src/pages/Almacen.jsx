@@ -46,7 +46,6 @@ const Almacen = () => {
     }));
   };
 
-  // Carga productos
   useEffect(() => {
     if (!tenant) return;
 
@@ -68,7 +67,6 @@ const Almacen = () => {
 
         setProducto(dataFormateada);
       } catch (error) {
-        console.log("ERROR productos:", error);
       }
     };
 
@@ -110,7 +108,6 @@ const Almacen = () => {
     }
   }, [highlightId, producto, location.pathname, location.search]);
 
-  // Carga categorias
   useEffect(() => {
     const getCategorias = async () => {
       try {
@@ -119,7 +116,6 @@ const Almacen = () => {
         });
         setCategorias(res.data);
       } catch (error) {
-        console.log("ERROR categorias:", error);
       }
     };
 
@@ -172,7 +168,6 @@ const Almacen = () => {
 
       setProducto(dataFormateada);
     } catch (error) {
-      console.log("ERROR productos:", error);
     }
   };
 
@@ -275,8 +270,6 @@ const handleExportPDF = () => {
           <p>Agregar Nuevo</p>
         </button>
       </div>
-
-      {/* FILTROS DINÁMICOS */}
       {!formVisible && (
         <div className="filtros">
           <ul>

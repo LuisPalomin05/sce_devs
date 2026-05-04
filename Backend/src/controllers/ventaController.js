@@ -1,7 +1,6 @@
 const ventaRepository = require("../models/ventaRepository");
 const pool = require("../config/db");
 
-// 📋 GET todas las ventas del tenant
 exports.getVentas = async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -18,7 +17,6 @@ exports.getVentas = async (req, res) => {
   }
 };
 
-// 🔍 GET una venta con detalles
 exports.getVentaById = async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -41,7 +39,6 @@ exports.getVentaById = async (req, res) => {
   }
 };
 
-// ➕ POST crear venta
 exports.createVenta = async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -60,7 +57,6 @@ exports.createVenta = async (req, res) => {
       return res.status(400).json({ message: "Detalles de venta requeridos" });
     }
 
-    // Calcular total
     let total = 0;
     for (const detalle of detalles) {
       total += parseFloat(detalle.subtotal) || 0;
@@ -85,7 +81,6 @@ exports.createVenta = async (req, res) => {
   }
 };
 
-// ❌ DELETE venta
 exports.deleteVenta = async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];

@@ -2,15 +2,10 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  /* height: 90vh; */
    flex: 1;  
   overflow-y: auto;
   min-height: 0; 
 }
-
-/* .titleDashboard {
-  margin-bottom: 20px;
-} */
 
 .cards {
   display: flex;
@@ -50,10 +45,6 @@
   font-size: 12px;
 }
 
-/* ===================== */
-/* ANIMACIÓN */
-/* ===================== */
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -64,10 +55,6 @@
     transform: translateY(0);
   }
 }
-
-/* ===================== */
-/* SECCIONES */
-/* ===================== */
 
 .section {
   background: var(--bg-color);
@@ -80,10 +67,6 @@
   margin-bottom: 15px;
 }
 
-/* ===================== */
-/* GRÁFICO */
-/* ===================== */
-
 .chartContainer {
   margin-top: 20px;
   padding: 20px;
@@ -91,10 +74,6 @@
   border-radius: 12px;
   border: 1px solid var(--border-color);
 }
-
-/* ===================== */
-/* GRID ABAJO */
-/* ===================== */
 
 .gridBottom {
   display: grid;
@@ -139,10 +118,6 @@
   }
 }
 
-/* ===================== */
-/* ACTIVIDAD */
-/* ===================== */
-
 .activityList {
   list-style: none;
   padding: 0;
@@ -166,10 +141,6 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* ===================== */
-/* HISTORIAL (TIMELINE) */
-/* ===================== */
-
 .historyList {
   margin-top: 10px;
   border-left: 3px solid #f17107;
@@ -182,7 +153,6 @@
   margin-bottom: 20px;
 }
 
-/* PUNTO PERFECTAMENTE ALINEADO */
 .historyItem .dot {
   position: absolute;
   left: -36px;
@@ -194,7 +164,6 @@
   box-shadow: 0 0 0 4px rgba(241, 113, 7, 0.12);
 }
 
-/* CARD HISTORIAL */
 .historyContent {
   background: #fff7ed;
   padding: 16px;

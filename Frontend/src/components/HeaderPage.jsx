@@ -49,7 +49,6 @@ const getHighlightQuery = (item) => {
   return isAlmacen && productId ? `?highlight=${productId}` : "";
 };
 
-  // 🔥 debounce
   useEffect(() => {
     const delay = setTimeout(() => {
       buscarGlobal(busqueda);

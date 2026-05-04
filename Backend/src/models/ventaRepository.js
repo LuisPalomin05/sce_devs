@@ -6,7 +6,6 @@ const getVentas = async (tenantId) => {
 };
 
 const getVentaById = async (id, tenantId) => {
-  // Cabecera
   const [cabecera] = await pool.query(
     `SELECT 
       v.id_venta,
@@ -22,7 +21,6 @@ const getVentaById = async (id, tenantId) => {
 
   if (!cabecera || cabecera.length === 0) return null;
 
-  // Detalles
   const [detalles] = await pool.query(
     `SELECT 
       vd.id_detalle,

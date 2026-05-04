@@ -1,12 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 
-// Routes
 const statusRoutes = require("./routes/apiRoutes");
 const usersRouter = require("./routes/userRoutes");
 const authRouter = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
-// const productoRoutes = require("./routes/producto");
 const productosRouter = require("./routes/productoRoutes");
 const busquedaRoutes = require("./routes/busquedaRoutes");
 const ventasRoutes = require("./routes/ventasRoutes");

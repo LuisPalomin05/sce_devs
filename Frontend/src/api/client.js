@@ -15,7 +15,7 @@ axiosClient.interceptors.request.use((config) => {
   const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
   if (tenant?.id_tenant) {
-   //config.headers["x-tenant-id"] = tenant.id_tenant;
+
   }
 
   return config;

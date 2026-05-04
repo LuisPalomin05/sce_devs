@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRepository = require("../models/userRepository");
-// const { getUserById } = require("../models/userRepository");
 const { getTenantsByUserId } = require("../models/tenantRepository");
 
 const register = async (req, res) => {
@@ -34,7 +33,6 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
 
-    // ← userRepository, no userModel
     const user = await userRepository.findByEmail(email);
     if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
 

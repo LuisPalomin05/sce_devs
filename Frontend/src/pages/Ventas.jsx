@@ -17,7 +17,6 @@ const Ventas = () => {
   const [selectedVenta, setSelectedVenta] = useState(null);
   const [showVentaDetail, setShowVentaDetail] = useState(false);
 
-  // Cargar productos y ventas
   useEffect(() => {
     if (tenant) {
       getProductos();
@@ -190,7 +189,6 @@ const Ventas = () => {
 
       {message && <div className={`messageAlert ${message.includes("Error") || message.includes("error") ? "error" : "success"}`}>{message}</div>}
 
-      {/* TABLA DE VENTAS */}
       <div className="ventasTableContainer">
         <h3>Historial de Ventas</h3>
         <table className="ventasTable">
@@ -228,13 +226,11 @@ const Ventas = () => {
         </table>
       </div>
 
-      {/* MODAL NUEVA VENTA */}
       {showModal && (
         <div className="modal" onClick={(e) => e.target === e.currentTarget && setShowModal(false)}>
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
             <h3>Registrar Venta</h3>
 
-            {/* PRODUCTOS */}
             <div className="productosList">
               {filteredProductos.length === 0 ? (
                 <div className="emptyDetail">No hay productos disponibles para venta</div>
@@ -249,7 +245,6 @@ const Ventas = () => {
               )}
             </div>
 
-            {/* DETALLE */}
             <div className="detalleVenta">
               <h4>Detalle de Venta</h4>
 
@@ -296,7 +291,6 @@ const Ventas = () => {
 
             <div className="totalVenta">Total: S/ {total.toFixed(2)}</div>
 
-            {/* BOTONES */}
             <div className="modalActions">
               <button className="btnCancel" onClick={() => { setShowModal(false); setDetalle([]); }}>Cancelar</button>
               <button className="btnSave" disabled={detalle.length === 0 || loading} onClick={guardarVenta}>
@@ -307,7 +301,6 @@ const Ventas = () => {
         </div>
       )}
 
-      {/* MODAL VER DETALLE */}
       {showVentaDetail && selectedVenta && (
         <div className="modal" onClick={(e) => e.target === e.currentTarget && setShowVentaDetail(false)}>
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>

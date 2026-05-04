@@ -4,7 +4,6 @@ const verifyToken = require("../middlewares/authMiddleware");
 const userRepository = require("../models/userRepository");
 const bcrypt = require("bcrypt");
 
-// GET /api/usuario — listar usuarios del tenant
 router.get("/", verifyToken, async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -15,7 +14,6 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-// GET /api/usuario/roles — debe ir ANTES de /:id
 router.get("/roles", verifyToken, async (req, res) => {
   try {
     const roles = await userRepository.getRoles();
@@ -25,7 +23,6 @@ router.get("/roles", verifyToken, async (req, res) => {
   }
 });
 
-// GET /api/usuario/:id
 router.get("/:id", verifyToken, async (req, res) => {
   try {
     const usuario = await userRepository.getUserById(req.params.id);
@@ -36,7 +33,6 @@ router.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// POST /api/usuario — crear usuario
 router.post("/", verifyToken, async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -53,7 +49,6 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-// PUT /api/usuario/:id — actualizar usuario
 router.put("/:id", verifyToken, async (req, res) => {
   try {
     const tenantId = req.headers["x-tenant-id"];
@@ -68,7 +63,6 @@ router.put("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// DELETE /api/usuario/:id — eliminar usuario
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
     await userRepository.deleteUser(req.params.id);

@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [loading, setLoading] = useState(true);
-  //CONSULTAR USUARIO
   const fetchUser = async () => {
     try {
       const response = await axiosClient.get("/users/me");
