@@ -29,6 +29,9 @@ tmp/
 temp/
 .cache/
 
+# QA
+QA/
+
 # Build / compilación
 dist/
 build/
@@ -37,7 +40,9 @@ out/
 # Coverage de tests
 coverage/
 .nyc_output/
-
+/test
+*.test.js
+*.spec.js
 # Archivos de procesos
 pids
 *.pid
