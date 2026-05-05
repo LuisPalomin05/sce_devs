@@ -16,7 +16,6 @@ const Login = () => {
     password: "",
   });
 
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -46,12 +45,12 @@ const Login = () => {
 
   return (
     <div className="cntLogin">
-
       <div className="LoginPanel">
         <div className="cntLoginPanel">
           <div className="LoginImage">
-
-            <p className="LoginBrand" onClick={toggleTheme}>SCE SISTEMAS</p>
+            <p className="LoginBrand" onClick={toggleTheme}>
+              SCE SISTEMAS
+            </p>
             <p className="LoginTittle">Bienvenido</p>
             <p className="LoginSubtittle">Inicia sesión con tus credenciales</p>
           </div>
@@ -63,7 +62,7 @@ const Login = () => {
                   <p className="boldtxt">Correo electrónico</p>
                 </div>
                 <div className="itmInput">
-                  <DynamicIcon name="mail" size={16} color="#000000" />
+                  <DynamicIcon name="mail" size={16} color="#746e6eff" />
                   <input
                     type="email"
                     name="email"
@@ -81,7 +80,11 @@ const Login = () => {
                   <p className="alertOrange">¿Olvidaste tu contraseña?</p>
                 </div>
                 <div className="itmInput">
-                  <DynamicIcon name="lock-keyhole" size={16} color="#000000" />
+                  <DynamicIcon
+                    name="lock-keyhole"
+                    size={16}
+                    color="#746e6eff"
+                  />
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"

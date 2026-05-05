@@ -16,7 +16,7 @@ const register = async (req, res) => {
 
     const result = await userRepository.createUser(
       { nombres, apellidos, email, password_hash: hash, id_rol },
-      tenantId
+      tenantId,
     );
 
     res.status(201).json({
@@ -37,7 +37,8 @@ const login = async (req, res) => {
     if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
 
     const match = await bcrypt.compare(password, user.password_hash);
-    if (!match) return res.status(401).json({ error: "Credenciales inválidas" });
+    if (!match)
+      return res.status(401).json({ error: "Credenciales inválidas" });
 
     const token = jwt.sign(
       {
@@ -46,13 +47,11 @@ const login = async (req, res) => {
         apellidos: user.apellidos,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "8h" }
+      { expiresIn: "8h" },
     );
 
     res.json({ token });
   } catch (error) {
-    console.error("[LOGIN_ERROR]", error);
-    console.error(error);
     res.status(500).json({ error: "Error en login" });
   }
 };
@@ -66,9 +65,11 @@ const findUserById = async (req, res) => {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    const tenants = await getTenantsByUserId(id) || [];
+    const tenants = (await getTenantsByUserId(id)) || [];
 
-    let tenant_activa = tenants.find(t => t.id_tenant === user.tenant_activo_id);
+    let tenant_activa = tenants.find(
+      (t) => t.id_tenant === user.tenant_activo_id,
+    );
     if (!tenant_activa && tenants.length > 0) {
       tenant_activa = tenants[0];
     }
@@ -82,7 +83,6 @@ const findUserById = async (req, res) => {
       tenant_activa,
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Error interno " + error });
   }
 };

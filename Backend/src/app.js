@@ -23,7 +23,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/api", busquedaRoutes);
+app.use("/api/buscar", busquedaRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/producto", productosRouter);
 app.use("/api/venta", ventasRoutes);
