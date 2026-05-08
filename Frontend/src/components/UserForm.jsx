@@ -84,7 +84,11 @@ const UserForm = ({
 
   return (
     <div className="FormPanelWrap">
-      <form className="CrearProd formCard" onSubmit={handleSubmit} autoComplete="off">
+      <form
+        className="CrearProd formCard"
+        onSubmit={handleSubmit}
+        autoComplete="off"
+      >
         <div className="TittleCreate">
           <section className="titleIconWrap">
             <User className="cardLayer" />
@@ -172,7 +176,9 @@ const UserForm = ({
                 type="button"
                 className="togglePassword"
                 onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>

@@ -2,7 +2,7 @@ const catRepository = require("../models/categoriaRepository");
 
 const createCategorias = async (req, res) => {
   try {
-    const tenantId = parseInt(req.headers["x-tenant-id"]);
+    const tenantId = req.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant requerido" });
@@ -24,7 +24,7 @@ const createCategorias = async (req, res) => {
 
 const getAllCategorias = async (req, res) => {
   try {
-    const tenantId = parseInt(req.headers["x-tenant-id"]);
+    const tenantId = req.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant requerido" });

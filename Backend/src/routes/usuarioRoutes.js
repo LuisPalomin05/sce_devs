@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
     const usuarios = await userRepository.findUsers(tenantId);
     res.json(usuarios);
   } catch (error) {
@@ -35,13 +35,13 @@ router.get("/:id", verifyToken, async (req, res) => {
 
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const { tenantId } = req.body;
     const { nombres, apellidos, email, id_rol } = req.body;
     const password_hash = await bcrypt.hash("Temporal123!", 10);
 
     const result = await userRepository.createUser(
       { nombres, apellidos, email, password_hash, id_rol },
-      tenantId
+      tenantId,
     );
     res.status(201).json(result);
   } catch (error) {
@@ -51,11 +51,11 @@ router.post("/", verifyToken, async (req, res) => {
 
 router.put("/:id", verifyToken, async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const { tenantId } = req.body;
     const updated = await userRepository.updateUser(
       req.params.id,
       req.body,
-      tenantId
+      tenantId,
     );
     res.json({ success: updated });
   } catch (error) {

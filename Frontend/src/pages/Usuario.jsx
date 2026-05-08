@@ -35,9 +35,7 @@ const Usuario = () => {
 
     const getUsuarios = async () => {
       try {
-        const res = await axiosClient.get("/usuario", {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        const res = await axiosClient.get("/usuario");
 
         const dataFormateada = res.data.map((u) => ({
           ...u,
@@ -45,8 +43,7 @@ const Usuario = () => {
         }));
 
         setUsuarios(dataFormateada);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     getUsuarios();
@@ -79,7 +76,7 @@ const Usuario = () => {
         window.history.replaceState(
           null,
           "",
-          `${location.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}`
+          `${location.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}`,
         );
       }
 
@@ -90,12 +87,9 @@ const Usuario = () => {
   useEffect(() => {
     const getRoles = async () => {
       try {
-        const res = await axiosClient.get("/usuario/roles", {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        const res = await axiosClient.get("/usuario/roles");
         setRoles(res.data);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     if (tenant) getRoles();
@@ -130,9 +124,7 @@ const Usuario = () => {
 
   const refreshUsuarios = async () => {
     try {
-      const res = await axiosClient.get("/usuario", {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      const res = await axiosClient.get("/usuario");
 
       const dataFormateada = res.data.map((u) => ({
         ...u,
@@ -140,8 +132,7 @@ const Usuario = () => {
       }));
 
       setUsuarios(dataFormateada);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleSaveUser = async (userData) => {
@@ -149,15 +140,11 @@ const Usuario = () => {
     setFormMessage("");
 
     try {
-      const headers = { "x-tenant-id": tenant?.id_tenant };
-
       if (formMode === "create") {
-        await axiosClient.post("/usuario", userData, { headers });
+        await axiosClient.post("/usuario", userData);
         setFormMessage("Usuario creado correctamente.");
       } else {
-        await axiosClient.put(`/usuario/${userData.id_usuario}`, userData, {
-          headers,
-        });
+        await axiosClient.put(`/usuario/${userData.id_usuario}`, userData);
         setFormMessage("Usuario actualizado correctamente.");
       }
 
@@ -177,9 +164,7 @@ const Usuario = () => {
     setFormMessage("");
 
     try {
-      await axiosClient.delete(`/usuario/${userId}`, {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      await axiosClient.delete(`/usuario/${userId}`);
 
       setFormMessage("Usuario eliminado correctamente.");
       await refreshUsuarios();
@@ -197,28 +182,26 @@ const Usuario = () => {
     return u.rol?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
 
-const handleExportPDF = () => {
-  const data = usuariosFiltrados.map((u) => [
-    `${u.nombres} ${u.apellidos}`,
-    u.email,
-    u.rol || "Sin rol",
-    u.estado,
-  ]);
+  const handleExportPDF = () => {
+    const data = usuariosFiltrados.map((u) => [
+      `${u.nombres} ${u.apellidos}`,
+      u.email,
+      u.rol || "Sin rol",
+      u.estado,
+    ]);
 
-  exportToPDF({
-    title: "Reporte de Usuarios",
-    subtitle:
-      filtro === "Todos"
-        ? "Todos los usuarios"
-        : `Usuarios - ${filtro}`,
-    columns: ["Nombre completo", "Correo", "Rol", "Estado"],
-    data,
-    fileName:
-      filtro === "Todos"
-        ? "usuarios.pdf"
-        : `usuarios_${filtro.toLowerCase()}.pdf`,
-  });
-};
+    exportToPDF({
+      title: "Reporte de Usuarios",
+      subtitle:
+        filtro === "Todos" ? "Todos los usuarios" : `Usuarios - ${filtro}`,
+      columns: ["Nombre completo", "Correo", "Rol", "Estado"],
+      data,
+      fileName:
+        filtro === "Todos"
+          ? "usuarios.pdf"
+          : `usuarios_${filtro.toLowerCase()}.pdf`,
+    });
+  };
 
   return (
     <div className="usuarioContent">
@@ -238,7 +221,11 @@ const handleExportPDF = () => {
             <p>Exportar Reporte</p>
           </button>
 
-          <button type="button" className="btnExportReport" onClick={openNewUser}>
+          <button
+            type="button"
+            className="btnExportReport"
+            onClick={openNewUser}
+          >
             <LayersPlus />
             <p>Agregar Nuevo</p>
           </button>
@@ -294,7 +281,11 @@ const handleExportPDF = () => {
               {usuariosFiltrados.length === 0 ? (
                 <p className="alertaUser">
                   No hay usuarios en esta categoría.{" "}
-                  <button className="linkButton" type="button" onClick={openNewUser}>
+                  <button
+                    className="linkButton"
+                    type="button"
+                    onClick={openNewUser}
+                  >
                     Agregar Aquí
                   </button>
                 </p>
@@ -306,7 +297,9 @@ const handleExportPDF = () => {
                       if (el) rowRefs.current[item.id_usuario] = el;
                     }}
                     className={`UsuarioTableItem ${
-                      highlightId === String(item.id_usuario) ? "highlighted" : ""
+                      highlightId === String(item.id_usuario)
+                        ? "highlighted"
+                        : ""
                     }`}
                   >
                     <div className="NombUsuarioTable">
@@ -324,7 +317,9 @@ const handleExportPDF = () => {
                     <div className="emailUsuario">{item.email}</div>
                     <div className="rolUsuario">{item.rol || "Sin rol"}</div>
 
-                    <div className={`estadoUsuario ${getEstadoClass(item.estado)}`}>
+                    <div
+                      className={`estadoUsuario ${getEstadoClass(item.estado)}`}
+                    >
                       {item.estado}
                     </div>
 

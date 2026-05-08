@@ -13,7 +13,6 @@ import { AuthContext } from "../context/AuthContext";
 import ProductForm from "../components/ProductForm";
 import { exportToPDF } from "../utils/exportPDF";
 
-
 const Almacen = () => {
   const [producto, setProducto] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -51,9 +50,7 @@ const Almacen = () => {
 
     const getProductos = async () => {
       try {
-        const res = await axiosClient.get("/producto", {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        const res = await axiosClient.get("/producto");
 
         const dataFormateada = res.data.map((p) => ({
           ...p,
@@ -66,8 +63,7 @@ const Almacen = () => {
         }));
 
         setProducto(dataFormateada);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     if (tenant) getProductos();
@@ -100,7 +96,7 @@ const Almacen = () => {
         window.history.replaceState(
           null,
           "",
-          `${location.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}`
+          `${location.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}`,
         );
       }
 
@@ -111,12 +107,9 @@ const Almacen = () => {
   useEffect(() => {
     const getCategorias = async () => {
       try {
-        const res = await axiosClient.get("/producto/categorias", {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        const res = await axiosClient.get("/producto/categorias");
         setCategorias(res.data);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     if (tenant) getCategorias();
@@ -152,9 +145,7 @@ const Almacen = () => {
 
   const refreshProductos = async () => {
     try {
-      const res = await axiosClient.get("/producto", {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      const res = await axiosClient.get("/producto");
 
       const dataFormateada = res.data.map((p) => ({
         ...p,
@@ -167,8 +158,7 @@ const Almacen = () => {
       }));
 
       setProducto(dataFormateada);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleSaveProduct = async (productData) => {
@@ -176,15 +166,14 @@ const Almacen = () => {
     setFormMessage("");
 
     try {
-      const headers = { "x-tenant-id": tenant?.id_tenant };
-
       if (formMode === "create") {
-        await axiosClient.post("/producto", productData, { headers });
+        await axiosClient.post("/producto", productData);
         setFormMessage("Producto creado correctamente.");
       } else {
-        await axiosClient.put(`/producto/${productData.id_producto}`, productData, {
-          headers,
-        });
+        await axiosClient.put(
+          `/producto/${productData.id_producto}`,
+          productData,
+        );
         setFormMessage("Producto actualizado correctamente.");
       }
 
@@ -204,9 +193,7 @@ const Almacen = () => {
     setFormMessage("");
 
     try {
-      await axiosClient.delete(`/producto/${productId}`, {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      await axiosClient.delete(`/producto/${productId}`);
 
       setFormMessage("Producto eliminado correctamente.");
       await refreshProductos();
@@ -222,35 +209,24 @@ const Almacen = () => {
   const productosFiltrados = producto.filter((p) => {
     if (filtro === "Todos") return true;
 
-    return (
-      p.categoria?.trim().toLowerCase() ===
-      filtro.trim().toLowerCase()
-    );
+    return p.categoria?.trim().toLowerCase() === filtro.trim().toLowerCase();
   });
 
-const handleExportPDF = () => {
-  const data = productosFiltrados.map((p) => [
-    p.nombre,
-    p.precio,
-    p.stock,
-  ]);
+  const handleExportPDF = () => {
+    const data = productosFiltrados.map((p) => [p.nombre, p.precio, p.stock]);
 
-  exportToPDF({
-    title: "Reporte de Almacén",
-    subtitle:
-      filtro === "Todos"
-        ? "Todos los productos"
-        : `Categoría - ${filtro}`,
-    columns: ["Nombre", "Precio", "Stock"],
-    data,
-    fileName:
-      filtro === "Todos"
-        ? "productos.pdf"
-        : `productos_${filtro.toLowerCase()}.pdf`,
-  });
-};
-
-
+    exportToPDF({
+      title: "Reporte de Almacén",
+      subtitle:
+        filtro === "Todos" ? "Todos los productos" : `Categoría - ${filtro}`,
+      columns: ["Nombre", "Precio", "Stock"],
+      data,
+      fileName:
+        filtro === "Todos"
+          ? "productos.pdf"
+          : `productos_${filtro.toLowerCase()}.pdf`,
+    });
+  };
 
   return (
     <div className="storageContent">
@@ -265,7 +241,11 @@ const handleExportPDF = () => {
           <p>Exportar Reporte</p>
         </div>
 
-        <button type="button" className="btnExportReport" onClick={openNewProduct}>
+        <button
+          type="button"
+          className="btnExportReport"
+          onClick={openNewProduct}
+        >
           <LayersPlus />
           <p>Agregar Nuevo</p>
         </button>
@@ -319,8 +299,12 @@ const handleExportPDF = () => {
           <div className="StorageTableBody">
             {productosFiltrados.length === 0 ? (
               <p className="alertaProd">
-                No hay productos en esta categoría. {" "}
-                <button className="linkButton" type="button" onClick={openNewProduct}>
+                No hay productos en esta categoría.{" "}
+                <button
+                  className="linkButton"
+                  type="button"
+                  onClick={openNewProduct}
+                >
                   Agregar Aqui
                 </button>
               </p>
@@ -331,10 +315,12 @@ const handleExportPDF = () => {
                   ref={(el) => {
                     if (el) rowRefs.current[item.id_producto] = el;
                   }}
-                  className={`StorageTableItem ${highlightId === String(item.id_producto) ? "highlighted" : ""
-                    }`}
+                  className={`StorageTableItem ${
+                    highlightId === String(item.id_producto)
+                      ? "highlighted"
+                      : ""
+                  }`}
                 >
-
                   <div className="NombProductoTable">
                     <div className="itemProd">
                       <AlignHorizontalDistributeCenter />
@@ -351,7 +337,9 @@ const handleExportPDF = () => {
 
                   <div className="stockProducto">{item.stock}</div>
 
-                  <div className={`estateProducto ${getEstadoClass(item.estado)}`}>
+                  <div
+                    className={`estateProducto ${getEstadoClass(item.estado)}`}
+                  >
                     {item.estado}
                   </div>
 
@@ -364,7 +352,6 @@ const handleExportPDF = () => {
                       <PencilLine />
                     </button>
                   </div>
-
                 </div>
               ))
             )}

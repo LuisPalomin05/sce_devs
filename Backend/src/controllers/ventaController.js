@@ -3,7 +3,7 @@ const pool = require("../config/db");
 
 exports.getVentas = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ message: "Tenant requerido" });
@@ -19,7 +19,7 @@ exports.getVentas = async (req, res) => {
 
 exports.getVentaById = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
     const { id } = req.params;
 
     if (!tenantId) {
@@ -41,8 +41,8 @@ exports.getVentaById = async (req, res) => {
 
 exports.createVenta = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
     const userId = req.user?.id;
+    const tenantId = req.tenantId;
     const { detalles } = req.body;
 
     if (!tenantId) {
@@ -66,12 +66,12 @@ exports.createVenta = async (req, res) => {
       total,
       id_usuario: userId,
       id_tenant: tenantId,
-      detalles
+      detalles,
     });
 
     const [ventaCreada] = await pool.query(
       "SELECT v.id_venta, v.total, v.created_at FROM venta v WHERE v.id_venta = ?",
-      [ventaId]
+      [ventaId],
     );
 
     res.status(201).json(ventaCreada[0]);
@@ -83,7 +83,7 @@ exports.createVenta = async (req, res) => {
 
 exports.deleteVenta = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const { tenantId } = req.body;
     const { id } = req.params;
 
     if (!tenantId) {

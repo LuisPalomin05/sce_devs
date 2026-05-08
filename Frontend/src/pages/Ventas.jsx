@@ -26,9 +26,7 @@ const Ventas = () => {
 
   const getProductos = async () => {
     try {
-      const res = await axiosClient.get("/producto", {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      const res = await axiosClient.get("/producto");
       setProductos(res.data);
     } catch (error) {
       console.error(error);
@@ -38,9 +36,7 @@ const Ventas = () => {
 
   const getVentas = async () => {
     try {
-      const res = await axiosClient.get("/venta", {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      const res = await axiosClient.get("/venta");
       setVentas(res.data);
     } catch (error) {
       console.error(error);
@@ -50,9 +46,7 @@ const Ventas = () => {
 
   const getVentaDetail = async (ventaId) => {
     try {
-      const res = await axiosClient.get(`/venta/${ventaId}`, {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      const res = await axiosClient.get(`/venta/${ventaId}`);
       setSelectedVenta(res.data);
       setShowVentaDetail(true);
     } catch (error) {
@@ -68,7 +62,9 @@ const Ventas = () => {
         return;
       }
 
-      const existe = detalle.find((d) => d.id_producto === producto.id_producto);
+      const existe = detalle.find(
+        (d) => d.id_producto === producto.id_producto,
+      );
 
       if (existe) {
         setDetalle(
@@ -79,8 +75,8 @@ const Ventas = () => {
                   cantidad: d.cantidad + 1,
                   subtotal: (d.cantidad + 1) * d.precio_unitario,
                 }
-              : d
-          )
+              : d,
+          ),
         );
       } else {
         setDetalle([
@@ -110,8 +106,8 @@ const Ventas = () => {
               cantidad: numCantidad,
               subtotal: numCantidad * d.precio_unitario,
             }
-          : d
-      )
+          : d,
+      ),
     );
   };
 
@@ -125,13 +121,7 @@ const Ventas = () => {
     setLoading(true);
     setMessage("");
     try {
-      await axiosClient.post(
-        "/venta",
-        { detalles: detalle },
-        {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        }
-      );
+      await axiosClient.post("/venta", { detalles: detalle });
 
       setDetalle([]);
       setShowModal(false);
@@ -149,9 +139,7 @@ const Ventas = () => {
     if (!window.confirm("¿Eliminar esta venta?")) return;
 
     try {
-      await axiosClient.delete(`/venta/${ventaId}`, {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      await axiosClient.delete(`/venta/${ventaId}`);
       getVentas();
       setMessage("Venta eliminada correctamente");
     } catch (error) {
@@ -161,7 +149,7 @@ const Ventas = () => {
   };
 
   const filteredProductos = productos.filter((p) =>
-    p.nombre.toLowerCase().includes(search.toLowerCase())
+    p.nombre.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -187,7 +175,13 @@ const Ventas = () => {
         </button>
       </div>
 
-      {message && <div className={`messageAlert ${message.includes("Error") || message.includes("error") ? "error" : "success"}`}>{message}</div>}
+      {message && (
+        <div
+          className={`messageAlert ${message.includes("Error") || message.includes("error") ? "error" : "success"}`}
+        >
+          {message}
+        </div>
+      )}
 
       <div className="ventasTableContainer">
         <h3>Historial de Ventas</h3>
@@ -212,10 +206,16 @@ const Ventas = () => {
                 <td>{new Date(venta.created_at).toLocaleDateString()}</td>
                 <td>
                   <div className="actionsCell">
-                    <button className="btnView" onClick={() => getVentaDetail(venta.id_venta)}>
+                    <button
+                      className="btnView"
+                      onClick={() => getVentaDetail(venta.id_venta)}
+                    >
                       <Eye size={18} />
                     </button>
-                    <button className="btnDelete" onClick={() => deleteVenta(venta.id_venta)}>
+                    <button
+                      className="btnDelete"
+                      onClick={() => deleteVenta(venta.id_venta)}
+                    >
                       <TrashIcon size={18} />
                     </button>
                   </div>
@@ -227,16 +227,28 @@ const Ventas = () => {
       </div>
 
       {showModal && (
-        <div className="modal" onClick={(e) => e.target === e.currentTarget && setShowModal(false)}>
+        <div
+          className="modal"
+          onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
+        >
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
             <h3>Registrar Venta</h3>
 
             <div className="productosList">
               {filteredProductos.length === 0 ? (
-                <div className="emptyDetail">No hay productos disponibles para venta</div>
+                <div className="emptyDetail">
+                  No hay productos disponibles para venta
+                </div>
               ) : (
                 filteredProductos.map((p) => (
-                  <div key={p.id_producto} className="productoItem" onClick={(e) => { e.stopPropagation(); agregarProducto(p); }}>
+                  <div
+                    key={p.id_producto}
+                    className="productoItem"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      agregarProducto(p);
+                    }}
+                  >
                     <strong>{p.nombre}</strong>
                     <p>S/ {parseFloat(p.precio).toFixed(2)}</p>
                     <small>Stock: {p.stock}</small>
@@ -265,7 +277,9 @@ const Ventas = () => {
                     {detalle.map((item) => (
                       <tr key={item.id_producto}>
                         <td>{item.nombre}</td>
-                        <td style={{ textAlign: "center" }}>S/ {parseFloat(item.precio_unitario).toFixed(2)}</td>
+                        <td style={{ textAlign: "center" }}>
+                          S/ {parseFloat(item.precio_unitario).toFixed(2)}
+                        </td>
                         <td style={{ textAlign: "center" }}>
                           <input
                             type="number"
@@ -276,9 +290,14 @@ const Ventas = () => {
                             }
                           />
                         </td>
-                        <td style={{ textAlign: "right" }}>S/ {parseFloat(item.subtotal).toFixed(2)}</td>
+                        <td style={{ textAlign: "right" }}>
+                          S/ {parseFloat(item.subtotal).toFixed(2)}
+                        </td>
                         <td style={{ textAlign: "center" }}>
-                          <button className="btnRemove" onClick={() => eliminarDetalle(item.id_producto)}>
+                          <button
+                            className="btnRemove"
+                            onClick={() => eliminarDetalle(item.id_producto)}
+                          >
                             <TrashIcon size={16} />
                           </button>
                         </td>
@@ -292,8 +311,20 @@ const Ventas = () => {
             <div className="totalVenta">Total: S/ {total.toFixed(2)}</div>
 
             <div className="modalActions">
-              <button className="btnCancel" onClick={() => { setShowModal(false); setDetalle([]); }}>Cancelar</button>
-              <button className="btnSave" disabled={detalle.length === 0 || loading} onClick={guardarVenta}>
+              <button
+                className="btnCancel"
+                onClick={() => {
+                  setShowModal(false);
+                  setDetalle([]);
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                className="btnSave"
+                disabled={detalle.length === 0 || loading}
+                onClick={guardarVenta}
+              >
                 {loading ? "Guardando..." : "Guardar Venta"}
               </button>
             </div>
@@ -302,13 +333,23 @@ const Ventas = () => {
       )}
 
       {showVentaDetail && selectedVenta && (
-        <div className="modal" onClick={(e) => e.target === e.currentTarget && setShowVentaDetail(false)}>
+        <div
+          className="modal"
+          onClick={(e) =>
+            e.target === e.currentTarget && setShowVentaDetail(false)
+          }
+        >
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
             <h3>Detalle de Venta #{selectedVenta.id_venta}</h3>
 
             <div style={{ marginTop: "15px" }}>
-              <p><strong>Vendedor:</strong> {selectedVenta.nombres || "Sistema"}</p>
-              <p><strong>Fecha:</strong> {new Date(selectedVenta.created_at).toLocaleString()}</p>
+              <p>
+                <strong>Vendedor:</strong> {selectedVenta.nombres || "Sistema"}
+              </p>
+              <p>
+                <strong>Fecha:</strong>{" "}
+                {new Date(selectedVenta.created_at).toLocaleString()}
+              </p>
 
               <h4>Productos</h4>
               <table className="ventasTable">
@@ -324,17 +365,26 @@ const Ventas = () => {
                     <tr key={d.id_detalle}>
                       <td>{d.nombre}</td>
                       <td style={{ textAlign: "center" }}>{d.cantidad}</td>
-                      <td style={{ textAlign: "right" }}>S/ {parseFloat(d.subtotal).toFixed(2)}</td>
+                      <td style={{ textAlign: "right" }}>
+                        S/ {parseFloat(d.subtotal).toFixed(2)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <div className="totalVenta">Total: S/ {parseFloat(selectedVenta.total).toFixed(2)}</div>
+              <div className="totalVenta">
+                Total: S/ {parseFloat(selectedVenta.total).toFixed(2)}
+              </div>
             </div>
 
             <div className="modalActions">
-              <button className="btnCancel" onClick={() => setShowVentaDetail(false)}>Cerrar</button>
+              <button
+                className="btnCancel"
+                onClick={() => setShowVentaDetail(false)}
+              >
+                Cerrar
+              </button>
             </div>
           </div>
         </div>

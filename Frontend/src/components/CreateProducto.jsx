@@ -15,14 +15,11 @@ const CreateProducto = () => {
       if (!id) return;
 
       try {
-        const tenantRaw = localStorage.getItem("tenant");
-        const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
+        const { data } = await axiosClient.get("/producto");
 
-        const { data } = await axiosClient.get("/producto", {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
-
-        const productoSeleccionado = data.find((item) => String(item.id_producto) === String(id));
+        const productoSeleccionado = data.find(
+          (item) => String(item.id_producto) === String(id),
+        );
         setProducto(productoSeleccionado || null);
       } catch (error) {
         console.error(error);
@@ -37,17 +34,10 @@ const CreateProducto = () => {
     setMessage("");
 
     try {
-      const tenantRaw = localStorage.getItem("tenant");
-      const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
-
       if (id) {
-        await axiosClient.put(`/producto/${id}`, formData, {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        await axiosClient.put(`/producto/${id}`, formData);
       } else {
-        await axiosClient.post("/producto", formData, {
-          headers: { "x-tenant-id": tenant?.id_tenant },
-        });
+        await axiosClient.post("/producto", formData);
       }
 
       navigate("/dashboard/almacen");
@@ -66,12 +56,7 @@ const CreateProducto = () => {
     setMessage("");
 
     try {
-      const tenantRaw = localStorage.getItem("tenant");
-      const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
-
-      await axiosClient.delete(`/producto/${productId}`, {
-        headers: { "x-tenant-id": tenant?.id_tenant },
-      });
+      await axiosClient.delete(`/producto/${productId}`);
 
       navigate("/dashboard/almacen");
     } catch (error) {

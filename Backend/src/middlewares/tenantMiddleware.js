@@ -1,8 +1,10 @@
 const tenantMiddleware = (req, res, next) => {
-  const tenantId = req.headers["x-tenant-id"];
+  const tenantId = req.tenantId;
 
   if (!tenantId) {
-    return res.status(400).json({ message: "Tenant requerido" });
+    return res.status(400).json({
+      message: "Tenant requerido",
+    });
   }
 
   req.tenantId = tenantId;

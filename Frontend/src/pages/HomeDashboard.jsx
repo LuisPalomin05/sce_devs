@@ -14,7 +14,7 @@ import {
 } from "recharts";
 
 const HomeDashboard = () => {
-    const { success, errorToast, warning } = useToast();
+  const { success, errorToast, warning } = useToast();
   const { tenant } = useContext(AuthContext);
 
   const [data, setData] = useState({
@@ -26,19 +26,14 @@ const HomeDashboard = () => {
     actividad: [],
     pedidos: [],
     porcentajeHoy: 0,
-    porcentajeMes: 0
+    porcentajeMes: 0,
   });
 
   const getDashboard = async () => {
     try {
-      const res = await axiosClient.get("/dashboard", {
-        headers: {
-          "x-tenant-id": tenant?.id_tenant,
-        },
-      });
+      const res = await axiosClient.get("/dashboard");
 
       setData(res.data);
-
     } catch (error) {
       errorToast(error);
     }
@@ -57,19 +52,22 @@ const HomeDashboard = () => {
     Thursday: "Jue",
     Friday: "Vie",
     Saturday: "Sáb",
-    Sunday: "Dom"
+    Sunday: "Dom",
   };
 
-  const graficoFormateado = data.grafico.map(d => ({
+  const graficoFormateado = data.grafico.map((d) => ({
     ...d,
-    dia: dias[d.dia] || d.dia
+    dia: dias[d.dia] || d.dia,
   }));
 
   return (
     <div className="ContentDashboard">
       <div>
-      <h2 className="titleDashboard">Dashboard</h2>
-      <p className="fontGrayInfo">Encuentra un progreso detallado y administra tus actividades recientes.</p>
+        <h2 className="titleDashboard">Dashboard</h2>
+        <p className="fontGrayInfo">
+          Encuentra un progreso detallado y administra tus actividades
+          recientes.
+        </p>
       </div>
 
       <div className="cards">
@@ -123,15 +121,17 @@ const HomeDashboard = () => {
       </div>
 
       <div className="gridBottom">
-
         <div className="section">
           <h3>Actividad reciente</h3>
           <div className="activityContainer">
             {data.actividad.map((item, index) => (
               <div className="activityItem" key={index}>
-
                 <div className="activityIcon">
-                  {item.tipo === "venta" ? "💰" : item.tipo === "usuario" ? "👤" : "⚠️"}
+                  {item.tipo === "venta"
+                    ? "💰"
+                    : item.tipo === "usuario"
+                      ? "👤"
+                      : "⚠️"}
                 </div>
 
                 <div className="activityContent">
@@ -142,7 +142,6 @@ const HomeDashboard = () => {
                       : "Hace un momento"}
                   </span>
                 </div>
-
               </div>
             ))}
           </div>
@@ -161,8 +160,12 @@ const HomeDashboard = () => {
 
                   <div className="historyContent">
                     <div className="historyHeader">
-                      <h4>{pedido.titulo || `Pedido #${pedido.id || index + 1}`}</h4>
-                      <span className="historyBadge">{pedido.estado || "Pendiente"}</span>
+                      <h4>
+                        {pedido.titulo || `Pedido #${pedido.id || index + 1}`}
+                      </h4>
+                      <span className="historyBadge">
+                        {pedido.estado || "Pendiente"}
+                      </span>
                     </div>
                     <p>{pedido.cliente || "Cliente no especificado"}</p>
                     <span>{pedido.fecha || "Sin fecha"}</span>
@@ -172,7 +175,6 @@ const HomeDashboard = () => {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

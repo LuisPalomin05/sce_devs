@@ -1,14 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const ventaController = require("../controllers/ventaController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const verifyToken = require("../middlewares/authMiddleware");
+const tenantMiddleware = require("../middlewares/tenantMiddleware");
 
-router.get("/", authMiddleware, ventaController.getVentas);
+router.use(verifyToken);
+router.use(tenantMiddleware);
 
-router.get("/:id", authMiddleware, ventaController.getVentaById);
+router.get("/", ventaController.getVentas);
 
-router.post("/", authMiddleware, ventaController.createVenta);
+router.get("/:id", ventaController.getVentaById);
 
-router.delete("/:id", authMiddleware, ventaController.deleteVenta);
+router.post("/", ventaController.createVenta);
+
+router.delete("/:id", ventaController.deleteVenta);
 
 module.exports = router;

@@ -1,8 +1,8 @@
-const productoRepository = require('../models/productoRepository');
+const productoRepository = require("../models/productoRepository");
 
 const getAllProductos = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ message: "Tenant requerido" });
@@ -31,7 +31,7 @@ const getProductoByID = async (req, res) => {
 
 const createProducto = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
     const { nombre, precio, stock, id_categoria } = req.body;
 
     if (!tenantId) {
@@ -43,7 +43,7 @@ const createProducto = async (req, res) => {
       precio,
       stock,
       id_categoria,
-      id_tenant: tenantId
+      id_tenant: tenantId,
     });
 
     res.status(201).json({ id, message: "Producto creado" });
@@ -62,7 +62,7 @@ const editProducto = async (req, res) => {
       nombre,
       precio,
       stock,
-      id_categoria
+      id_categoria,
     });
 
     if (!updated) {
@@ -95,7 +95,7 @@ const deleteProducto = async (req, res) => {
 
 const getCategorias = async (req, res) => {
   try {
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant requerido" });
@@ -115,5 +115,5 @@ module.exports = {
   createProducto,
   editProducto,
   deleteProducto,
-  getCategorias
+  getCategorias,
 };

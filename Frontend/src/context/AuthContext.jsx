@@ -11,28 +11,31 @@ export const AuthProvider = ({ children }) => {
     const stored = localStorage.getItem("tenant");
     return stored ? JSON.parse(stored) : null;
   });
-
   const [loading, setLoading] = useState(true);
+
+  // para verificar el usuario
   const fetchUser = async () => {
     try {
       const response = await axiosClient.get("/users/me");
+
       const userData = response.data;
 
       setUser(userData);
 
       const storedTenant = JSON.parse(localStorage.getItem("tenant"));
 
-    const validTenant = userData.tenants?.find(
-      (t) => t.id_tenant === storedTenant?.id_tenant
-    );
+      const validTenant = userData.tenants?.find(
+        (t) => t.id_tenant === storedTenant?.id_tenant,
+      );
 
       const finalTenant = validTenant || userData.tenant_activa || null;
 
       setTenant(finalTenant);
       localStorage.setItem("tenant", JSON.stringify(finalTenant));
     } catch (error) {
-      localStorage.removeItem("token");
-      setUser(null);
+      if (error.response?.status === 401) {
+        logout();
+      }
     } finally {
       setLoading(false);
     }
@@ -68,7 +71,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("tenant");
     setUser(null);
     setTenant(null);
-
   };
 
   useEffect(() => {

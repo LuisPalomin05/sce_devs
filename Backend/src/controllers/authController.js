@@ -33,10 +33,17 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
 
+    console.log("email:", email);
+    console.log("password:", password);
+
     const user = await userRepository.findByEmail(email);
+
     if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
 
     const match = await bcrypt.compare(password, user.password_hash);
+
+    console.log("match:", match);
+
     if (!match)
       return res.status(401).json({ error: "Credenciales inválidas" });
 
@@ -58,7 +65,10 @@ const login = async (req, res) => {
 
 const findUserById = async (req, res) => {
   try {
+    console.log(req.user);
+
     const id = req.user.id;
+
     const user = await userRepository.getUserById(id);
 
     if (!user) {
