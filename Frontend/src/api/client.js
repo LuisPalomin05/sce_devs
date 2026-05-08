@@ -12,6 +12,7 @@ axiosClient.interceptors.request.use((config) => {
   }
 
   const tenantRaw = localStorage.getItem("tenant");
+
   const tenant = tenantRaw ? JSON.parse(tenantRaw) : null;
 
   if (tenant?.id_tenant) {

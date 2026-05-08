@@ -33,16 +33,11 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
 
-    console.log("email:", email);
-    console.log("password:", password);
-
     const user = await userRepository.findByEmail(email);
 
     if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
 
     const match = await bcrypt.compare(password, user.password_hash);
-
-    console.log("match:", match);
 
     if (!match)
       return res.status(401).json({ error: "Credenciales inválidas" });
@@ -65,9 +60,8 @@ const login = async (req, res) => {
 
 const findUserById = async (req, res) => {
   try {
-    console.log(req.user);
-
     const id = req.user.id;
+    const tenantId = req.tenantId;
 
     const user = await userRepository.getUserById(id);
 
@@ -78,8 +72,9 @@ const findUserById = async (req, res) => {
     const tenants = (await getTenantsByUserId(id)) || [];
 
     let tenant_activa = tenants.find(
-      (t) => t.id_tenant === user.tenant_activo_id,
+      (t) => Number(t.id_tenant) === Number(user.tenant_activo_id),
     );
+
     if (!tenant_activa && tenants.length > 0) {
       tenant_activa = tenants[0];
     }
