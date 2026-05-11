@@ -97,7 +97,6 @@ const getCategorias = async (req, res) => {
   try {
     const tenantId = req.tenantId;
 
-
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant requerido" });
     }

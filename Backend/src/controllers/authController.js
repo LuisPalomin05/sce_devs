@@ -47,6 +47,8 @@ const login = async (req, res) => {
         id: user.id_usuario,
         nombres: user.nombres,
         apellidos: user.apellidos,
+        tenantId: user.tenant_activo_id,
+        email: user.email,
       },
       process.env.JWT_SECRET,
       { expiresIn: "8h" },
