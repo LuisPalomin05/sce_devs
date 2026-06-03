@@ -7,7 +7,8 @@ import HomeDashboard from "./HomeDashboard";
 import Almacen from "./Almacen";
 import Ventas from "./Ventas";
 import Usuario from "./Usuario";
-import CreateProducto from '../components/CreateProducto'
+import CreateProducto from '../components/CreateProducto';
+import Cotizador from "./Cotizador/Cotizador";
 
 
 const Dashboard = () => {
@@ -25,6 +26,7 @@ const Dashboard = () => {
             <Route path="/almacen/edit/:id" element={<CreateProducto />} />
             <Route path="/almacen/create" element={<CreateProducto />} />
             <Route path={"/users"} element={<Usuario />} />
+            <Route path={"/cotizador"} element={<Cotizador/>} />
             <Route path={"/settings"} element={<Configuracion />} />
 
           </Routes>
