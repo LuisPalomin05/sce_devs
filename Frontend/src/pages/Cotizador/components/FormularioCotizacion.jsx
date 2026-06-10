@@ -11,25 +11,25 @@ const FormularioCotizacion = () => {
         <div className="datos-cliente-inputs">
           <div className="input-cliente">
             <label className="labelDataCliente" htmlFor="">
-              RUC / IDENTIFICACION <span className="input-alerta">*</span>{" "}
+              RUC / IDENTIFICACION <span className="input-alerta">*</span>
             </label>
             <input className="inputDataCliente" type="text" name="" id="" />
           </div>
           <div className="input-cliente">
             <label className="labelDataCliente" htmlFor="">
-              NOMBRE EMPRESA <span className="input-alerta">*</span>{" "}
+              NOMBRE EMPRESA <span className="input-alerta">*</span>
             </label>
             <input className="inputDataCliente" type="text" name="" id="" />
           </div>
           <div className="input-cliente">
             <label className="labelDataCliente" htmlFor="">
-              DIRECCION FISCAL{" "}
+              DIRECCION FISCAL
             </label>
             <input className="inputDataCliente" type="text" name="" id="" />
           </div>
           <div className="input-cliente">
             <label className="labelDataCliente" htmlFor="">
-              ATENCION A{" "}
+              ATENCION A
             </label>
             <input className="inputDataCliente" type="text" name="" id="" />
           </div>
@@ -43,7 +43,7 @@ const FormularioCotizacion = () => {
           <div className="tipo-moneda">
             <small>TIPO MONEDA</small>
             <div className="opciones-tipo-moneda">
-              <div className="opcion-moneda">
+              <div className="opcion-moneda active">
                 <p>Soles</p>
               </div>
               <div className="opcion-moneda">

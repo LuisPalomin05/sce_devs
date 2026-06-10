@@ -1,3 +1,9 @@
+.enlinea{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
 /* TITUTO DE COTIZACION */
 
 .titulo-cotizacion {
@@ -104,6 +110,15 @@ grid-template-columns: 2fr 1fr;
     border-radius: 5px;
     border: 1px solid #ccc;
     cursor: pointer;
+}
+
+.opcion-moneda:hover{
+    background: #4f80db;
+}
+
+.active{
+    background: #3a86f8;
+    color: white;
 }
 
 /* .forma-pago{
@@ -276,6 +291,16 @@ grid-template-columns: 2fr 1fr;
     color: #555;
 }
 
+.subtotal, .igv{
+    border-radius: 5px;
+    padding: 10px;
+   
+}
+
+.subtotal{
+    background-color: #f0f0f0;
+}
+
 .total{
     margin-top: 10px;
     padding-top: 10px;
@@ -290,7 +315,17 @@ grid-template-columns: 2fr 1fr;
     color: white;
 }
 
+.table-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.table-Inputs{
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
 
 
 

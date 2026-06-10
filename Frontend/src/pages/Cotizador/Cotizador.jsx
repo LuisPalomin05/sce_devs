@@ -1,23 +1,25 @@
-import React from 'react';
-import './Cotizador.css';
-import TituloCotizacion from './components/TituloCotizacion';
-import FormularioCotizacion from './components/FormularioCotizacion';
-import TablaCotizacion from './components/TablaCotizacion';
-import ResumenCotizacion from './components/ResumenCotizacion';
-import OpcionesCotizacion from './components/OpcionesCotizacion';
+import React from "react";
+import "./Cotizador.css";
+import TituloCotizacion from "./components/TituloCotizacion";
+import FormularioCotizacion from "./components/FormularioCotizacion";
+import TablaCotizacion from "./components/TablaCotizacion";
+import ResumenCotizacion from "./components/ResumenCotizacion";
+import OpcionesCotizacion from "./components/OpcionesCotizacion";
 
 const Cotizador = () => {
-
-    return(
+  return (
+    <div>
+      <TituloCotizacion />
+      <FormularioCotizacion />
+      <div className="enlinea">
+        <TablaCotizacion />
         <div>
-        <TituloCotizacion/>
-        <FormularioCotizacion/>
-        <TablaCotizacion/>
-        <ResumenCotizacion/>
-        <OpcionesCotizacion/>
-        
+          <ResumenCotizacion />
+          <OpcionesCotizacion />
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default Cotizador;

@@ -15,21 +15,27 @@ const TablaCotizacion = () => {
             <p>limpiar Tabla</p>
           </div>
         </div>
-        
       </div>
       <div className="tabla-cotizacion-header">
-        
-          <div>
-            <input type="checkbox" name="" id="" />
-          </div>
-          <div>DESCRIPCION</div>
-          <div>CANTIDAD</div>
-          <div>PRECIO UNIT.</div>
-          <div>SUBTOTAL</div>
-          <div>ACCIONES</div>
-        
+        <div>
+          <input type="checkbox" name="" id="" />
+        </div>
+        <div>DESCRIPCION</div>
+        <div>CANTIDAD</div>
+        <div>PRECIO UNIT.</div>
+        <div>SUBTOTAL</div>
+        <div>ACCIONES</div>
       </div>
       <div className="tabla-cotizacion-body">
+        <div className="table-item">
+        <div>
+          <input type="checkbox" name="" id="" />
+        </div>
+        <input className="table-Inputs" type="text" name="" id="cantidad" placeholder="0" />
+        <input className="table-Inputs" type="number" name="" id="cantidad" placeholder="0" />
+        <input className="table-Inputs" type="number" name="" id="precioUnitario" placeholder="0" />
+        <input className="table-Inputs" type="number" name="" id="subtotalSinIgv" placeholder="0" />
+        </div>
 
       </div>
     </div>
