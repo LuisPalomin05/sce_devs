@@ -1,10 +1,10 @@
 import React from 'react';
 import './Cotizador.css';
-import TituloCotizacion from './component/TituloCotizacion';
-import FormularioCotizacion from './component/FormularioCotizacion';
-import TablaCotizacion from './component/TablaCotizacion';
-import ResumenCotizacion from './component/ResumenCotizacion';
-import OpcionesCotizacion from './component/OpcionesCotizacion';
+import TituloCotizacion from './components/TituloCotizacion';
+import FormularioCotizacion from './components/FormularioCotizacion';
+import TablaCotizacion from './components/TablaCotizacion';
+import ResumenCotizacion from './components/ResumenCotizacion';
+import OpcionesCotizacion from './components/OpcionesCotizacion';
 
 const Cotizador = () => {
 

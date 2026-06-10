@@ -1,0 +1,309 @@
+/* TITUTO DE COTIZACION */
+
+.titulo-cotizacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.titulo h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.titulo small {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* FormularioCotizacion */
+.formulario-cotizacion {
+display: grid;
+grid-template-columns: 2fr 1fr;
+
+}
+
+.datos-cliente-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 15px;
+}
+
+.titulo-cliente {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #3a86f8;
+  padding: 0 15px;
+}
+
+.input-cliente {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.labelDataCliente{
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.inputDataCliente{
+    min-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.input-alerta{
+    color: rgb(209, 19, 19);
+}
+
+.configuracion-cotizacion{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+.titulo-configuracion{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3a86f8;
+}
+.configuracion-opciones{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tipo-moneda{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.opciones-tipo-moneda{
+    display: flex;
+    gap: 15px;
+}
+
+.opcion-moneda{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* .forma-pago{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.titulo-forma-pago{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3a86f8;
+}
+
+.select-forma-pago{
+    min-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+} */
+
+/* selecionar forma pago */
+.forma-pago {
+  width: 200px;
+  min-width: 150px;
+  min-height: 30px;
+}
+
+.titulo-forma-pago {
+  display: block;
+  margin-bottom: 5px;
+  /* font-weight: bold; */
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select__selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  cursor: pointer;
+  user-select: none;
+  background: white;
+}
+
+.flecha {
+  transition: transform 0.2s ease;
+}
+
+.flecha.abierta {
+  transform: rotate(180deg);
+}
+
+.custom-select__options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+
+  width: 100%;
+  background: white;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  overflow: hidden;
+  z-index: 100;
+}
+
+.custom-select__option {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.custom-select__option:hover {
+  background: #f3f3f3;
+}
+
+/* TablaCotizacion */
+
+.tabla-cotizacion{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    padding: 0 15px;
+}
+
+.tabla-cotizacion-titulo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo-tabla{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3a86f8;
+}
+
+.opciones-tabla{
+    display: flex;
+    gap: 15px;
+}
+
+.agregar-producto, .limpiar-tabla{
+    padding: 5px 10px;
+    border-radius: 5px;
+    /* border: 1px solid #ccc; */
+    cursor: pointer;
+}
+
+.agregar-producto{
+    border:1px solid #3d88df;
+    color: #3d88df;
+}
+
+.limpiar-tabla{
+    border:1px solid #e03333;
+    color: #e03333;
+}
+
+.agregar-producto:hover, .limpiar-tabla:hover{
+    background: #f3f3f3;
+}
+
+.tabla-cotizacion-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* resumen */
+
+.resumen-cotizacion{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+.titulo-resumen{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3a86f8;
+}
+
+.resumen-detalles{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resumen-detalles-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo-Detale{
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.total{
+    margin-top: 10px;
+    padding-top: 10px;
+    height: 50px;
+    width: 100%;
+    background-color: #3a86f8;
+    border-radius: 5px;
+    padding: 0 15px;
+}
+
+.monto-total{
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
